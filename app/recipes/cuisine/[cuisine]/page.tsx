@@ -19,14 +19,15 @@ const cuisineMeta: Record<string, CuisineMeta> = {
   mediterranean: { label: "Mediterranean", headline: "Mediterranean Recipes by Ingredient", description: "Olive oil, feta, chickpeas, and fresh vegetables define Mediterranean cooking. Find healthy vibrant dishes.", commonIngredients: ["olive oil", "feta", "chickpeas", "cucumber", "lemon"], keywords: ["Mediterranean recipes by ingredient", "Greek recipes", "easy Mediterranean dinner ideas"] },
 };
 
-export async function generateMetadata({ params }: { params: { cuisine: string } }): Promise<Metadata> {
-  const meta = cuisineMeta[params.cuisine];
+export async function generateMetadata({ params }: { params: Promise<{ cuisine: string }> }): Promise<Metadata> {
+  const { cuisine } = await params;
+  const meta = cuisineMeta[cuisine];
   if (!meta) return { title: "Cuisine Recipes | My Recipe Match" };
   return {
     title: meta.headline + " - My Recipe Match",
     description: meta.description,
     keywords: meta.keywords,
-    alternates: { canonical: "https://www.myrecipematch.com/recipes/cuisine/" + params.cuisine },
+    alternates: { canonical: "https://www.myrecipematch.com/recipes/cuisine/" + cuisine },
   };
 }
 
@@ -34,8 +35,9 @@ export function generateStaticParams() {
   return ["italian","mexican","chinese","indian","japanese","thai","american","mediterranean"].map((c) => ({ cuisine: c }));
 }
 
-export default function CuisinePage({ params }: { params: { cuisine: string } }) {
-  const meta = cuisineMeta[params.cuisine];
+export default async function CuisinePage({ params }: { params: Promise<{ cuisine: string }> }) {
+  const { cuisine } = await params;
+  const meta = cuisineMeta[cuisine];
   if (!meta) return <p>Cuisine not found.</p>;
 
   return (
