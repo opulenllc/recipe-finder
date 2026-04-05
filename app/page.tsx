@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import { useState } from "react";
 
 export default function Home() {
@@ -60,7 +60,7 @@ export default function Home() {
     <div className="min-h-screen bg-orange-50 flex flex-col">
       <header className="bg-white shadow-sm py-5 px-6">
         <div className="max-w-4xl mx-auto flex items-center gap-3">
-          <span className="text-4xl">🍳</span>
+          <span className="text-4xl">??</span>
           <div>
             <h1 className="text-2xl font-bold text-orange-600">My Recipe Match</h1>
             <p className="text-xs text-gray-400">Find recipes using ingredients you already have</p>
@@ -159,7 +159,7 @@ export default function Home() {
                   />
                   {isPerfectMatch(recipe) && (
                     <div className="absolute top-2 left-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow">
-                      🎯 Perfect Match
+                      ?? Perfect Match
                     </div>
                   )}
                 </div>
@@ -182,7 +182,7 @@ export default function Home() {
       </main>
 
       <footer className="bg-white border-t border-gray-100 py-4 px-6 text-center text-sm text-gray-400">
-        myrecipematch.com · Recipes by Spoonacular
+        myrecipematch.com � Recipes by Spoonacular � <a href="/privacy" className="hover:text-orange-400">Privacy Policy</a>
       </footer>
     </div>
   );
