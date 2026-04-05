@@ -1,13 +1,24 @@
 ﻿"use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
-export default function Home() {
+function RecipeApp() {
+  const searchParams = useSearchParams();
   const [ingredients, setIngredients] = useState("");
   const [recipes, setRecipes] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [showAll, setShowAll] = useState(false);
   const [searched, setSearched] = useState(false);
   const [history, setHistory] = useState<string[]>([]);
+
+  useEffect(() => {
+    const ing = searchParams.get("ingredients");
+    if (ing) {
+      setIngredients(ing);
+      handleSearch(ing);
+    }
+  }, []);
 
   const handleSearch = async (query?: string) => {
     const searchTerm = query || ingredients;
@@ -28,9 +39,7 @@ export default function Home() {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter") {
-      handleSearch();
-    }
+    if (e.key === "Enter") handleSearch();
   };
 
   const handleClear = () => {
@@ -52,9 +61,7 @@ export default function Home() {
     );
   };
 
-  const filteredRecipes = showAll
-    ? recipes
-    : recipes.filter((recipe) => isPerfectMatch(recipe));
+  const filteredRecipes = showAll ? recipes : recipes.filter((recipe) => isPerfectMatch(recipe));
 
   return (
     <div className="min-h-screen bg-orange-50 flex flex-col">
@@ -80,18 +87,10 @@ export default function Home() {
               onKeyDown={handleKeyDown}
             />
             {ingredients && (
-              <button
-                onClick={handleClear}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 text-xl font-bold"
-              >
-                x
-              </button>
+              <button onClick={handleClear} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 text-xl font-bold">x</button>
             )}
           </div>
-          <button
-            onClick={() => handleSearch()}
-            className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-xl font-semibold"
-          >
+          <button onClick={() => handleSearch()} className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-xl font-semibold">
             {loading ? "Searching..." : "Find Recipes"}
           </button>
         </div>
@@ -100,13 +99,7 @@ export default function Home() {
           <div className="flex flex-wrap gap-2 mb-6">
             <span className="text-xs text-gray-400 mt-1">Recent:</span>
             {history.map((item, i) => (
-              <button
-                key={i}
-                onClick={() => handleSearch(item)}
-                className="text-xs bg-orange-100 hover:bg-orange-200 text-orange-700 px-3 py-1 rounded-full"
-              >
-                {item}
-              </button>
+              <button key={i} onClick={() => handleSearch(item)} className="text-xs bg-orange-100 hover:bg-orange-200 text-orange-700 px-3 py-1 rounded-full">{item}</button>
             ))}
           </div>
         )}
@@ -114,9 +107,7 @@ export default function Home() {
         {searched && !loading && (
           <div className="flex items-center justify-between mb-4">
             <p className="text-sm text-gray-500">
-              {filteredRecipes.length === 0
-                ? "No matches found"
-                : "Found " + filteredRecipes.length + " recipe" + (filteredRecipes.length === 1 ? "" : "s")}
+              {filteredRecipes.length === 0 ? "No matches found" : "Found " + filteredRecipes.length + " recipe" + (filteredRecipes.length === 1 ? "" : "s")}
             </p>
             {recipes.length > 0 && (
               <button onClick={() => setShowAll(!showAll)} className="text-sm text-orange-600 underline">
@@ -151,16 +142,9 @@ export default function Home() {
             {filteredRecipes.map((recipe: any) => (
               <div key={recipe.id} className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-shadow flex flex-col">
                 <div className="relative">
-                  <img
-                    src={recipe.image}
-                    alt={recipe.title}
-                    className="w-full h-48 object-cover"
-                    onError={(e) => { e.currentTarget.src = "https://placehold.co/600x400?text=No+Image"; }}
-                  />
+                  <img src={recipe.image} alt={recipe.title} className="w-full h-48 object-cover" onError={(e) => { e.currentTarget.src = "https://placehold.co/600x400?text=No+Image"; }} />
                   {isPerfectMatch(recipe) && (
-                    <div className="absolute top-2 left-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow">
-                      🎯 Perfect Match
-                    </div>
+                    <div className="absolute top-2 left-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow">🎯 Perfect Match</div>
                   )}
                 </div>
                 <div className="p-4 flex flex-col flex-1">
@@ -170,9 +154,7 @@ export default function Home() {
                     <p className="text-xs text-red-400 mb-3">Missing: {recipe.missedIngredients.map((i: any) => i.name).join(", ")}</p>
                   )}
                   <div className="mt-auto">
-                    <a href={getUrl(recipe)} target="_blank" className="inline-block w-full text-center bg-orange-100 hover:bg-orange-200 text-orange-700 font-semibold px-4 py-2 rounded-lg transition-colors">
-                      View Full Recipe
-                    </a>
+                    <a href={getUrl(recipe)} target="_blank" className="inline-block w-full text-center bg-orange-100 hover:bg-orange-200 text-orange-700 font-semibold px-4 py-2 rounded-lg transition-colors">View Full Recipe</a>
                   </div>
                 </div>
               </div>
@@ -185,5 +167,13 @@ export default function Home() {
         myrecipematch.com · Recipes by Spoonacular · <a href="/privacy" className="hover:text-orange-400">Privacy Policy</a> · <a href="/terms" className="hover:text-orange-400">Terms of Service</a>
       </footer>
     </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense>
+      <RecipeApp />
+    </Suspense>
   );
 }
