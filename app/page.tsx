@@ -3,13 +3,13 @@ import { useState } from "react";
 
 export default function Home() {
   const [ingredients, setIngredients] = useState("");
-  const [recipes, setRecipes] = useState([]);
+  const [recipes, setRecipes] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [showAll, setShowAll] = useState(false);
   const [searched, setSearched] = useState(false);
-  const [history, setHistory] = useState([]);
+  const [history, setHistory] = useState<string[]>([]);
 
-  const handleSearch = async (query) => {
+  const handleSearch = async (query?: string) => {
     const searchTerm = query || ingredients;
     if (!searchTerm.trim()) return;
     setLoading(true);
@@ -27,7 +27,7 @@ export default function Home() {
     setLoading(false);
   };
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
       handleSearch();
     }
@@ -40,15 +40,15 @@ export default function Home() {
     setShowAll(false);
   };
 
-  const getUrl = (recipe) => {
+  const getUrl = (recipe: any) => {
     return "https://spoonacular.com/recipes/" + recipe.title.replaceAll(" ", "-").toLowerCase() + "-" + recipe.id;
   };
 
   const inputList = ingredients.split(",").map((i) => i.trim().toLowerCase()).filter(Boolean);
 
-  const isPerfectMatch = (recipe) => {
+  const isPerfectMatch = (recipe: any) => {
     return inputList.every((ing) =>
-      recipe.usedIngredients.some((u) => u.name.toLowerCase().includes(ing))
+      recipe.usedIngredients.some((u: any) => u.name.toLowerCase().includes(ing))
     );
   };
 
@@ -148,7 +148,7 @@ export default function Home() {
 
         {!loading && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredRecipes.map((recipe) => (
+            {filteredRecipes.map((recipe: any) => (
               <div key={recipe.id} className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-shadow flex flex-col">
                 <div className="relative">
                   <img
@@ -165,9 +165,9 @@ export default function Home() {
                 </div>
                 <div className="p-4 flex flex-col flex-1">
                   <h2 className="text-lg font-bold text-gray-800 mb-2 leading-tight">{recipe.title}</h2>
-                  <p className="text-xs text-green-600 mb-1">Used: {recipe.usedIngredients.map((i) => i.name).join(", ")}</p>
+                  <p className="text-xs text-green-600 mb-1">Used: {recipe.usedIngredients.map((i: any) => i.name).join(", ")}</p>
                   {recipe.missedIngredients.length > 0 && (
-                    <p className="text-xs text-red-400 mb-3">Missing: {recipe.missedIngredients.map((i) => i.name).join(", ")}</p>
+                    <p className="text-xs text-red-400 mb-3">Missing: {recipe.missedIngredients.map((i: any) => i.name).join(", ")}</p>
                   )}
                   <div className="mt-auto">
                     <a href={getUrl(recipe)} target="_blank" className="inline-block w-full text-center bg-orange-100 hover:bg-orange-200 text-orange-700 font-semibold px-4 py-2 rounded-lg transition-colors">
