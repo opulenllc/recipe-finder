@@ -6,11 +6,15 @@
 
   if (id) {
     try {
-      const res = await fetch("https://api.spoonacular.com/recipes/" + id + "/analyzedInstructions?apiKey=" + apiKey);
-      const data = await res.json();
-      return Response.json(data);
+      const [infoRes, instrRes] = await Promise.all([
+        fetch("https://api.spoonacular.com/recipes/" + id + "/information?includeNutrition=true&apiKey=" + apiKey),
+        fetch("https://api.spoonacular.com/recipes/" + id + "/analyzedInstructions?apiKey=" + apiKey)
+      ]);
+      const info = await infoRes.json();
+      const instructions = await instrRes.json();
+      return Response.json({ info, instructions });
     } catch (error) {
-      return Response.json([], { status: 500 });
+      return Response.json({ error: "Failed" }, { status: 500 });
     }
   }
 

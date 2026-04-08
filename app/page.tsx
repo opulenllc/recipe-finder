@@ -3,6 +3,127 @@ import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 
+function RecipeModal({ recipe, data, onClose }: { recipe: any; data: any; onClose: () => void }) {
+  const info = data?.info || {};
+  const instructions = data?.instructions || [];
+  const steps = instructions.length > 0 ? instructions[0].steps || [] : [];
+  const nutrients = info?.nutrition?.nutrients || [];
+  const calories = nutrients.find((n: any) => n.name === "Calories");
+  const protein = nutrients.find((n: any) => n.name === "Protein");
+  const fat = nutrients.find((n: any) => n.name === "Fat");
+  const carbs = nutrients.find((n: any) => n.name === "Carbohydrates");
+
+  const handlePrint = () => window.print();
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-60 z-50 flex items-start justify-center p-4 overflow-y-auto print:relative print:inset-auto print:bg-white print:p-0">
+      <div className="bg-white rounded-2xl max-w-2xl w-full my-4 overflow-hidden print:rounded-none print:shadow-none print:my-0">
+        <div className="print:hidden flex items-center justify-between p-4 border-b border-gray-100">
+          <h2 className="text-lg font-bold text-gray-800 pr-4">{recipe.title}</h2>
+          <div className="flex gap-2 flex-shrink-0">
+            <button onClick={handlePrint} className="bg-orange-100 hover:bg-orange-200 text-orange-700 font-semibold px-4 py-2 rounded-lg text-sm">Print</button>
+            <button onClick={onClose} className="bg-gray-100 hover:bg-gray-200 text-gray-600 font-semibold px-4 py-2 rounded-lg text-sm">Close</button>
+          </div>
+        </div>
+
+        <div className="hidden print:block p-6 border-b">
+          <h1 className="text-2xl font-bold text-gray-800 mb-1">{recipe.title}</h1>
+          <p className="text-sm text-gray-500">myrecipematch.com</p>
+        </div>
+
+        <img src={recipe.image} alt={recipe.title} className="w-full h-56 object-cover print:h-40" onError={(e) => { e.currentTarget.src = "https://placehold.co/600x400?text=No+Image"; }} />
+
+        <div className="p-6">
+          <div className="flex flex-wrap gap-4 mb-6">
+            {info.readyInMinutes && (
+              <div className="text-center">
+                <p className="text-xs text-gray-400">Ready In</p>
+                <p className="text-sm font-bold text-gray-700">{info.readyInMinutes} min</p>
+              </div>
+            )}
+            {info.servings && (
+              <div className="text-center">
+                <p className="text-xs text-gray-400">Servings</p>
+                <p className="text-sm font-bold text-gray-700">{info.servings}</p>
+              </div>
+            )}
+            {calories && (
+              <div className="text-center">
+                <p className="text-xs text-gray-400">Calories</p>
+                <p className="text-sm font-bold text-gray-700">{Math.round(calories.amount)} kcal</p>
+              </div>
+            )}
+            {protein && (
+              <div className="text-center">
+                <p className="text-xs text-gray-400">Protein</p>
+                <p className="text-sm font-bold text-gray-700">{Math.round(protein.amount)}g</p>
+              </div>
+            )}
+            {fat && (
+              <div className="text-center">
+                <p className="text-xs text-gray-400">Fat</p>
+                <p className="text-sm font-bold text-gray-700">{Math.round(fat.amount)}g</p>
+              </div>
+            )}
+            {carbs && (
+              <div className="text-center">
+                <p className="text-xs text-gray-400">Carbs</p>
+                <p className="text-sm font-bold text-gray-700">{Math.round(carbs.amount)}g</p>
+              </div>
+            )}
+          </div>
+
+          {info.diets && info.diets.length > 0 && (
+            <div className="flex flex-wrap gap-2 mb-6">
+              {info.diets.map((diet: string) => (
+                <span key={diet} className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full capitalize">{diet}</span>
+              ))}
+            </div>
+          )}
+
+          {info.extendedIngredients && info.extendedIngredients.length > 0 && (
+            <div className="mb-6">
+              <h3 className="text-base font-bold text-gray-800 mb-3">Ingredients</h3>
+              <ul className="space-y-1">
+                {info.extendedIngredients.map((ing: any, i: number) => (
+                  <li key={i} className="flex items-center gap-2 text-sm text-gray-600">
+                    <span className="w-1.5 h-1.5 bg-orange-400 rounded-full flex-shrink-0"></span>
+                    {ing.original}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {steps.length > 0 && (
+            <div className="mb-6">
+              <h3 className="text-base font-bold text-gray-800 mb-3">Instructions</h3>
+              <ol className="space-y-4">
+                {steps.map((step: any) => (
+                  <li key={step.number} className="flex gap-3">
+                    <span className="bg-orange-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 mt-0.5">{step.number}</span>
+                    <p className="text-sm text-gray-600 leading-relaxed">{step.step}</p>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          )}
+
+          {steps.length === 0 && (
+            <div className="text-center py-4">
+              <p className="text-sm text-gray-400">No instructions available for this recipe.</p>
+            </div>
+          )}
+
+          <div className="print:hidden pt-4 border-t border-gray-100">
+            <p className="text-xs text-gray-400 text-center">Recipe data provided by Spoonacular</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function RecipeApp() {
   const searchParams = useSearchParams();
   const [ingredients, setIngredients] = useState("");
@@ -11,9 +132,9 @@ function RecipeApp() {
   const [showAll, setShowAll] = useState(false);
   const [searched, setSearched] = useState(false);
   const [history, setHistory] = useState<string[]>([]);
-  const [expandedId, setExpandedId] = useState<number | null>(null);
-  const [instructions, setInstructions] = useState<Record<number, any[]>>({});
-  const [loadingInstructions, setLoadingInstructions] = useState<number | null>(null);
+  const [selectedRecipe, setSelectedRecipe] = useState<any | null>(null);
+  const [recipeData, setRecipeData] = useState<any | null>(null);
+  const [loadingRecipe, setLoadingRecipe] = useState(false);
 
   useEffect(() => {
     const ing = searchParams.get("ingredients");
@@ -29,40 +150,28 @@ function RecipeApp() {
     setLoading(true);
     setSearched(true);
     setShowAll(false);
-    setExpandedId(null);
     setIngredients(searchTerm);
     if (!history.includes(searchTerm)) {
       setHistory((prev) => [searchTerm, ...prev].slice(0, 5));
     }
     const res = await fetch("/api/recipes?ingredients=" + searchTerm);
     const data = await res.json();
-    if (Array.isArray(data)) {
-      setRecipes(data);
-    }
+    if (Array.isArray(data)) setRecipes(data);
     setLoading(false);
   };
 
   const handleViewRecipe = async (recipe: any) => {
-    if (expandedId === recipe.id) {
-      setExpandedId(null);
-      return;
-    }
-    if (instructions[recipe.id]) {
-      setExpandedId(recipe.id);
-      return;
-    }
-    setLoadingInstructions(recipe.id);
+    setSelectedRecipe(recipe);
+    setRecipeData(null);
+    setLoadingRecipe(true);
     try {
       const res = await fetch("/api/recipes?id=" + recipe.id);
       const data = await res.json();
-      const steps = Array.isArray(data) && data.length > 0 ? data[0].steps || [] : [];
-      setInstructions((prev) => ({ ...prev, [recipe.id]: steps }));
-      setExpandedId(recipe.id);
+      setRecipeData(data);
     } catch (e) {
-      setInstructions((prev) => ({ ...prev, [recipe.id]: [] }));
-      setExpandedId(recipe.id);
+      setRecipeData({});
     }
-    setLoadingInstructions(null);
+    setLoadingRecipe(false);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -74,7 +183,6 @@ function RecipeApp() {
     setRecipes([]);
     setSearched(false);
     setShowAll(false);
-    setExpandedId(null);
   };
 
   const inputList = ingredients.split(",").map((i) => i.trim().toLowerCase()).filter(Boolean);
@@ -89,7 +197,17 @@ function RecipeApp() {
 
   return (
     <div className="min-h-screen bg-orange-50 flex flex-col">
-      <header className="bg-white shadow-sm py-5 px-6">
+      {selectedRecipe && (
+        loadingRecipe ? (
+          <div className="fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center">
+            <div className="w-12 h-12 border-4 border-orange-200 border-t-orange-500 rounded-full animate-spin"></div>
+          </div>
+        ) : (
+          <RecipeModal recipe={selectedRecipe} data={recipeData} onClose={() => setSelectedRecipe(null)} />
+        )
+      )}
+
+      <header className="bg-white shadow-sm py-5 px-6 print:hidden">
         <div className="max-w-4xl mx-auto flex items-center gap-3">
           <span className="text-4xl">🍳</span>
           <div>
@@ -99,7 +217,7 @@ function RecipeApp() {
         </div>
       </header>
 
-      <main className="flex-1 max-w-4xl mx-auto w-full px-4 py-10">
+      <main className="flex-1 max-w-4xl mx-auto w-full px-4 py-10 print:hidden">
         <div className="flex gap-2 mb-2">
           <div className="relative flex-1">
             <input
@@ -163,60 +281,36 @@ function RecipeApp() {
 
         {!loading && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredRecipes.map((recipe: any) => {
-              const isExpanded = expandedId === recipe.id;
-              const isLoadingThis = loadingInstructions === recipe.id;
-              const steps = instructions[recipe.id] || [];
-              return (
-                <div key={recipe.id} className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-shadow flex flex-col">
-                  <div className="relative">
-                    <img src={recipe.image} alt={recipe.title} className="w-full h-48 object-cover" onError={(e) => { e.currentTarget.src = "https://placehold.co/600x400?text=No+Image"; }} />
-                    {isPerfectMatch(recipe) && (
-                      <div className="absolute top-2 left-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow">🎯 Perfect Match</div>
-                    )}
-                  </div>
-                  <div className="p-4 flex flex-col flex-1">
-                    <h2 className="text-lg font-bold text-gray-800 mb-2 leading-tight">{recipe.title}</h2>
-                    <p className="text-xs text-green-600 mb-1">Used: {recipe.usedIngredients.map((i: any) => i.name).join(", ")}</p>
-                    {recipe.missedIngredients.length > 0 && (
-                      <p className="text-xs text-red-400 mb-3">Missing: {recipe.missedIngredients.map((i: any) => i.name).join(", ")}</p>
-                    )}
-                    <div className="mt-auto">
-                      <button
-                        onClick={() => handleViewRecipe(recipe)}
-                        className="inline-block w-full text-center bg-orange-100 hover:bg-orange-200 text-orange-700 font-semibold px-4 py-2 rounded-lg transition-colors"
-                      >
-                        {isLoadingThis ? "Loading..." : isExpanded ? "Hide Instructions" : "View Full Recipe"}
-                      </button>
-                    </div>
-                    {isExpanded && (
-                      <div className="mt-4 border-t border-orange-100 pt-4">
-                        {steps.length > 0 ? (
-                          <>
-                            <h3 className="text-sm font-bold text-gray-700 mb-3">Instructions</h3>
-                            <ol className="space-y-3">
-                              {steps.map((step: any) => (
-                                <li key={step.number} className="flex gap-2">
-                                  <span className="bg-orange-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0 mt-0.5">{step.number}</span>
-                                  <p className="text-xs text-gray-600 leading-relaxed">{step.step}</p>
-                                </li>
-                              ))}
-                            </ol>
-                          </>
-                        ) : (
-                          <p className="text-xs text-gray-400 text-center py-2">No instructions available for this recipe.</p>
-                        )}
-                      </div>
-                    )}
+            {filteredRecipes.map((recipe: any) => (
+              <div key={recipe.id} className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-shadow flex flex-col">
+                <div className="relative">
+                  <img src={recipe.image} alt={recipe.title} className="w-full h-48 object-cover" onError={(e) => { e.currentTarget.src = "https://placehold.co/600x400?text=No+Image"; }} />
+                  {isPerfectMatch(recipe) && (
+                    <div className="absolute top-2 left-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow">🎯 Perfect Match</div>
+                  )}
+                </div>
+                <div className="p-4 flex flex-col flex-1">
+                  <h2 className="text-lg font-bold text-gray-800 mb-2 leading-tight">{recipe.title}</h2>
+                  <p className="text-xs text-green-600 mb-1">Used: {recipe.usedIngredients.map((i: any) => i.name).join(", ")}</p>
+                  {recipe.missedIngredients.length > 0 && (
+                    <p className="text-xs text-red-400 mb-3">Missing: {recipe.missedIngredients.map((i: any) => i.name).join(", ")}</p>
+                  )}
+                  <div className="mt-auto">
+                    <button
+                      onClick={() => handleViewRecipe(recipe)}
+                      className="inline-block w-full text-center bg-orange-100 hover:bg-orange-200 text-orange-700 font-semibold px-4 py-2 rounded-lg transition-colors"
+                    >
+                      View Full Recipe
+                    </button>
                   </div>
                 </div>
-              );
-            })}
+              </div>
+            ))}
           </div>
         )}
       </main>
 
-      <footer className="bg-white border-t border-gray-100 py-4 px-6 text-center text-sm text-gray-400">
+      <footer className="bg-white border-t border-gray-100 py-4 px-6 text-center text-sm text-gray-400 print:hidden">
         myrecipematch.com · Recipes by Spoonacular · <a href="/privacy" className="hover:text-orange-400">Privacy Policy</a> · <a href="/terms" className="hover:text-orange-400">Terms of Service</a>
       </footer>
     </div>
