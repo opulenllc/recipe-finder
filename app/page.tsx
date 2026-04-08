@@ -1,5 +1,5 @@
 ﻿"use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 
@@ -18,10 +18,28 @@ function NutritionBar({ label, amount, unit, max, color }: { label: string; amou
   );
 }
 
-function RecipeModal({ recipe, data, onClose }: { recipe: any; data: any; onClose: () => void }) {
-  const info = data?.info || {};
-  const instructions = data?.instructions || [];
-  const steps = instructions.length > 0 ? instructions[0].steps || [] : [];
+function SkeletonBlock({ className }: { className: string }) {
+  return <div className={"animate-pulse bg-gray-100 rounded-lg " + className}></div>;
+}
+
+function RecipeModal({ recipe, onClose }: { recipe: any; onClose: () => void }) {
+  const [info, setInfo] = useState<any>(null);
+  const [instructions, setInstructions] = useState<any[]>([]);
+  const [infoLoading, setInfoLoading] = useState(true);
+  const [instrLoading, setInstrLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/recipes?id=" + recipe.id + "&type=info")
+      .then(r => r.json())
+      .then(d => { setInfo(d); setInfoLoading(false); })
+      .catch(() => setInfoLoading(false));
+
+    fetch("/api/recipes?id=" + recipe.id + "&type=instructions")
+      .then(r => r.json())
+      .then(d => { setInstructions(Array.isArray(d) ? d : []); setInstrLoading(false); })
+      .catch(() => setInstrLoading(false));
+  }, [recipe.id]);
+
   const nutrients = info?.nutrition?.nutrients || [];
   const cal = nutrients.find((n: any) => n.name === "Calories");
   const protein = nutrients.find((n: any) => n.name === "Protein");
@@ -33,15 +51,16 @@ function RecipeModal({ recipe, data, onClose }: { recipe: any; data: any; onClos
   const vitC = nutrients.find((n: any) => n.name === "Vitamin C");
   const calcium = nutrients.find((n: any) => n.name === "Calcium");
   const iron = nutrients.find((n: any) => n.name === "Iron");
-  const highResImage = recipe.image ? recipe.image.replace("312x231", "636x393") : null;
+  const steps = instructions.length > 0 ? instructions[0].steps || [] : [];
   const equipment = steps.flatMap((s: any) => s.equipment || []).filter((e: any, i: number, arr: any[]) => arr.findIndex((x: any) => x.name === e.name) === i);
+  const highResImage = recipe.image ? recipe.image.replace("312x231", "636x393") : null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 print:relative print:inset-auto print:p-0" style={{backgroundColor: "rgba(0,0,0,0.5)"}}>
-      <div className="bg-white rounded-2xl w-full max-w-2xl flex flex-col print:rounded-none print:shadow-none" style={{maxHeight: "90vh"}}>
-        
+      <div className="bg-white rounded-2xl w-full max-w-2xl flex flex-col print:rounded-none" style={{maxHeight: "90vh"}}>
+
         <div className="print:hidden flex items-center justify-between px-5 py-3 border-b border-gray-100 flex-shrink-0">
-          <h2 className="text-sm font-bold text-gray-800 pr-4 leading-tight line-clamp-1">{recipe.title}</h2>
+          <h2 className="text-sm font-bold text-gray-800 pr-4 leading-tight">{recipe.title}</h2>
           <div className="flex gap-2 flex-shrink-0">
             <button onClick={() => window.print()} className="bg-orange-100 hover:bg-orange-200 text-orange-700 font-semibold px-3 py-1.5 rounded-lg text-xs">🖨 Print</button>
             <button onClick={onClose} className="bg-gray-100 hover:bg-gray-200 text-gray-500 font-semibold px-3 py-1.5 rounded-lg text-xs">✕ Close</button>
@@ -57,22 +76,32 @@ function RecipeModal({ recipe, data, onClose }: { recipe: any; data: any; onClos
           <img src={highResImage || recipe.image} alt={recipe.title} className="w-full object-cover" style={{height: "220px"}} onError={(e) => { e.currentTarget.src = recipe.image || "https://placehold.co/600x400?text=No+Image"; }} />
 
           <div className="p-5">
-            <div className="grid grid-cols-4 gap-2 mb-5">
-              {[
-                { label: "Ready In", val: info.readyInMinutes ? info.readyInMinutes + " min" : null, icon: "⏱" },
-                { label: "Servings", val: info.servings, icon: "👥" },
-                { label: "Calories", val: cal ? Math.round(cal.amount) + " kcal" : null, icon: "🔥" },
-                { label: "Cost/Serving", val: info.pricePerServing ? "$" + (info.pricePerServing / 100).toFixed(2) : null, icon: "💰" },
-              ].filter(i => i.val).map(item => (
-                <div key={item.label} className="bg-orange-50 rounded-xl p-2 text-center">
-                  <div className="text-lg mb-0.5">{item.icon}</div>
-                  <p className="text-xs text-gray-400">{item.label}</p>
-                  <p className="text-xs font-bold text-gray-700">{item.val}</p>
-                </div>
-              ))}
-            </div>
+            {infoLoading ? (
+              <div className="grid grid-cols-4 gap-2 mb-5">
+                {[1,2,3,4].map(i => <SkeletonBlock key={i} className="h-16" />)}
+              </div>
+            ) : (
+              <div className="grid grid-cols-4 gap-2 mb-5">
+                {[
+                  { label: "Ready In", val: info?.readyInMinutes ? info.readyInMinutes + " min" : null, icon: "⏱" },
+                  { label: "Servings", val: info?.servings, icon: "👥" },
+                  { label: "Calories", val: cal ? Math.round(cal.amount) + " kcal" : null, icon: "🔥" },
+                  { label: "Cost/Serving", val: info?.pricePerServing ? "$" + (info.pricePerServing / 100).toFixed(2) : null, icon: "💰" },
+                ].filter(i => i.val).map(item => (
+                  <div key={item.label} className="bg-orange-50 rounded-xl p-2 text-center">
+                    <div className="text-lg mb-0.5">{item.icon}</div>
+                    <p className="text-xs text-gray-400">{item.label}</p>
+                    <p className="text-xs font-bold text-gray-700">{item.val}</p>
+                  </div>
+                ))}
+              </div>
+            )}
 
-            {info.diets && info.diets.length > 0 && (
+            {infoLoading ? (
+              <div className="flex gap-2 mb-5">
+                {[1,2,3].map(i => <SkeletonBlock key={i} className="h-6 w-20" />)}
+              </div>
+            ) : info?.diets && info.diets.length > 0 && (
               <div className="flex flex-wrap gap-1.5 mb-5">
                 {info.diets.map((diet: string) => (
                   <span key={diet} className="bg-green-100 text-green-700 text-xs font-medium px-2 py-0.5 rounded-full capitalize">{diet}</span>
@@ -80,9 +109,16 @@ function RecipeModal({ recipe, data, onClose }: { recipe: any; data: any; onClos
               </div>
             )}
 
-            {info.extendedIngredients && info.extendedIngredients.length > 0 && (
+            {infoLoading ? (
               <div className="mb-5">
-                <h3 className="text-sm font-bold text-gray-800 mb-2 flex items-center gap-1">🥕 Ingredients <span className="text-xs font-normal text-gray-400">({info.extendedIngredients.length})</span></h3>
+                <SkeletonBlock className="h-4 w-24 mb-2" />
+                <div className="space-y-1.5">
+                  {[1,2,3,4].map(i => <SkeletonBlock key={i} className="h-3" />)}
+                </div>
+              </div>
+            ) : info?.extendedIngredients && info.extendedIngredients.length > 0 && (
+              <div className="mb-5">
+                <h3 className="text-sm font-bold text-gray-800 mb-2">🥕 Ingredients <span className="text-xs font-normal text-gray-400">({info.extendedIngredients.length})</span></h3>
                 <div className="bg-gray-50 rounded-xl p-3">
                   <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
                     {info.extendedIngredients.map((ing: any, i: number) => (
@@ -96,7 +132,14 @@ function RecipeModal({ recipe, data, onClose }: { recipe: any; data: any; onClos
               </div>
             )}
 
-            {equipment.length > 0 && (
+            {instrLoading ? (
+              <div className="mb-5">
+                <SkeletonBlock className="h-4 w-24 mb-2" />
+                <div className="flex gap-2">
+                  {[1,2,3].map(i => <SkeletonBlock key={i} className="h-8 w-20" />)}
+                </div>
+              </div>
+            ) : equipment.length > 0 && (
               <div className="mb-5">
                 <h3 className="text-sm font-bold text-gray-800 mb-2">🍳 Equipment</h3>
                 <div className="flex flex-wrap gap-2">
@@ -110,7 +153,19 @@ function RecipeModal({ recipe, data, onClose }: { recipe: any; data: any; onClos
               </div>
             )}
 
-            {steps.length > 0 && (
+            {instrLoading ? (
+              <div className="mb-5">
+                <SkeletonBlock className="h-4 w-24 mb-3" />
+                <div className="space-y-3">
+                  {[1,2,3,4].map(i => (
+                    <div key={i} className="flex gap-3">
+                      <SkeletonBlock className="w-6 h-6 rounded-full flex-shrink-0" />
+                      <SkeletonBlock className="h-4 flex-1" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : steps.length > 0 && (
               <div className="mb-5">
                 <h3 className="text-sm font-bold text-gray-800 mb-2">📋 Instructions</h3>
                 <ol className="space-y-3">
@@ -124,7 +179,17 @@ function RecipeModal({ recipe, data, onClose }: { recipe: any; data: any; onClos
               </div>
             )}
 
-            {(protein || fat || carbs) && (
+            {infoLoading ? (
+              <div className="mb-5">
+                <SkeletonBlock className="h-4 w-32 mb-3" />
+                <div className="grid grid-cols-3 gap-2 mb-3">
+                  {[1,2,3].map(i => <SkeletonBlock key={i} className="h-20" />)}
+                </div>
+                <div className="space-y-2">
+                  {[1,2,3,4].map(i => <SkeletonBlock key={i} className="h-4" />)}
+                </div>
+              </div>
+            ) : (protein || fat || carbs) && (
               <div className="mb-4">
                 <h3 className="text-sm font-bold text-gray-800 mb-3">📊 Nutrition per serving</h3>
                 <div className="grid grid-cols-3 gap-2 mb-3">
@@ -172,8 +237,6 @@ function RecipeApp() {
   const [searched, setSearched] = useState(false);
   const [history, setHistory] = useState<string[]>([]);
   const [selectedRecipe, setSelectedRecipe] = useState<any | null>(null);
-  const [recipeData, setRecipeData] = useState<any | null>(null);
-  const [loadingRecipe, setLoadingRecipe] = useState(false);
 
   useEffect(() => {
     const ing = searchParams.get("ingredients");
@@ -195,22 +258,14 @@ function RecipeApp() {
     }
     const res = await fetch("/api/recipes?ingredients=" + searchTerm);
     const data = await res.json();
-    if (Array.isArray(data)) { setRecipes(data); data.slice(0, 3).forEach((r: any) => { fetch("/api/recipes?id=" + r.id).catch(() => {}); }); }
-    setLoading(false);
-  };
-
-  const handleViewRecipe = async (recipe: any) => {
-    setSelectedRecipe(recipe);
-    setRecipeData(null);
-    setLoadingRecipe(true);
-    try {
-      const res = await fetch("/api/recipes?id=" + recipe.id);
-      const data = await res.json();
-      setRecipeData(data);
-    } catch (e) {
-      setRecipeData({});
+    if (Array.isArray(data)) {
+      setRecipes(data);
+      data.slice(0, 3).forEach((r: any) => {
+        fetch("/api/recipes?id=" + r.id + "&type=info").catch(() => {});
+        fetch("/api/recipes?id=" + r.id + "&type=instructions").catch(() => {});
+      });
     }
-    setLoadingRecipe(false);
+    setLoading(false);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -237,13 +292,7 @@ function RecipeApp() {
   return (
     <div className="min-h-screen bg-orange-50 flex flex-col">
       {selectedRecipe && (
-        loadingRecipe ? (
-          <div className="fixed inset-0 z-50 flex items-center justify-center" style={{backgroundColor: "rgba(0,0,0,0.5)"}}>
-            <div className="w-12 h-12 border-4 border-orange-200 border-t-orange-500 rounded-full animate-spin"></div>
-          </div>
-        ) : (
-          <RecipeModal recipe={selectedRecipe} data={recipeData} onClose={() => setSelectedRecipe(null)} />
-        )
+        <RecipeModal recipe={selectedRecipe} onClose={() => setSelectedRecipe(null)} />
       )}
 
       <header className="bg-white shadow-sm py-5 px-6 print:hidden">
@@ -335,7 +384,7 @@ function RecipeApp() {
                     <p className="text-xs text-red-400 mb-3">Missing: {recipe.missedIngredients.map((i: any) => i.name).join(", ")}</p>
                   )}
                   <div className="mt-auto">
-                    <button onClick={() => handleViewRecipe(recipe)} className="inline-block w-full text-center bg-orange-100 hover:bg-orange-200 text-orange-700 font-semibold px-4 py-2 rounded-lg transition-colors">
+                    <button onClick={() => setSelectedRecipe(recipe)} className="inline-block w-full text-center bg-orange-100 hover:bg-orange-200 text-orange-700 font-semibold px-4 py-2 rounded-lg transition-colors">
                       View Full Recipe
                     </button>
                   </div>
@@ -360,4 +409,3 @@ export default function Home() {
     </Suspense>
   );
 }
-
