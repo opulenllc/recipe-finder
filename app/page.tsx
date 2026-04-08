@@ -108,14 +108,22 @@ function RecipeModal({ recipe, onClose }: { recipe: any; onClose: () => void }) 
     { id: "nutrition", label: "Nutrition", loading: infoLoading },
   ];
 
+  const handlePrint = () => {
+    if (infoLoading || instrLoading) {
+      alert("Please wait for all recipe data to finish loading before printing.");
+      return;
+    }
+    window.print();
+  };
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 print:relative print:inset-auto print:p-0" style={{backgroundColor: "rgba(0,0,0,0.5)"}}>
-      <div className="bg-white rounded-2xl w-full max-w-2xl flex flex-col print:rounded-none" style={{maxHeight: "90vh"}}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 print:relative print:inset-auto print:p-0 print:block" style={{backgroundColor: "rgba(0,0,0,0.5)"}}>
+      <div className="bg-white rounded-2xl w-full max-w-2xl flex flex-col print:rounded-none print:max-w-none print:max-h-none print:w-full" style={{maxHeight: "90vh"}}>
 
         <div className="print:hidden flex items-center justify-between px-5 py-3 border-b border-gray-100 flex-shrink-0">
           <h2 className="text-sm font-bold text-gray-800 pr-4 leading-tight line-clamp-1">{recipe.title}</h2>
           <div className="flex gap-2 flex-shrink-0">
-            <button onClick={() => window.print()} className="bg-orange-100 hover:bg-orange-200 text-orange-700 font-semibold px-3 py-1.5 rounded-lg text-xs">🖨 Print</button>
+            <button onClick={handlePrint} className="bg-orange-100 hover:bg-orange-200 text-orange-700 font-semibold px-3 py-1.5 rounded-lg text-xs">🖨 Print</button>
             <button onClick={onClose} className="bg-gray-100 hover:bg-gray-200 text-gray-500 font-semibold px-3 py-1.5 rounded-lg text-xs">✕ Close</button>
           </div>
         </div>
@@ -134,136 +142,221 @@ function RecipeModal({ recipe, onClose }: { recipe: any; onClose: () => void }) 
         </div>
 
         <div className="overflow-y-auto flex-1 print:overflow-visible">
+
           <div className="hidden print:block p-6 border-b">
             <h1 className="text-2xl font-bold text-gray-800 mb-1">{recipe.title}</h1>
             <p className="text-sm text-gray-400">myrecipematch.com</p>
           </div>
 
-          <img src={highResImage || recipe.image} alt={recipe.title} className="w-full object-cover print:h-40" style={{height: "200px"}} onError={(e) => { e.currentTarget.src = recipe.image || "https://placehold.co/600x400?text=No+Image"; }} />
+          <img src={highResImage || recipe.image} alt={recipe.title} className="w-full object-cover print:h-48" style={{height: "200px"}} onError={(e) => { e.currentTarget.src = recipe.image || "https://placehold.co/600x400?text=No+Image"; }} />
 
-          <div className="p-5">
+          <div className="p-5 print:p-6">
+
             {activeTab === "loading" && <FunLoader label="Loading recipe..." />}
 
-            {activeTab === "overview" && (
-              <>
-                {infoLoading ? <FunLoader label="Loading recipe details..." /> : (
-                  <>
-                    <div className="grid grid-cols-4 gap-2 mb-4">
-                      {[
-                        { label: "Ready In", val: info?.readyInMinutes ? info.readyInMinutes + " min" : null, icon: "⏱" },
-                        { label: "Servings", val: info?.servings, icon: "👥" },
-                        { label: "Calories", val: cal ? Math.round(cal.amount) + " kcal" : null, icon: "🔥" },
-                        { label: "Cost/Serving", val: info?.pricePerServing ? "$" + (info.pricePerServing / 100).toFixed(2) : null, icon: "💰" },
-                      ].filter(i => i.val).map(item => (
-                        <div key={item.label} className="bg-orange-50 rounded-xl p-2 text-center">
-                          <div className="text-lg mb-0.5">{item.icon}</div>
-                          <p className="text-xs text-gray-400">{item.label}</p>
-                          <p className="text-xs font-bold text-gray-700">{item.val}</p>
-                        </div>
-                      ))}
-                    </div>
-                    {info?.diets && info.diets.length > 0 && (
-                      <div className="flex flex-wrap gap-1.5 mb-4">
-                        {info.diets.map((diet: string) => (
-                          <span key={diet} className="bg-green-100 text-green-700 text-xs font-medium px-2 py-0.5 rounded-full capitalize">{diet}</span>
+            {/* SCREEN: show active tab only */}
+            <div className="print:hidden">
+              {activeTab === "overview" && (
+                <>
+                  {infoLoading ? <FunLoader label="Loading recipe details..." /> : (
+                    <>
+                      <div className="grid grid-cols-4 gap-2 mb-4">
+                        {[
+                          { label: "Ready In", val: info?.readyInMinutes ? info.readyInMinutes + " min" : null, icon: "⏱" },
+                          { label: "Servings", val: info?.servings, icon: "👥" },
+                          { label: "Calories", val: cal ? Math.round(cal.amount) + " kcal" : null, icon: "🔥" },
+                          { label: "Cost/Serving", val: info?.pricePerServing ? "$" + (info.pricePerServing / 100).toFixed(2) : null, icon: "💰" },
+                        ].filter(i => i.val).map(item => (
+                          <div key={item.label} className="bg-orange-50 rounded-xl p-2 text-center">
+                            <div className="text-lg mb-0.5">{item.icon}</div>
+                            <p className="text-xs text-gray-400">{item.label}</p>
+                            <p className="text-xs font-bold text-gray-700">{item.val}</p>
+                          </div>
                         ))}
                       </div>
-                    )}
-                    {info?.extendedIngredients && info.extendedIngredients.length > 0 && (
-                      <div className="mb-4">
-                        <h3 className="text-sm font-bold text-gray-800 mb-2">🥕 Ingredients <span className="text-xs font-normal text-gray-400">({info.extendedIngredients.length})</span></h3>
-                        <div className="bg-gray-50 rounded-xl p-3">
-                          <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
-                            {info.extendedIngredients.map((ing: any, i: number) => (
-                              <div key={i} className="flex items-start gap-1.5">
-                                <span className="text-orange-400 mt-0.5 flex-shrink-0">•</span>
-                                <span className="text-xs text-gray-600">{ing.original}</span>
+                      {info?.diets && info.diets.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5 mb-4">
+                          {info.diets.map((diet: string) => (
+                            <span key={diet} className="bg-green-100 text-green-700 text-xs font-medium px-2 py-0.5 rounded-full capitalize">{diet}</span>
+                          ))}
+                        </div>
+                      )}
+                      {info?.extendedIngredients && info.extendedIngredients.length > 0 && (
+                        <div className="mb-4">
+                          <h3 className="text-sm font-bold text-gray-800 mb-2">🥕 Ingredients <span className="text-xs font-normal text-gray-400">({info.extendedIngredients.length})</span></h3>
+                          <div className="bg-gray-50 rounded-xl p-3">
+                            <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
+                              {info.extendedIngredients.map((ing: any, i: number) => (
+                                <div key={i} className="flex items-start gap-1.5">
+                                  <span className="text-orange-400 mt-0.5 flex-shrink-0">•</span>
+                                  <span className="text-xs text-gray-600">{ing.original}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                      {equipment.length > 0 && (
+                        <div className="mb-4">
+                          <h3 className="text-sm font-bold text-gray-800 mb-2">🍳 Equipment</h3>
+                          <div className="flex flex-wrap gap-2">
+                            {equipment.map((eq: any) => (
+                              <div key={eq.name} className="flex items-center gap-1.5 bg-gray-50 border border-gray-200 rounded-lg px-2.5 py-1.5">
+                                {eq.image && <img src={"https://spoonacular.com/cdn/equipment_100x100/" + eq.image} alt={eq.name} className="w-5 h-5 object-contain" onError={(e) => { e.currentTarget.style.display = "none"; }} />}
+                                <span className="text-xs text-gray-600 capitalize">{eq.name}</span>
                               </div>
                             ))}
                           </div>
                         </div>
+                      )}
+                      <div className="flex gap-2 mt-2">
+                        <button onClick={() => setActiveTab("instructions")} className="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 rounded-xl text-xs">📋 View Instructions</button>
+                        <button onClick={() => setActiveTab("nutrition")} className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-600 font-semibold py-2 rounded-xl text-xs">📊 View Nutrition</button>
                       </div>
-                    )}
-                    {equipment.length > 0 && (
-                      <div className="mb-4">
-                        <h3 className="text-sm font-bold text-gray-800 mb-2">🍳 Equipment</h3>
-                        <div className="flex flex-wrap gap-2">
-                          {equipment.map((eq: any) => (
-                            <div key={eq.name} className="flex items-center gap-1.5 bg-gray-50 border border-gray-200 rounded-lg px-2.5 py-1.5">
-                              {eq.image && <img src={"https://spoonacular.com/cdn/equipment_100x100/" + eq.image} alt={eq.name} className="w-5 h-5 object-contain" onError={(e) => { e.currentTarget.style.display = "none"; }} />}
-                              <span className="text-xs text-gray-600 capitalize">{eq.name}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                    <div className="print:hidden flex gap-2 mt-2">
-                      <button onClick={() => setActiveTab("instructions")} className="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 rounded-xl text-xs">📋 View Instructions</button>
-                      <button onClick={() => setActiveTab("nutrition")} className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-600 font-semibold py-2 rounded-xl text-xs">📊 View Nutrition</button>
-                    </div>
-                  </>
-                )}
-              </>
-            )}
+                    </>
+                  )}
+                </>
+              )}
 
-            {activeTab === "instructions" && (
-              <>
-                {instrLoading ? <FunLoader label="Loading instructions..." /> : steps.length > 0 ? (
-                  <ol className="space-y-4">
+              {activeTab === "instructions" && (
+                <>
+                  {instrLoading ? <FunLoader label="Loading instructions..." /> : steps.length > 0 ? (
+                    <ol className="space-y-4">
+                      {steps.map((step: any) => (
+                        <li key={step.number} className="flex gap-3">
+                          <span className="bg-orange-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 mt-0.5">{step.number}</span>
+                          <p className="text-sm text-gray-600 leading-relaxed pt-0.5">{step.step}</p>
+                        </li>
+                      ))}
+                    </ol>
+                  ) : (
+                    <div className="text-center py-8">
+                      <p className="text-gray-400 text-sm">No instructions available for this recipe.</p>
+                    </div>
+                  )}
+                </>
+              )}
+
+              {activeTab === "nutrition" && (
+                <>
+                  {infoLoading ? <FunLoader label="Calculating nutrition..." /> : (protein || fat || carbs) ? (
+                    <>
+                      <div className="grid grid-cols-3 gap-2 mb-4">
+                        {[
+                          { label: "Protein", n: protein, color: "bg-blue-400" },
+                          { label: "Fat", n: fat, color: "bg-yellow-400" },
+                          { label: "Carbs", n: carbs, color: "bg-orange-400" },
+                        ].filter(x => x.n).map(x => (
+                          <div key={x.label} className="text-center bg-gray-50 rounded-xl p-3">
+                            <div className={"w-10 h-10 rounded-full mx-auto mb-2 " + x.color}></div>
+                            <p className="text-sm font-bold text-gray-700">{Math.round(x.n.amount)}{x.n.unit}</p>
+                            <p className="text-xs text-gray-400">{x.label}</p>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="bg-gray-50 rounded-xl p-4 space-y-2.5">
+                        {cal && <NutritionBar label="Calories" amount={cal.amount} unit=" kcal" max={2000} color="bg-red-400" />}
+                        {protein && <NutritionBar label="Protein" amount={protein.amount} unit="g" max={50} color="bg-blue-400" />}
+                        {fat && <NutritionBar label="Fat" amount={fat.amount} unit="g" max={65} color="bg-yellow-400" />}
+                        {carbs && <NutritionBar label="Carbohydrates" amount={carbs.amount} unit="g" max={300} color="bg-orange-400" />}
+                        {fiber && <NutritionBar label="Fiber" amount={fiber.amount} unit="g" max={25} color="bg-green-400" />}
+                        {sugar && <NutritionBar label="Sugar" amount={sugar.amount} unit="g" max={50} color="bg-pink-400" />}
+                        {sodium && <NutritionBar label="Sodium" amount={sodium.amount} unit="mg" max={2300} color="bg-purple-400" />}
+                        {vitC && <NutritionBar label="Vitamin C" amount={vitC.amount} unit="mg" max={90} color="bg-teal-400" />}
+                        {calcium && <NutritionBar label="Calcium" amount={calcium.amount} unit="mg" max={1000} color="bg-indigo-400" />}
+                        {iron && <NutritionBar label="Iron" amount={iron.amount} unit="mg" max={18} color="bg-gray-400" />}
+                      </div>
+                    </>
+                  ) : (
+                    <div className="text-center py-8">
+                      <p className="text-gray-400 text-sm">No nutrition data available for this recipe.</p>
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
+
+            {/* PRINT: show all sections together */}
+            <div className="hidden print:block">
+              <div className="grid grid-cols-4 gap-2 mb-4">
+                {[
+                  { label: "Ready In", val: info?.readyInMinutes ? info.readyInMinutes + " min" : null, icon: "⏱" },
+                  { label: "Servings", val: info?.servings, icon: "👥" },
+                  { label: "Calories", val: cal ? Math.round(cal.amount) + " kcal" : null, icon: "🔥" },
+                  { label: "Cost/Serving", val: info?.pricePerServing ? "$" + (info.pricePerServing / 100).toFixed(2) : null, icon: "💰" },
+                ].filter(i => i.val).map(item => (
+                  <div key={item.label} className="bg-orange-50 rounded-xl p-2 text-center">
+                    <p className="text-xs text-gray-400">{item.label}</p>
+                    <p className="text-xs font-bold text-gray-700">{item.val}</p>
+                  </div>
+                ))}
+              </div>
+
+              {info?.diets && info.diets.length > 0 && (
+                <div className="flex flex-wrap gap-1.5 mb-4">
+                  {info.diets.map((diet: string) => (
+                    <span key={diet} className="bg-green-100 text-green-700 text-xs font-medium px-2 py-0.5 rounded-full capitalize">{diet}</span>
+                  ))}
+                </div>
+              )}
+
+              {info?.extendedIngredients && info.extendedIngredients.length > 0 && (
+                <div className="mb-5">
+                  <h3 className="text-sm font-bold text-gray-800 mb-2">Ingredients</h3>
+                  <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
+                    {info.extendedIngredients.map((ing: any, i: number) => (
+                      <div key={i} className="flex items-start gap-1.5">
+                        <span className="text-orange-400 mt-0.5 flex-shrink-0">•</span>
+                        <span className="text-xs text-gray-600">{ing.original}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {equipment.length > 0 && (
+                <div className="mb-5">
+                  <h3 className="text-sm font-bold text-gray-800 mb-2">Equipment</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {equipment.map((eq: any) => (
+                      <span key={eq.name} className="text-xs text-gray-600 bg-gray-100 px-2 py-1 rounded capitalize">{eq.name}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {steps.length > 0 && (
+                <div className="mb-5">
+                  <h3 className="text-sm font-bold text-gray-800 mb-3">Instructions</h3>
+                  <ol className="space-y-3">
                     {steps.map((step: any) => (
                       <li key={step.number} className="flex gap-3">
                         <span className="bg-orange-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 mt-0.5">{step.number}</span>
-                        <p className="text-sm text-gray-600 leading-relaxed pt-0.5">{step.step}</p>
+                        <p className="text-xs text-gray-600 leading-relaxed pt-0.5">{step.step}</p>
                       </li>
                     ))}
                   </ol>
-                ) : (
-                  <div className="text-center py-8">
-                    <p className="text-gray-400 text-sm">No instructions available for this recipe.</p>
-                  </div>
-                )}
-              </>
-            )}
+                </div>
+              )}
 
-            {activeTab === "nutrition" && (
-              <>
-                {infoLoading ? <FunLoader label="Calculating nutrition..." /> : (protein || fat || carbs) ? (
-                  <>
-                    <div className="grid grid-cols-3 gap-2 mb-4">
-                      {[
-                        { label: "Protein", n: protein, color: "bg-blue-400" },
-                        { label: "Fat", n: fat, color: "bg-yellow-400" },
-                        { label: "Carbs", n: carbs, color: "bg-orange-400" },
-                      ].filter(x => x.n).map(x => (
-                        <div key={x.label} className="text-center bg-gray-50 rounded-xl p-3">
-                          <div className={"w-10 h-10 rounded-full mx-auto mb-2 " + x.color}></div>
-                          <p className="text-sm font-bold text-gray-700">{Math.round(x.n.amount)}{x.n.unit}</p>
-                          <p className="text-xs text-gray-400">{x.label}</p>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="bg-gray-50 rounded-xl p-4 space-y-2.5">
-                      {cal && <NutritionBar label="Calories" amount={cal.amount} unit=" kcal" max={2000} color="bg-red-400" />}
-                      {protein && <NutritionBar label="Protein" amount={protein.amount} unit="g" max={50} color="bg-blue-400" />}
-                      {fat && <NutritionBar label="Fat" amount={fat.amount} unit="g" max={65} color="bg-yellow-400" />}
-                      {carbs && <NutritionBar label="Carbohydrates" amount={carbs.amount} unit="g" max={300} color="bg-orange-400" />}
-                      {fiber && <NutritionBar label="Fiber" amount={fiber.amount} unit="g" max={25} color="bg-green-400" />}
-                      {sugar && <NutritionBar label="Sugar" amount={sugar.amount} unit="g" max={50} color="bg-pink-400" />}
-                      {sodium && <NutritionBar label="Sodium" amount={sodium.amount} unit="mg" max={2300} color="bg-purple-400" />}
-                      {vitC && <NutritionBar label="Vitamin C" amount={vitC.amount} unit="mg" max={90} color="bg-teal-400" />}
-                      {calcium && <NutritionBar label="Calcium" amount={calcium.amount} unit="mg" max={1000} color="bg-indigo-400" />}
-                      {iron && <NutritionBar label="Iron" amount={iron.amount} unit="mg" max={18} color="bg-gray-400" />}
-                    </div>
-                  </>
-                ) : (
-                  <div className="text-center py-8">
-                    <p className="text-gray-400 text-sm">No nutrition data available for this recipe.</p>
+              {(protein || fat || carbs) && (
+                <div className="mb-4">
+                  <h3 className="text-sm font-bold text-gray-800 mb-3">Nutrition per serving</h3>
+                  <div className="space-y-2">
+                    {cal && <NutritionBar label="Calories" amount={cal.amount} unit=" kcal" max={2000} color="bg-red-400" />}
+                    {protein && <NutritionBar label="Protein" amount={protein.amount} unit="g" max={50} color="bg-blue-400" />}
+                    {fat && <NutritionBar label="Fat" amount={fat.amount} unit="g" max={65} color="bg-yellow-400" />}
+                    {carbs && <NutritionBar label="Carbohydrates" amount={carbs.amount} unit="g" max={300} color="bg-orange-400" />}
+                    {fiber && <NutritionBar label="Fiber" amount={fiber.amount} unit="g" max={25} color="bg-green-400" />}
+                    {sugar && <NutritionBar label="Sugar" amount={sugar.amount} unit="g" max={50} color="bg-pink-400" />}
+                    {sodium && <NutritionBar label="Sodium" amount={sodium.amount} unit="mg" max={2300} color="bg-purple-400" />}
                   </div>
-                )}
-              </>
-            )}
+                </div>
+              )}
 
-            <p className="text-xs text-gray-300 text-center mt-4 print:hidden">Recipe data by Spoonacular</p>
+              <p className="text-xs text-gray-300 text-center mt-4">Recipe data by Spoonacular · myrecipematch.com</p>
+            </div>
+
           </div>
         </div>
       </div>
