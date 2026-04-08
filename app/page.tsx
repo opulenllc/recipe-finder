@@ -3,6 +3,45 @@ import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 
+const funMessages = [
+  "Consulting the chef... 👨‍🍳",
+  "Taste-testing in progress... 😋",
+  "Sharpening the knives... 🔪",
+  "Preheating the oven... 🔥",
+  "Chopping the veggies... 🥦",
+  "Checking the pantry... 🫙",
+  "Asking Grandma for tips... 👵",
+  "Stirring the pot... 🥄",
+  "Sniffing the spices... 🌶️",
+  "Tasting for seasoning... 🧂",
+  "Hunting for recipes... 🗺️",
+  "Whisking things up... 🥚",
+  "Marinating the ideas... 🍗",
+  "Reading the recipe twice... 📖",
+  "Negotiating with the garlic... 🧄",
+];
+
+function FunLoader({ label }: { label?: string }) {
+  const [msgIndex, setMsgIndex] = useState(Math.floor(Math.random() * funMessages.length));
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setMsgIndex((prev) => (prev + 1) % funMessages.length);
+    }, 1800);
+    return () => clearInterval(interval);
+  }, []);
+  return (
+    <div className="flex flex-col items-center justify-center py-4 gap-2">
+      <div className="w-7 h-7 border-orange-200 border-t-orange-500 rounded-full animate-spin" style={{borderWidth: "3px", borderStyle: "solid"}}></div>
+      <p className="text-xs text-orange-500 font-medium text-center">{funMessages[msgIndex]}</p>
+      {label && <p className="text-xs text-gray-400">{label}</p>}
+    </div>
+  );
+}
+
+function SkeletonBlock({ className }: { className: string }) {
+  return <div className={"animate-pulse bg-gray-100 rounded-lg " + className}></div>;
+}
+
 function NutritionBar({ label, amount, unit, max, color }: { label: string; amount: number; unit: string; max: number; color: string }) {
   const pct = Math.min(100, Math.round((amount / max) * 100));
   return (
@@ -16,10 +55,6 @@ function NutritionBar({ label, amount, unit, max, color }: { label: string; amou
       </div>
     </div>
   );
-}
-
-function SkeletonBlock({ className }: { className: string }) {
-  return <div className={"animate-pulse bg-gray-100 rounded-lg " + className}></div>;
 }
 
 function RecipeModal({ recipe, onClose }: { recipe: any; onClose: () => void }) {
@@ -77,119 +112,85 @@ function RecipeModal({ recipe, onClose }: { recipe: any; onClose: () => void }) 
 
           <div className="p-5">
             {infoLoading ? (
-              <div className="grid grid-cols-4 gap-2 mb-5">
-                {[1,2,3,4].map(i => <SkeletonBlock key={i} className="h-16" />)}
-              </div>
+              <FunLoader label="Loading recipe details..." />
             ) : (
-              <div className="grid grid-cols-4 gap-2 mb-5">
-                {[
-                  { label: "Ready In", val: info?.readyInMinutes ? info.readyInMinutes + " min" : null, icon: "⏱" },
-                  { label: "Servings", val: info?.servings, icon: "👥" },
-                  { label: "Calories", val: cal ? Math.round(cal.amount) + " kcal" : null, icon: "🔥" },
-                  { label: "Cost/Serving", val: info?.pricePerServing ? "$" + (info.pricePerServing / 100).toFixed(2) : null, icon: "💰" },
-                ].filter(i => i.val).map(item => (
-                  <div key={item.label} className="bg-orange-50 rounded-xl p-2 text-center">
-                    <div className="text-lg mb-0.5">{item.icon}</div>
-                    <p className="text-xs text-gray-400">{item.label}</p>
-                    <p className="text-xs font-bold text-gray-700">{item.val}</p>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {infoLoading ? (
-              <div className="flex gap-2 mb-5">
-                {[1,2,3].map(i => <SkeletonBlock key={i} className="h-6 w-20" />)}
-              </div>
-            ) : info?.diets && info.diets.length > 0 && (
-              <div className="flex flex-wrap gap-1.5 mb-5">
-                {info.diets.map((diet: string) => (
-                  <span key={diet} className="bg-green-100 text-green-700 text-xs font-medium px-2 py-0.5 rounded-full capitalize">{diet}</span>
-                ))}
-              </div>
-            )}
-
-            {infoLoading ? (
-              <div className="mb-5">
-                <SkeletonBlock className="h-4 w-24 mb-2" />
-                <div className="space-y-1.5">
-                  {[1,2,3,4].map(i => <SkeletonBlock key={i} className="h-3" />)}
+              <>
+                <div className="grid grid-cols-4 gap-2 mb-5">
+                  {[
+                    { label: "Ready In", val: info?.readyInMinutes ? info.readyInMinutes + " min" : null, icon: "⏱" },
+                    { label: "Servings", val: info?.servings, icon: "👥" },
+                    { label: "Calories", val: cal ? Math.round(cal.amount) + " kcal" : null, icon: "🔥" },
+                    { label: "Cost/Serving", val: info?.pricePerServing ? "$" + (info.pricePerServing / 100).toFixed(2) : null, icon: "💰" },
+                  ].filter(i => i.val).map(item => (
+                    <div key={item.label} className="bg-orange-50 rounded-xl p-2 text-center">
+                      <div className="text-lg mb-0.5">{item.icon}</div>
+                      <p className="text-xs text-gray-400">{item.label}</p>
+                      <p className="text-xs font-bold text-gray-700">{item.val}</p>
+                    </div>
+                  ))}
                 </div>
-              </div>
-            ) : info?.extendedIngredients && info.extendedIngredients.length > 0 && (
-              <div className="mb-5">
-                <h3 className="text-sm font-bold text-gray-800 mb-2">🥕 Ingredients <span className="text-xs font-normal text-gray-400">({info.extendedIngredients.length})</span></h3>
-                <div className="bg-gray-50 rounded-xl p-3">
-                  <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
-                    {info.extendedIngredients.map((ing: any, i: number) => (
-                      <div key={i} className="flex items-start gap-1.5">
-                        <span className="text-orange-400 mt-0.5 flex-shrink-0">•</span>
-                        <span className="text-xs text-gray-600">{ing.original}</span>
-                      </div>
+
+                {info?.diets && info.diets.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5 mb-5">
+                    {info.diets.map((diet: string) => (
+                      <span key={diet} className="bg-green-100 text-green-700 text-xs font-medium px-2 py-0.5 rounded-full capitalize">{diet}</span>
                     ))}
                   </div>
-                </div>
-              </div>
+                )}
+
+                {info?.extendedIngredients && info.extendedIngredients.length > 0 && (
+                  <div className="mb-5">
+                    <h3 className="text-sm font-bold text-gray-800 mb-2">🥕 Ingredients <span className="text-xs font-normal text-gray-400">({info.extendedIngredients.length})</span></h3>
+                    <div className="bg-gray-50 rounded-xl p-3">
+                      <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
+                        {info.extendedIngredients.map((ing: any, i: number) => (
+                          <div key={i} className="flex items-start gap-1.5">
+                            <span className="text-orange-400 mt-0.5 flex-shrink-0">•</span>
+                            <span className="text-xs text-gray-600">{ing.original}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </>
             )}
 
             {instrLoading ? (
-              <div className="mb-5">
-                <SkeletonBlock className="h-4 w-24 mb-2" />
-                <div className="flex gap-2">
-                  {[1,2,3].map(i => <SkeletonBlock key={i} className="h-8 w-20" />)}
-                </div>
-              </div>
-            ) : equipment.length > 0 && (
-              <div className="mb-5">
-                <h3 className="text-sm font-bold text-gray-800 mb-2">🍳 Equipment</h3>
-                <div className="flex flex-wrap gap-2">
-                  {equipment.map((eq: any) => (
-                    <div key={eq.name} className="flex items-center gap-1.5 bg-gray-50 border border-gray-200 rounded-lg px-2.5 py-1.5">
-                      {eq.image && <img src={"https://spoonacular.com/cdn/equipment_100x100/" + eq.image} alt={eq.name} className="w-5 h-5 object-contain" onError={(e) => { e.currentTarget.style.display = "none"; }} />}
-                      <span className="text-xs text-gray-600 capitalize">{eq.name}</span>
+              <FunLoader label="Loading instructions..." />
+            ) : (
+              <>
+                {equipment.length > 0 && (
+                  <div className="mb-5">
+                    <h3 className="text-sm font-bold text-gray-800 mb-2">🍳 Equipment</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {equipment.map((eq: any) => (
+                        <div key={eq.name} className="flex items-center gap-1.5 bg-gray-50 border border-gray-200 rounded-lg px-2.5 py-1.5">
+                          {eq.image && <img src={"https://spoonacular.com/cdn/equipment_100x100/" + eq.image} alt={eq.name} className="w-5 h-5 object-contain" onError={(e) => { e.currentTarget.style.display = "none"; }} />}
+                          <span className="text-xs text-gray-600 capitalize">{eq.name}</span>
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
-              </div>
+                  </div>
+                )}
+
+                {steps.length > 0 && (
+                  <div className="mb-5">
+                    <h3 className="text-sm font-bold text-gray-800 mb-2">📋 Instructions</h3>
+                    <ol className="space-y-3">
+                      {steps.map((step: any) => (
+                        <li key={step.number} className="flex gap-3">
+                          <span className="bg-orange-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 mt-0.5">{step.number}</span>
+                          <p className="text-xs text-gray-600 leading-relaxed pt-0.5">{step.step}</p>
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
+                )}
+              </>
             )}
 
-            {instrLoading ? (
-              <div className="mb-5">
-                <SkeletonBlock className="h-4 w-24 mb-3" />
-                <div className="space-y-3">
-                  {[1,2,3,4].map(i => (
-                    <div key={i} className="flex gap-3">
-                      <SkeletonBlock className="w-6 h-6 rounded-full flex-shrink-0" />
-                      <SkeletonBlock className="h-4 flex-1" />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ) : steps.length > 0 && (
-              <div className="mb-5">
-                <h3 className="text-sm font-bold text-gray-800 mb-2">📋 Instructions</h3>
-                <ol className="space-y-3">
-                  {steps.map((step: any) => (
-                    <li key={step.number} className="flex gap-3">
-                      <span className="bg-orange-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 mt-0.5">{step.number}</span>
-                      <p className="text-xs text-gray-600 leading-relaxed pt-0.5">{step.step}</p>
-                    </li>
-                  ))}
-                </ol>
-              </div>
-            )}
-
-            {infoLoading ? (
-              <div className="mb-5">
-                <SkeletonBlock className="h-4 w-32 mb-3" />
-                <div className="grid grid-cols-3 gap-2 mb-3">
-                  {[1,2,3].map(i => <SkeletonBlock key={i} className="h-20" />)}
-                </div>
-                <div className="space-y-2">
-                  {[1,2,3,4].map(i => <SkeletonBlock key={i} className="h-4" />)}
-                </div>
-              </div>
-            ) : (protein || fat || carbs) && (
+            {infoLoading ? null : (protein || fat || carbs) && (
               <div className="mb-4">
                 <h3 className="text-sm font-bold text-gray-800 mb-3">📊 Nutrition per serving</h3>
                 <div className="grid grid-cols-3 gap-2 mb-3">
@@ -348,8 +349,9 @@ function RecipeApp() {
         )}
 
         {loading && (
-          <div className="flex justify-center items-center py-12">
+          <div className="flex flex-col items-center justify-center py-12 gap-3">
             <div className="w-12 h-12 border-4 border-orange-200 border-t-orange-500 rounded-full animate-spin"></div>
+            <FunLoader />
           </div>
         )}
 
