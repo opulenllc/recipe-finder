@@ -142,7 +142,6 @@ function RecipeModal({ recipe, onClose }: { recipe: any; onClose: () => void }) 
         </div>
 
         <div className="overflow-y-auto flex-1 print:overflow-visible">
-
           <div className="hidden print:block p-6 border-b">
             <h1 className="text-2xl font-bold text-gray-800 mb-1">{recipe.title}</h1>
             <p className="text-sm text-gray-400">myrecipematch.com</p>
@@ -151,10 +150,8 @@ function RecipeModal({ recipe, onClose }: { recipe: any; onClose: () => void }) 
           <img src={highResImage || recipe.image} alt={recipe.title} className="w-full object-cover print:h-48" style={{height: "200px"}} onError={(e) => { e.currentTarget.src = recipe.image || "https://placehold.co/600x400?text=No+Image"; }} />
 
           <div className="p-5 print:p-6">
-
             {activeTab === "loading" && <FunLoader label="Loading recipe..." />}
 
-            {/* SCREEN: show active tab only */}
             <div className="print:hidden">
               {activeTab === "overview" && (
                 <>
@@ -276,7 +273,6 @@ function RecipeModal({ recipe, onClose }: { recipe: any; onClose: () => void }) 
               )}
             </div>
 
-            {/* PRINT: show all sections together */}
             <div className="hidden print:block">
               <div className="grid grid-cols-4 gap-2 mb-4">
                 {[
@@ -291,7 +287,6 @@ function RecipeModal({ recipe, onClose }: { recipe: any; onClose: () => void }) 
                   </div>
                 ))}
               </div>
-
               {info?.diets && info.diets.length > 0 && (
                 <div className="flex flex-wrap gap-1.5 mb-4">
                   {info.diets.map((diet: string) => (
@@ -299,7 +294,6 @@ function RecipeModal({ recipe, onClose }: { recipe: any; onClose: () => void }) 
                   ))}
                 </div>
               )}
-
               {info?.extendedIngredients && info.extendedIngredients.length > 0 && (
                 <div className="mb-5">
                   <h3 className="text-sm font-bold text-gray-800 mb-2">Ingredients</h3>
@@ -313,7 +307,6 @@ function RecipeModal({ recipe, onClose }: { recipe: any; onClose: () => void }) 
                   </div>
                 </div>
               )}
-
               {equipment.length > 0 && (
                 <div className="mb-5">
                   <h3 className="text-sm font-bold text-gray-800 mb-2">Equipment</h3>
@@ -324,7 +317,6 @@ function RecipeModal({ recipe, onClose }: { recipe: any; onClose: () => void }) 
                   </div>
                 </div>
               )}
-
               {steps.length > 0 && (
                 <div className="mb-5">
                   <h3 className="text-sm font-bold text-gray-800 mb-3">Instructions</h3>
@@ -338,7 +330,6 @@ function RecipeModal({ recipe, onClose }: { recipe: any; onClose: () => void }) 
                   </ol>
                 </div>
               )}
-
               {(protein || fat || carbs) && (
                 <div className="mb-4">
                   <h3 className="text-sm font-bold text-gray-800 mb-3">Nutrition per serving</h3>
@@ -353,10 +344,8 @@ function RecipeModal({ recipe, onClose }: { recipe: any; onClose: () => void }) 
                   </div>
                 </div>
               )}
-
               <p className="text-xs text-gray-300 text-center mt-4">Recipe data by Spoonacular · myrecipematch.com</p>
             </div>
-
           </div>
         </div>
       </div>
@@ -373,17 +362,19 @@ function RecipeApp() {
   const [searched, setSearched] = useState(false);
   const [history, setHistory] = useState<string[]>([]);
   const [selectedRecipe, setSelectedRecipe] = useState<any | null>(null);
+  const [searchMode, setSearchMode] = useState<"ingredients" | "name">("ingredients");
 
   useEffect(() => {
     const ing = searchParams.get("ingredients");
     if (ing) {
       setIngredients(ing);
-      handleSearch(ing);
+      handleSearch(ing, "ingredients");
     }
   }, []);
 
-  const handleSearch = async (query?: string) => {
+  const handleSearch = async (query?: string, mode?: "ingredients" | "name") => {
     const searchTerm = query || ingredients;
+    const currentMode = mode || searchMode;
     if (!searchTerm.trim()) return;
     setLoading(true);
     setSearched(true);
@@ -392,7 +383,12 @@ function RecipeApp() {
     if (!history.includes(searchTerm)) {
       setHistory((prev) => [searchTerm, ...prev].slice(0, 5));
     }
-    const res = await fetch("/api/recipes?ingredients=" + searchTerm);
+
+    const url = currentMode === "name"
+      ? "/api/recipes?query=" + encodeURIComponent(searchTerm)
+      : "/api/recipes?ingredients=" + searchTerm;
+
+    const res = await fetch(url);
     const data = await res.json();
     if (Array.isArray(data)) {
       setRecipes(data);
@@ -415,15 +411,26 @@ function RecipeApp() {
     setShowAll(false);
   };
 
+  const handleModeSwitch = (mode: "ingredients" | "name") => {
+    setSearchMode(mode);
+    setIngredients("");
+    setRecipes([]);
+    setSearched(false);
+    setShowAll(false);
+  };
+
   const inputList = ingredients.split(",").map((i) => i.trim().toLowerCase()).filter(Boolean);
 
   const isPerfectMatch = (recipe: any) => {
+    if (recipe.isNameSearch) return false;
     return inputList.every((ing) =>
       recipe.usedIngredients.some((u: any) => u.name.toLowerCase().includes(ing))
     );
   };
 
-  const filteredRecipes = showAll ? recipes : recipes.filter((recipe) => isPerfectMatch(recipe));
+  const filteredRecipes = showAll || searchMode === "name"
+    ? recipes
+    : recipes.filter((recipe) => isPerfectMatch(recipe));
 
   return (
     <div className="min-h-screen bg-orange-50 flex flex-col">
@@ -442,11 +449,27 @@ function RecipeApp() {
       </header>
 
       <main className="flex-1 max-w-4xl mx-auto w-full px-4 py-10 print:hidden">
+
+        <div className="flex gap-2 mb-3 bg-white rounded-xl p-1 border-2 border-orange-100 w-fit">
+          <button
+            onClick={() => handleModeSwitch("ingredients")}
+            className={"px-4 py-2 rounded-lg text-sm font-semibold transition-colors " + (searchMode === "ingredients" ? "bg-orange-500 text-white" : "text-gray-400 hover:text-gray-600")}
+          >
+            🥕 By Ingredients
+          </button>
+          <button
+            onClick={() => handleModeSwitch("name")}
+            className={"px-4 py-2 rounded-lg text-sm font-semibold transition-colors " + (searchMode === "name" ? "bg-orange-500 text-white" : "text-gray-400 hover:text-gray-600")}
+          >
+            🍽️ By Recipe Name
+          </button>
+        </div>
+
         <div className="flex gap-2 mb-2">
           <div className="relative flex-1">
             <input
               type="text"
-              placeholder="e.g. chicken, rice, eggs"
+              placeholder={searchMode === "ingredients" ? "e.g. chicken, rice, eggs" : "e.g. chicken parmesan, beef tacos..."}
               className="w-full border-2 border-orange-200 p-3 rounded-xl bg-white pr-10"
               value={ingredients}
               onChange={(e) => setIngredients(e.target.value)}
@@ -460,6 +483,10 @@ function RecipeApp() {
             {loading ? "Searching..." : "Find Recipes"}
           </button>
         </div>
+
+        {searchMode === "ingredients" && (
+          <p className="text-xs text-gray-400 mb-4">Separate ingredients with commas</p>
+        )}
 
         {history.length > 0 && (
           <div className="flex flex-wrap gap-2 mb-6">
@@ -475,7 +502,7 @@ function RecipeApp() {
             <p className="text-sm text-gray-500">
               {filteredRecipes.length === 0 ? "No matches found" : "Found " + filteredRecipes.length + " recipe" + (filteredRecipes.length === 1 ? "" : "s")}
             </p>
-            {recipes.length > 0 && (
+            {searchMode === "ingredients" && recipes.length > 0 && (
               <button onClick={() => setShowAll(!showAll)} className="text-sm text-orange-600 underline">
                 {showAll ? "Show exact matches only" : "Show all partial matches"}
               </button>
@@ -491,12 +518,12 @@ function RecipeApp() {
 
         {!loading && searched && filteredRecipes.length === 0 && recipes.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-gray-500 text-lg mb-2">No recipes found for those ingredients.</p>
-            <p className="text-gray-400 text-sm">Try different or more common ingredients.</p>
+            <p className="text-gray-500 text-lg mb-2">No recipes found.</p>
+            <p className="text-gray-400 text-sm">Try different {searchMode === "ingredients" ? "ingredients" : "recipe name"}.</p>
           </div>
         )}
 
-        {!loading && searched && filteredRecipes.length === 0 && recipes.length > 0 && !showAll && (
+        {!loading && searched && filteredRecipes.length === 0 && recipes.length > 0 && !showAll && searchMode === "ingredients" && (
           <div className="text-center py-12">
             <p className="text-gray-500 text-lg mb-2">No exact matches found.</p>
             <button onClick={() => setShowAll(true)} className="text-orange-600 underline text-sm">Show partial matches instead?</button>
@@ -512,12 +539,19 @@ function RecipeApp() {
                   {isPerfectMatch(recipe) && (
                     <div className="absolute top-2 left-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow">🎯 Perfect Match</div>
                   )}
+                  {recipe.isNameSearch && (
+                    <div className="absolute top-2 left-2 bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow">🍽️ Recipe</div>
+                  )}
                 </div>
                 <div className="p-4 flex flex-col flex-1">
                   <h2 className="text-lg font-bold text-gray-800 mb-2 leading-tight">{recipe.title}</h2>
-                  <p className="text-xs text-green-600 mb-1">Used: {recipe.usedIngredients.map((i: any) => i.name).join(", ")}</p>
-                  {recipe.missedIngredients.length > 0 && (
-                    <p className="text-xs text-red-400 mb-3">Missing: {recipe.missedIngredients.map((i: any) => i.name).join(", ")}</p>
+                  {!recipe.isNameSearch && (
+                    <>
+                      <p className="text-xs text-green-600 mb-1">Used: {recipe.usedIngredients.map((i: any) => i.name).join(", ")}</p>
+                      {recipe.missedIngredients.length > 0 && (
+                        <p className="text-xs text-red-400 mb-3">Missing: {recipe.missedIngredients.map((i: any) => i.name).join(", ")}</p>
+                      )}
+                    </>
                   )}
                   <div className="mt-auto">
                     <button onClick={() => setSelectedRecipe(recipe)} className="inline-block w-full text-center bg-orange-100 hover:bg-orange-200 text-orange-700 font-semibold px-4 py-2 rounded-lg transition-colors">

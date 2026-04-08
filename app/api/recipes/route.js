@@ -6,6 +6,7 @@ export async function GET(request) {
   const ingredients = searchParams.get("ingredients");
   const id = searchParams.get("id");
   const type = searchParams.get("type");
+  const query = searchParams.get("query");
   const apiKey = "6b6dd0f982c448f7adef501f6ca84f88";
 
   if (id && type === "info") {
@@ -38,6 +39,30 @@ export async function GET(request) {
     }
   }
 
+  if (query) {
+    const cacheKey = "query_" + query.toLowerCase().trim();
+    if (cache[cacheKey] && Date.now() - cache[cacheKey].timestamp < CACHE_DURATION) {
+      return Response.json(cache[cacheKey].data);
+    }
+    try {
+      const res = await fetch("https://api.spoonacular.com/recipes/complexSearch?query=" + encodeURIComponent(query) + "&number=9&addRecipeInformation=false&apiKey=" + apiKey);
+      const json = await res.json();
+      const results = (json.results || []).map((r) => ({
+        id: r.id,
+        title: r.title,
+        image: r.image,
+        usedIngredients: [],
+        missedIngredients: [],
+        likes: 0,
+        isNameSearch: true,
+      }));
+      cache[cacheKey] = { data: results, timestamp: Date.now() };
+      return Response.json(results);
+    } catch (error) {
+      return Response.json({ error: "Failed to fetch recipes" }, { status: 500 });
+    }
+  }
+
   if (ingredients) {
     const cacheKey = "ing_" + ingredients.toLowerCase().trim();
     if (cache[cacheKey] && Date.now() - cache[cacheKey].timestamp < CACHE_DURATION) {
@@ -55,3 +80,4 @@ export async function GET(request) {
 
   return Response.json({ error: "No parameters provided" }, { status: 400 });
 }
+
