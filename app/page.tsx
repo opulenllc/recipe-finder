@@ -49,9 +49,7 @@ function RecipeApp() {
     setShowAll(false);
   };
 
-  const getUrl = (recipe: any) => {
-    return "https://spoonacular.com/recipes/" + recipe.title.replaceAll(" ", "-").toLowerCase() + "-" + recipe.id;
-  };
+  const getUrl = (recipe: any) => { return "https://www.google.com/search?q=" + encodeURIComponent(recipe.title + " recipe"); };
 
   const inputList = ingredients.split(",").map((i) => i.trim().toLowerCase()).filter(Boolean);
 
@@ -154,7 +152,9 @@ function RecipeApp() {
                     <p className="text-xs text-red-400 mb-3">Missing: {recipe.missedIngredients.map((i: any) => i.name).join(", ")}</p>
                   )}
                   <div className="mt-auto">
-                    <a href={getUrl(recipe)} target="_blank" className="inline-block w-full text-center bg-orange-100 hover:bg-orange-200 text-orange-700 font-semibold px-4 py-2 rounded-lg transition-colors">View Full Recipe</a>
+                    <a href={getUrl(recipe)} target="_blank" className="inline-block w-full text-center bg-orange-100 hover:bg-orange-200 text-orange-700 font-semibold px-4 py-2 rounded-lg transition-colors">
+                      View Full Recipe
+                    </a>
                   </div>
                 </div>
               </div>
@@ -177,3 +177,5 @@ export default function Home() {
     </Suspense>
   );
 }
+
+
