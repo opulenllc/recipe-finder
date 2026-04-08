@@ -1,5 +1,5 @@
 ﻿"use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 
@@ -58,18 +58,33 @@ function RecipeModal({ recipe, onClose }: { recipe: any; onClose: () => void }) 
   const [instructions, setInstructions] = useState<any[]>([]);
   const [infoLoading, setInfoLoading] = useState(true);
   const [instrLoading, setInstrLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState("overview");
+  const [activeTab, setActiveTab] = useState("loading");
+  const firstTabSet = useRef(false);
 
   useEffect(() => {
-    fetch("/api/recipes?id=" + recipe.id + "&type=info")
-      .then(r => r.json())
-      .then(d => { setInfo(d); setInfoLoading(false); })
-      .catch(() => setInfoLoading(false));
-
     fetch("/api/recipes?id=" + recipe.id + "&type=instructions")
       .then(r => r.json())
-      .then(d => { setInstructions(Array.isArray(d) ? d : []); setInstrLoading(false); })
-      .catch(() => setInstrLoading(false));
+      .then(d => {
+        setInstructions(Array.isArray(d) ? d : []);
+        setInstrLoading(false);
+        if (!firstTabSet.current) {
+          firstTabSet.current = true;
+          setActiveTab("instructions");
+        }
+      })
+      .catch(() => { setInstrLoading(false); });
+
+    fetch("/api/recipes?id=" + recipe.id + "&type=info")
+      .then(r => r.json())
+      .then(d => {
+        setInfo(d);
+        setInfoLoading(false);
+        if (!firstTabSet.current) {
+          firstTabSet.current = true;
+          setActiveTab("overview");
+        }
+      })
+      .catch(() => { setInfoLoading(false); });
   }, [recipe.id]);
 
   const nutrients = info?.nutrition?.nutrients || [];
@@ -88,9 +103,9 @@ function RecipeModal({ recipe, onClose }: { recipe: any; onClose: () => void }) 
   const highResImage = recipe.image ? recipe.image.replace("312x231", "636x393") : null;
 
   const tabs = [
-    { id: "overview", label: "Overview" },
-    { id: "instructions", label: "Instructions" },
-    { id: "nutrition", label: "Nutrition" },
+    { id: "overview", label: "Overview", loading: infoLoading },
+    { id: "instructions", label: "Instructions", loading: instrLoading },
+    { id: "nutrition", label: "Nutrition", loading: infoLoading },
   ];
 
   return (
@@ -113,8 +128,7 @@ function RecipeModal({ recipe, onClose }: { recipe: any; onClose: () => void }) 
               className={"flex-1 py-2.5 text-xs font-semibold transition-colors " + (activeTab === tab.id ? "text-orange-600 border-b-2 border-orange-500" : "text-gray-400 hover:text-gray-600")}
             >
               {tab.label}
-              {tab.id === "instructions" && instrLoading && <span className="ml-1 text-orange-300">●</span>}
-              {tab.id === "nutrition" && infoLoading && <span className="ml-1 text-orange-300">●</span>}
+              {tab.loading && <span className="ml-1 inline-block w-1.5 h-1.5 bg-orange-300 rounded-full animate-pulse"></span>}
             </button>
           ))}
         </div>
@@ -128,12 +142,11 @@ function RecipeModal({ recipe, onClose }: { recipe: any; onClose: () => void }) 
           <img src={highResImage || recipe.image} alt={recipe.title} className="w-full object-cover print:h-40" style={{height: "200px"}} onError={(e) => { e.currentTarget.src = recipe.image || "https://placehold.co/600x400?text=No+Image"; }} />
 
           <div className="p-5">
+            {activeTab === "loading" && <FunLoader label="Loading recipe..." />}
 
             {activeTab === "overview" && (
               <>
-                {infoLoading ? (
-                  <FunLoader label="Loading recipe details..." />
-                ) : (
+                {infoLoading ? <FunLoader label="Loading recipe details..." /> : (
                   <>
                     <div className="grid grid-cols-4 gap-2 mb-4">
                       {[
@@ -149,7 +162,6 @@ function RecipeModal({ recipe, onClose }: { recipe: any; onClose: () => void }) 
                         </div>
                       ))}
                     </div>
-
                     {info?.diets && info.diets.length > 0 && (
                       <div className="flex flex-wrap gap-1.5 mb-4">
                         {info.diets.map((diet: string) => (
@@ -157,7 +169,6 @@ function RecipeModal({ recipe, onClose }: { recipe: any; onClose: () => void }) 
                         ))}
                       </div>
                     )}
-
                     {info?.extendedIngredients && info.extendedIngredients.length > 0 && (
                       <div className="mb-4">
                         <h3 className="text-sm font-bold text-gray-800 mb-2">🥕 Ingredients <span className="text-xs font-normal text-gray-400">({info.extendedIngredients.length})</span></h3>
@@ -173,9 +184,8 @@ function RecipeModal({ recipe, onClose }: { recipe: any; onClose: () => void }) 
                         </div>
                       </div>
                     )}
-
                     {equipment.length > 0 && (
-                      <div className="mb-2">
+                      <div className="mb-4">
                         <h3 className="text-sm font-bold text-gray-800 mb-2">🍳 Equipment</h3>
                         <div className="flex flex-wrap gap-2">
                           {equipment.map((eq: any) => (
@@ -187,14 +197,9 @@ function RecipeModal({ recipe, onClose }: { recipe: any; onClose: () => void }) 
                         </div>
                       </div>
                     )}
-
-                    <div className="print:hidden mt-4 flex gap-2">
-                      <button onClick={() => setActiveTab("instructions")} className="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 rounded-xl text-xs">
-                        📋 View Instructions
-                      </button>
-                      <button onClick={() => setActiveTab("nutrition")} className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-600 font-semibold py-2 rounded-xl text-xs">
-                        📊 View Nutrition
-                      </button>
+                    <div className="print:hidden flex gap-2 mt-2">
+                      <button onClick={() => setActiveTab("instructions")} className="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 rounded-xl text-xs">📋 View Instructions</button>
+                      <button onClick={() => setActiveTab("nutrition")} className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-600 font-semibold py-2 rounded-xl text-xs">📊 View Nutrition</button>
                     </div>
                   </>
                 )}
@@ -203,9 +208,7 @@ function RecipeModal({ recipe, onClose }: { recipe: any; onClose: () => void }) 
 
             {activeTab === "instructions" && (
               <>
-                {instrLoading ? (
-                  <FunLoader label="Loading instructions..." />
-                ) : steps.length > 0 ? (
+                {instrLoading ? <FunLoader label="Loading instructions..." /> : steps.length > 0 ? (
                   <ol className="space-y-4">
                     {steps.map((step: any) => (
                       <li key={step.number} className="flex gap-3">
@@ -224,9 +227,7 @@ function RecipeModal({ recipe, onClose }: { recipe: any; onClose: () => void }) 
 
             {activeTab === "nutrition" && (
               <>
-                {infoLoading ? (
-                  <FunLoader label="Calculating nutrition..." />
-                ) : (protein || fat || carbs) ? (
+                {infoLoading ? <FunLoader label="Calculating nutrition..." /> : (protein || fat || carbs) ? (
                   <>
                     <div className="grid grid-cols-3 gap-2 mb-4">
                       {[
