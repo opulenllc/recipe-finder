@@ -12,17 +12,21 @@ function RecipeModal({ recipe, data, onClose }: { recipe: any; data: any; onClos
   const protein = nutrients.find((n: any) => n.name === "Protein");
   const fat = nutrients.find((n: any) => n.name === "Fat");
   const carbs = nutrients.find((n: any) => n.name === "Carbohydrates");
-
-  const handlePrint = () => window.print();
+  const fiber = nutrients.find((n: any) => n.name === "Fiber");
+  const sugar = nutrients.find((n: any) => n.name === "Sugar");
+  const sodium = nutrients.find((n: any) => n.name === "Sodium");
+  const highResImage = recipe.image ? recipe.image.replace("312x231", "636x393") : null;
+  const equipment = steps.flatMap((s: any) => s.equipment || []).filter((e: any, i: number, arr: any[]) => arr.findIndex((x: any) => x.name === e.name) === i);
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-60 z-50 flex items-start justify-center p-4 overflow-y-auto print:relative print:inset-auto print:bg-white print:p-0">
-      <div className="bg-white rounded-2xl max-w-2xl w-full my-4 overflow-hidden print:rounded-none print:shadow-none print:my-0">
-        <div className="print:hidden flex items-center justify-between p-4 border-b border-gray-100">
-          <h2 className="text-lg font-bold text-gray-800 pr-4">{recipe.title}</h2>
+    <div className="fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center p-4 print:relative print:inset-auto print:bg-white print:p-0" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
+      <div className="bg-white rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto flex flex-col print:rounded-none print:max-h-none print:overflow-visible">
+        
+        <div className="print:hidden sticky top-0 bg-white z-10 flex items-center justify-between p-4 border-b border-gray-100">
+          <h2 className="text-base font-bold text-gray-800 pr-4 leading-tight">{recipe.title}</h2>
           <div className="flex gap-2 flex-shrink-0">
-            <button onClick={handlePrint} className="bg-orange-100 hover:bg-orange-200 text-orange-700 font-semibold px-4 py-2 rounded-lg text-sm">Print</button>
-            <button onClick={onClose} className="bg-gray-100 hover:bg-gray-200 text-gray-600 font-semibold px-4 py-2 rounded-lg text-sm">Close</button>
+            <button onClick={() => window.print()} className="bg-orange-100 hover:bg-orange-200 text-orange-700 font-semibold px-3 py-1.5 rounded-lg text-sm">Print</button>
+            <button onClick={onClose} className="bg-gray-100 hover:bg-gray-200 text-gray-600 font-semibold px-3 py-1.5 rounded-lg text-sm">Close</button>
           </div>
         </div>
 
@@ -31,50 +35,23 @@ function RecipeModal({ recipe, data, onClose }: { recipe: any; data: any; onClos
           <p className="text-sm text-gray-500">myrecipematch.com</p>
         </div>
 
-        <img src={recipe.image} alt={recipe.title} className="w-full h-56 object-cover print:h-40" onError={(e) => { e.currentTarget.src = "https://placehold.co/600x400?text=No+Image"; }} />
+        <img
+          src={highResImage || recipe.image}
+          alt={recipe.title}
+          className="w-full h-56 object-cover print:h-40"
+          onError={(e) => { e.currentTarget.src = recipe.image || "https://placehold.co/600x400?text=No+Image"; }}
+        />
 
-        <div className="p-6">
-          <div className="flex flex-wrap gap-4 mb-6">
-            {info.readyInMinutes && (
-              <div className="text-center">
-                <p className="text-xs text-gray-400">Ready In</p>
-                <p className="text-sm font-bold text-gray-700">{info.readyInMinutes} min</p>
-              </div>
-            )}
-            {info.servings && (
-              <div className="text-center">
-                <p className="text-xs text-gray-400">Servings</p>
-                <p className="text-sm font-bold text-gray-700">{info.servings}</p>
-              </div>
-            )}
-            {calories && (
-              <div className="text-center">
-                <p className="text-xs text-gray-400">Calories</p>
-                <p className="text-sm font-bold text-gray-700">{Math.round(calories.amount)} kcal</p>
-              </div>
-            )}
-            {protein && (
-              <div className="text-center">
-                <p className="text-xs text-gray-400">Protein</p>
-                <p className="text-sm font-bold text-gray-700">{Math.round(protein.amount)}g</p>
-              </div>
-            )}
-            {fat && (
-              <div className="text-center">
-                <p className="text-xs text-gray-400">Fat</p>
-                <p className="text-sm font-bold text-gray-700">{Math.round(fat.amount)}g</p>
-              </div>
-            )}
-            {carbs && (
-              <div className="text-center">
-                <p className="text-xs text-gray-400">Carbs</p>
-                <p className="text-sm font-bold text-gray-700">{Math.round(carbs.amount)}g</p>
-              </div>
-            )}
+        <div className="p-5">
+          <div className="flex flex-wrap gap-6 mb-4 pb-4 border-b border-gray-100">
+            {info.readyInMinutes && <div><p className="text-xs text-gray-400">Ready In</p><p className="text-sm font-bold text-gray-700">{info.readyInMinutes} min</p></div>}
+            {info.servings && <div><p className="text-xs text-gray-400">Servings</p><p className="text-sm font-bold text-gray-700">{info.servings}</p></div>}
+            {calories && <div><p className="text-xs text-gray-400">Calories</p><p className="text-sm font-bold text-gray-700">{Math.round(calories.amount)} kcal</p></div>}
+            {info.pricePerServing && <div><p className="text-xs text-gray-400">Cost/Serving</p><p className="text-sm font-bold text-gray-700">${(info.pricePerServing / 100).toFixed(2)}</p></div>}
           </div>
 
           {info.diets && info.diets.length > 0 && (
-            <div className="flex flex-wrap gap-2 mb-6">
+            <div className="flex flex-wrap gap-2 mb-4">
               {info.diets.map((diet: string) => (
                 <span key={diet} className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full capitalize">{diet}</span>
               ))}
@@ -82,12 +59,12 @@ function RecipeModal({ recipe, data, onClose }: { recipe: any; data: any; onClos
           )}
 
           {info.extendedIngredients && info.extendedIngredients.length > 0 && (
-            <div className="mb-6">
-              <h3 className="text-base font-bold text-gray-800 mb-3">Ingredients</h3>
-              <ul className="space-y-1">
+            <div className="mb-5">
+              <h3 className="text-sm font-bold text-gray-800 mb-2">Ingredients</h3>
+              <ul className="grid grid-cols-2 gap-x-4 gap-y-1">
                 {info.extendedIngredients.map((ing: any, i: number) => (
-                  <li key={i} className="flex items-center gap-2 text-sm text-gray-600">
-                    <span className="w-1.5 h-1.5 bg-orange-400 rounded-full flex-shrink-0"></span>
+                  <li key={i} className="flex items-start gap-1.5 text-xs text-gray-600">
+                    <span className="w-1.5 h-1.5 bg-orange-400 rounded-full flex-shrink-0 mt-1"></span>
                     {ing.original}
                   </li>
                 ))}
@@ -95,29 +72,57 @@ function RecipeModal({ recipe, data, onClose }: { recipe: any; data: any; onClos
             </div>
           )}
 
+          {equipment.length > 0 && (
+            <div className="mb-5">
+              <h3 className="text-sm font-bold text-gray-800 mb-2">Equipment</h3>
+              <div className="flex flex-wrap gap-2">
+                {equipment.map((eq: any) => (
+                  <span key={eq.name} className="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-lg capitalize">{eq.name}</span>
+                ))}
+              </div>
+            </div>
+          )}
+
           {steps.length > 0 && (
-            <div className="mb-6">
-              <h3 className="text-base font-bold text-gray-800 mb-3">Instructions</h3>
-              <ol className="space-y-4">
+            <div className="mb-5">
+              <h3 className="text-sm font-bold text-gray-800 mb-2">Instructions</h3>
+              <ol className="space-y-3">
                 {steps.map((step: any) => (
-                  <li key={step.number} className="flex gap-3">
-                    <span className="bg-orange-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 mt-0.5">{step.number}</span>
-                    <p className="text-sm text-gray-600 leading-relaxed">{step.step}</p>
+                  <li key={step.number} className="flex gap-2.5">
+                    <span className="bg-orange-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0 mt-0.5">{step.number}</span>
+                    <p className="text-xs text-gray-600 leading-relaxed">{step.step}</p>
                   </li>
                 ))}
               </ol>
             </div>
           )}
 
-          {steps.length === 0 && (
-            <div className="text-center py-4">
-              <p className="text-sm text-gray-400">No instructions available for this recipe.</p>
+          {(protein || fat || carbs || fiber || sugar || sodium) && (
+            <div className="mb-5 bg-gray-50 rounded-xl p-4">
+              <h3 className="text-sm font-bold text-gray-800 mb-3">Nutrition per serving</h3>
+              <div className="grid grid-cols-3 gap-3">
+                {[
+                  { label: "Protein", val: protein },
+                  { label: "Fat", val: fat },
+                  { label: "Carbs", val: carbs },
+                  { label: "Fiber", val: fiber },
+                  { label: "Sugar", val: sugar },
+                  { label: "Sodium", val: sodium },
+                ].filter(n => n.val).map(n => (
+                  <div key={n.label} className="text-center bg-white rounded-lg p-2">
+                    <p className="text-xs text-gray-400">{n.label}</p>
+                    <p className="text-sm font-bold text-gray-700">{Math.round(n.val.amount)}{n.val.unit}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
 
-          <div className="print:hidden pt-4 border-t border-gray-100">
-            <p className="text-xs text-gray-400 text-center">Recipe data provided by Spoonacular</p>
-          </div>
+          {steps.length === 0 && (
+            <p className="text-xs text-gray-400 text-center py-2">No instructions available for this recipe.</p>
+          )}
+
+          <p className="text-xs text-gray-300 text-center pt-2 print:hidden">Recipe data by Spoonacular</p>
         </div>
       </div>
     </div>
@@ -296,10 +301,7 @@ function RecipeApp() {
                     <p className="text-xs text-red-400 mb-3">Missing: {recipe.missedIngredients.map((i: any) => i.name).join(", ")}</p>
                   )}
                   <div className="mt-auto">
-                    <button
-                      onClick={() => handleViewRecipe(recipe)}
-                      className="inline-block w-full text-center bg-orange-100 hover:bg-orange-200 text-orange-700 font-semibold px-4 py-2 rounded-lg transition-colors"
-                    >
+                    <button onClick={() => handleViewRecipe(recipe)} className="inline-block w-full text-center bg-orange-100 hover:bg-orange-200 text-orange-700 font-semibold px-4 py-2 rounded-lg transition-colors">
                       View Full Recipe
                     </button>
                   </div>
