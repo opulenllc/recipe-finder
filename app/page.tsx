@@ -195,7 +195,7 @@ function RecipeApp() {
     }
     const res = await fetch("/api/recipes?ingredients=" + searchTerm);
     const data = await res.json();
-    if (Array.isArray(data)) setRecipes(data);
+    if (Array.isArray(data)) { setRecipes(data); data.slice(0, 3).forEach((r: any) => { fetch("/api/recipes?id=" + r.id).catch(() => {}); }); }
     setLoading(false);
   };
 
@@ -360,3 +360,4 @@ export default function Home() {
     </Suspense>
   );
 }
+

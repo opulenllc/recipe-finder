@@ -1,6 +1,19 @@
 ﻿const cache = {};
 const CACHE_DURATION = 60 * 60 * 1000;
 
+async function fetchWithTimeout(url, timeout) {
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), timeout);
+  try {
+    const res = await fetch(url, { signal: controller.signal });
+    clearTimeout(id);
+    return res;
+  } catch (e) {
+    clearTimeout(id);
+    throw e;
+  }
+}
+
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const ingredients = searchParams.get("ingredients");
@@ -14,11 +27,10 @@ export async function GET(request) {
     }
     try {
       const [infoRes, instrRes] = await Promise.all([
-        fetch("https://api.spoonacular.com/recipes/" + id + "/information?includeNutrition=true&apiKey=" + apiKey),
-        fetch("https://api.spoonacular.com/recipes/" + id + "/analyzedInstructions?apiKey=" + apiKey)
+        fetchWithTimeout("https://api.spoonacular.com/recipes/" + id + "/information?includeNutrition=true&apiKey=" + apiKey, 7000),
+        fetchWithTimeout("https://api.spoonacular.com/recipes/" + id + "/analyzedInstructions?apiKey=" + apiKey, 7000)
       ]);
-      const info = await infoRes.json();
-      const instructions = await instrRes.json();
+      const [info, instructions] = await Promise.all([infoRes.json(), instrRes.json()]);
       const data = { info, instructions };
       cache[cacheKey] = { data, timestamp: Date.now() };
       return Response.json(data);
@@ -33,7 +45,7 @@ export async function GET(request) {
       return Response.json(cache[cacheKey].data);
     }
     try {
-      const res = await fetch("https://api.spoonacular.com/recipes/findByIngredients?ingredients=" + ingredients + "&number=9&apiKey=" + apiKey);
+      const res = await fetchWithTimeout("https://api.spoonacular.com/recipes/findByIngredients?ingredients=" + ingredients + "&number=9&apiKey=" + apiKey, 7000);
       const data = await res.json();
       cache[cacheKey] = { data, timestamp: Date.now() };
       return Response.json(data);
