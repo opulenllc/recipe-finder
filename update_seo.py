@@ -2,7 +2,6 @@
 
 os.makedirs("app/recipes/[slug]", exist_ok=True)
 
-# The dynamic ingredient SEO page template
 page = """import { Metadata } from "next";
 
 const slugData: Record<string, { title: string; heading: string; intro: string; ingredients: string; keywords: string[] }> = {
@@ -11,7 +10,7 @@ const slugData: Record<string, { title: string; heading: string; intro: string; 
     heading: "Easy Recipes with Chicken and Rice",
     intro: "Have chicken and rice at home? You are already halfway to a delicious meal. From classic chicken fried rice to hearty casseroles, these recipes use simple ingredients you likely already have in your kitchen.",
     ingredients: "chicken,rice",
-    keywords: ["recipes with chicken and rice", "easy chicken and rice recipe", "simple chicken and rice recipes", "quick and easy chicken and rice recipes"],
+    keywords: ["recipes with chicken and rice", "easy chicken and rice recipe", "simple chicken and rice recipes"],
   },
   "chicken-and-broccoli": {
     title: "Recipes with Chicken and Broccoli",
@@ -75,6 +74,146 @@ const slugData: Record<string, { title: string; heading: string; intro: string; 
     intro: "Looking for healthy dinner ideas using chicken and rice? These nutritious, protein-packed recipes are perfect for anyone eating clean without sacrificing flavor.",
     ingredients: "chicken,rice",
     keywords: ["healthy chicken and rice recipes", "clean eating chicken rice", "low calorie chicken and rice"],
+  },
+  "chicken-and-pasta": {
+    title: "Recipes with Chicken and Pasta",
+    heading: "Easy Recipes with Chicken and Pasta",
+    intro: "Chicken and pasta is a classic combination that never gets old. From creamy alfredo to light lemon pasta, these recipes are quick, satisfying, and perfect for busy weeknights.",
+    ingredients: "chicken,pasta",
+    keywords: ["recipes with chicken and pasta", "easy chicken pasta recipes", "quick chicken and pasta dinner"],
+  },
+  "eggs-and-cheese": {
+    title: "Recipes with Eggs and Cheese",
+    heading: "Easy Recipes with Eggs and Cheese",
+    intro: "Eggs and cheese are a dream team in the kitchen. Whether you are making a quick omelette, frittata, or baked egg dish, these recipes are simple, delicious, and ready in minutes.",
+    ingredients: "eggs,cheese",
+    keywords: ["recipes with eggs and cheese", "easy egg and cheese recipes", "what to make with eggs and cheese"],
+  },
+  "ground-beef-and-rice": {
+    title: "Recipes with Ground Beef and Rice",
+    heading: "Easy Recipes with Ground Beef and Rice",
+    intro: "Ground beef and rice make a budget-friendly, filling meal that the whole family will love. These easy recipes come together quickly with ingredients you already have on hand.",
+    ingredients: "ground beef,rice",
+    keywords: ["recipes with ground beef and rice", "ground beef rice recipes", "easy ground beef and rice dinner"],
+  },
+  "chicken-and-potatoes": {
+    title: "Recipes with Chicken and Potatoes",
+    heading: "Easy Recipes with Chicken and Potatoes",
+    intro: "Chicken and potatoes is the ultimate comfort food combination. Roasted, baked, or in a hearty stew, these recipes are simple, satisfying, and perfect for any night of the week.",
+    ingredients: "chicken,potatoes",
+    keywords: ["recipes with chicken and potatoes", "chicken and potato recipes", "easy chicken potatoes dinner"],
+  },
+  "tuna-and-pasta": {
+    title: "Recipes with Tuna and Pasta",
+    heading: "Easy Recipes with Tuna and Pasta",
+    intro: "Tuna and pasta is a quick, budget-friendly meal that comes together in under 20 minutes. Stock your pantry with these two ingredients and you are always one step away from a great meal.",
+    ingredients: "tuna,pasta",
+    keywords: ["recipes with tuna and pasta", "tuna pasta recipes", "easy tuna and pasta dinner"],
+  },
+  "beef-and-broccoli": {
+    title: "Beef and Broccoli Recipes",
+    heading: "Easy Beef and Broccoli Recipes",
+    intro: "Beef and broccoli is a takeout favorite you can easily make at home. These recipes are quick, flavorful, and use simple ingredients you likely already have in your kitchen.",
+    ingredients: "beef,broccoli",
+    keywords: ["beef and broccoli recipes", "easy beef broccoli stir fry", "homemade beef and broccoli"],
+  },
+  "shrimp-and-rice": {
+    title: "Recipes with Shrimp and Rice",
+    heading: "Easy Recipes with Shrimp and Rice",
+    intro: "Shrimp and rice is a light, flavorful combination perfect for a quick weeknight dinner. From fried rice to shrimp bowls, these recipes are ready in 30 minutes or less.",
+    ingredients: "shrimp,rice",
+    keywords: ["recipes with shrimp and rice", "shrimp rice recipes", "easy shrimp and rice dinner"],
+  },
+  "pork-and-potatoes": {
+    title: "Recipes with Pork and Potatoes",
+    heading: "Easy Recipes with Pork and Potatoes",
+    intro: "Pork and potatoes are a hearty, satisfying combination that works for any meal. From roasted pork chops to stews and casseroles, these recipes are simple and delicious.",
+    ingredients: "pork,potatoes",
+    keywords: ["recipes with pork and potatoes", "pork and potato recipes", "easy pork potatoes dinner"],
+  },
+  "salmon-and-rice": {
+    title: "Recipes with Salmon and Rice",
+    heading: "Easy Recipes with Salmon and Rice",
+    intro: "Salmon and rice is a healthy, protein-rich meal that is as easy to make as it is delicious. These recipes are perfect for a nutritious weeknight dinner the whole family will enjoy.",
+    ingredients: "salmon,rice",
+    keywords: ["recipes with salmon and rice", "salmon rice recipes", "easy salmon and rice dinner"],
+  },
+  "chicken-and-mushrooms": {
+    title: "Recipes with Chicken and Mushrooms",
+    heading: "Easy Recipes with Chicken and Mushrooms",
+    intro: "Chicken and mushrooms are a classic flavor pairing that works in so many dishes. From creamy pasta to savory stir fries, these recipes are simple and incredibly satisfying.",
+    ingredients: "chicken,mushrooms",
+    keywords: ["recipes with chicken and mushrooms", "chicken mushroom recipes", "easy chicken and mushroom dinner"],
+  },
+  "eggs-and-potatoes": {
+    title: "Recipes with Eggs and Potatoes",
+    heading: "Easy Recipes with Eggs and Potatoes",
+    intro: "Eggs and potatoes are the ultimate budget-friendly combination. From breakfast hash to frittatas and casseroles, these recipes are hearty, filling, and incredibly easy to make.",
+    ingredients: "eggs,potatoes",
+    keywords: ["recipes with eggs and potatoes", "egg and potato recipes", "easy eggs and potatoes dinner"],
+  },
+  "chicken-and-spinach": {
+    title: "Recipes with Chicken and Spinach",
+    heading: "Easy Recipes with Chicken and Spinach",
+    intro: "Chicken and spinach is a healthy, nutritious combination perfect for clean eating. These recipes are light, flavorful, and come together quickly for a satisfying weeknight meal.",
+    ingredients: "chicken,spinach",
+    keywords: ["recipes with chicken and spinach", "chicken spinach recipes", "easy chicken and spinach dinner"],
+  },
+  "ground-beef-and-potatoes": {
+    title: "Recipes with Ground Beef and Potatoes",
+    heading: "Easy Recipes with Ground Beef and Potatoes",
+    intro: "Ground beef and potatoes make a hearty, filling meal that the whole family will love. These budget-friendly recipes are simple to prepare and packed with flavor.",
+    ingredients: "ground beef,potatoes",
+    keywords: ["recipes with ground beef and potatoes", "ground beef potato recipes", "easy ground beef and potatoes"],
+  },
+  "chicken-and-tomatoes": {
+    title: "Recipes with Chicken and Tomatoes",
+    heading: "Easy Recipes with Chicken and Tomatoes",
+    intro: "Chicken and tomatoes are a classic Mediterranean combination that works in countless dishes. From baked chicken to pasta sauces and soups, these recipes are bright, flavorful, and easy.",
+    ingredients: "chicken,tomatoes",
+    keywords: ["recipes with chicken and tomatoes", "chicken tomato recipes", "easy chicken and tomato dinner"],
+  },
+  "pasta-and-cheese": {
+    title: "Recipes with Pasta and Cheese",
+    heading: "Easy Recipes with Pasta and Cheese",
+    intro: "Pasta and cheese is comfort food at its finest. From classic mac and cheese to baked pasta dishes, these simple recipes are crowd-pleasers that come together in no time.",
+    ingredients: "pasta,cheese",
+    keywords: ["recipes with pasta and cheese", "pasta cheese recipes", "easy pasta and cheese dinner"],
+  },
+  "chicken-and-garlic": {
+    title: "Recipes with Chicken and Garlic",
+    heading: "Easy Recipes with Chicken and Garlic",
+    intro: "Chicken and garlic are a flavor match made in heaven. These aromatic, savory recipes transform simple ingredients into restaurant-quality meals you can make at home.",
+    ingredients: "chicken,garlic",
+    keywords: ["recipes with chicken and garlic", "garlic chicken recipes", "easy chicken and garlic dinner"],
+  },
+  "beef-and-potatoes": {
+    title: "Recipes with Beef and Potatoes",
+    heading: "Easy Recipes with Beef and Potatoes",
+    intro: "Beef and potatoes are a timeless combination perfect for hearty, satisfying meals. From beef stew to roasted dinners, these recipes are comforting, filling, and easy to make.",
+    ingredients: "beef,potatoes",
+    keywords: ["recipes with beef and potatoes", "beef and potato recipes", "easy beef and potatoes dinner"],
+  },
+  "chicken-and-lemon": {
+    title: "Recipes with Chicken and Lemon",
+    heading: "Easy Recipes with Chicken and Lemon",
+    intro: "Chicken and lemon is a bright, fresh combination that elevates any dish. These recipes are light, flavorful, and perfect for anyone looking for a simple but impressive weeknight meal.",
+    ingredients: "chicken,lemon",
+    keywords: ["recipes with chicken and lemon", "lemon chicken recipes", "easy chicken and lemon dinner"],
+  },
+  "pork-and-rice": {
+    title: "Recipes with Pork and Rice",
+    heading: "Easy Recipes with Pork and Rice",
+    intro: "Pork and rice is a versatile, satisfying combination enjoyed in cuisines around the world. These easy recipes are perfect for a quick weeknight dinner with minimal ingredients.",
+    ingredients: "pork,rice",
+    keywords: ["recipes with pork and rice", "pork rice recipes", "easy pork and rice dinner"],
+  },
+  "shrimp-and-pasta": {
+    title: "Recipes with Shrimp and Pasta",
+    heading: "Easy Recipes with Shrimp and Pasta",
+    intro: "Shrimp and pasta is an elegant yet easy combination perfect for weeknight dinners or special occasions. These recipes come together in under 30 minutes and taste like restaurant quality.",
+    ingredients: "shrimp,pasta",
+    keywords: ["recipes with shrimp and pasta", "shrimp pasta recipes", "easy shrimp and pasta dinner"],
   },
 };
 
@@ -163,7 +302,6 @@ export default async function RecipePage({ params }: { params: Promise<{ slug: s
                   src={recipe.image}
                   alt={recipe.title}
                   className="w-full h-48 object-cover"
-                  onError={() => {}}
                 />
                 <div className="p-4 flex flex-col flex-1">
                   <h3 className="text-base font-bold text-gray-800 mb-2 leading-tight">{recipe.title}</h3>
@@ -173,13 +311,9 @@ export default async function RecipePage({ params }: { params: Promise<{ slug: s
                   {recipe.missedIngredients && recipe.missedIngredients.length > 0 && (
                     <p className="text-xs text-red-400 mb-3">Also needs: {recipe.missedIngredients.slice(0, 3).map((i: any) => i.name).join(", ")}</p>
                   )}
-                  <div className="mt-auto">
-                    
-                      href={"/?ingredients=" + encodeURIComponent(data.ingredients)}
-                      className="inline-block w-full text-center bg-orange-100 hover:bg-orange-200 text-orange-700 font-semibold px-4 py-2 rounded-lg transition-colors text-sm"
-                    >
-                      Find Similar Recipes
-                    </a>
+                  <div className="mt-auto flex flex-col gap-2">
+                    <a href={"/?recipeId=" + recipe.id + "&recipeTitle=" + encodeURIComponent(recipe.title) + "&recipeImage=" + encodeURIComponent(recipe.image || "") + "&ingredients=" + data.ingredients} className="inline-block w-full text-center bg-orange-500 hover:bg-orange-600 text-white font-semibold px-4 py-2 rounded-lg transition-colors text-sm">View Full Recipe</a>
+                    <a href={"/?ingredients=" + data.ingredients} className="inline-block w-full text-center bg-orange-100 hover:bg-orange-200 text-orange-700 font-semibold px-4 py-2 rounded-lg transition-colors text-sm">Find Similar Recipes</a>
                   </div>
                 </div>
               </div>
