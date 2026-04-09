@@ -158,7 +158,7 @@ export default async function RecipePage({ params }: { params: Promise<{ slug: s
                   src={recipe.image}
                   alt={recipe.title}
                   className="w-full h-48 object-cover"
-                  onError={() => {}}
+                  
                 />
                 <div className="p-4 flex flex-col flex-1">
                   <h3 className="text-base font-bold text-gray-800 mb-2 leading-tight">{recipe.title}</h3>
