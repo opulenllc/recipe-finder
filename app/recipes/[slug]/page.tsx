@@ -1,9 +1,4 @@
-﻿import os
-
-os.makedirs("app/recipes/[slug]", exist_ok=True)
-
-# The dynamic ingredient SEO page template
-page = """import { Metadata } from "next";
+import { Metadata } from "next";
 
 const slugData: Record<string, { title: string; heading: string; intro: string; ingredients: string; keywords: string[] }> = {
   "chicken-and-rice": {
@@ -174,11 +169,10 @@ export default async function RecipePage({ params }: { params: Promise<{ slug: s
                     <p className="text-xs text-red-400 mb-3">Also needs: {recipe.missedIngredients.slice(0, 3).map((i: any) => i.name).join(", ")}</p>
                   )}
                   <div className="mt-auto">
-                    
-                      href={"/?ingredients=" + encodeURIComponent(data.ingredients)}
+                    <a
+                      href={"/?ingredients=" + data.ingredients}
                       className="inline-block w-full text-center bg-orange-100 hover:bg-orange-200 text-orange-700 font-semibold px-4 py-2 rounded-lg transition-colors text-sm"
                     >
-                      Find Similar Recipes
                     </a>
                   </div>
                 </div>
@@ -215,8 +209,3 @@ export default async function RecipePage({ params }: { params: Promise<{ slug: s
     </div>
   );
 }
-"""
-
-with open("app/recipes/[slug]/page.tsx", "w", encoding="utf-8") as f:
-    f.write(page)
-print("Done!")
