@@ -366,16 +366,31 @@ function RecipeApp() {
 
   useEffect(() => {
     const ing = searchParams.get("ingredients");
+    const recipeId = searchParams.get("recipeId");
+    const recipeTitle = searchParams.get("recipeTitle");
+    const recipeImage = searchParams.get("recipeImage");
+
     if (ing) {
       setIngredients(ing);
-      handleSearch(ing, "ingredients");
+      handleSearch(ing, "ingredients").then((results: any[]) => {
+        if (recipeId && results) {
+          const found = results.find((r: any) => String(r.id) === String(recipeId));
+          if (found) {
+            setSelectedRecipe(found);
+          } else if (recipeTitle) {
+            setSelectedRecipe({ id: recipeId, title: decodeURIComponent(recipeTitle), image: recipeImage ? decodeURIComponent(recipeImage) : null, usedIngredients: [], missedIngredients: [] });
+          }
+        }
+      });
+    } else if (recipeId && recipeTitle) {
+      setSelectedRecipe({ id: recipeId, title: decodeURIComponent(recipeTitle), image: recipeImage ? decodeURIComponent(recipeImage) : null, usedIngredients: [], missedIngredients: [] });
     }
   }, []);
 
-  const handleSearch = async (query?: string, mode?: "ingredients" | "name") => {
+  const handleSearch = async (query?: string, mode?: "ingredients" | "name"): Promise<any[]> => {
     const searchTerm = query || ingredients;
     const currentMode = mode || searchMode;
-    if (!searchTerm.trim()) return;
+    if (!searchTerm.trim()) return [];
     setLoading(true);
     setSearched(true);
     setShowAll(false);
@@ -396,8 +411,11 @@ function RecipeApp() {
         fetch("/api/recipes?id=" + r.id + "&type=info").catch(() => {});
         fetch("/api/recipes?id=" + r.id + "&type=instructions").catch(() => {});
       });
+      setLoading(false);
+      return data;
     }
     setLoading(false);
+    return [];
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
