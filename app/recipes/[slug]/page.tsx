@@ -158,6 +158,7 @@ export default async function RecipePage({ params }: { params: Promise<{ slug: s
                   src={recipe.image}
                   alt={recipe.title}
                   className="w-full h-48 object-cover"
+                  onError={() => {}}
                 />
                 <div className="p-4 flex flex-col flex-1">
                   <h3 className="text-base font-bold text-gray-800 mb-2 leading-tight">{recipe.title}</h3>
@@ -167,13 +168,9 @@ export default async function RecipePage({ params }: { params: Promise<{ slug: s
                   {recipe.missedIngredients && recipe.missedIngredients.length > 0 && (
                     <p className="text-xs text-red-400 mb-3">Also needs: {recipe.missedIngredients.slice(0, 3).map((i: any) => i.name).join(", ")}</p>
                   )}
-                  <div className="mt-auto">
-                    <a
-                      href={"/?ingredients=" + data.ingredients}
-                      className="inline-block w-full text-center bg-orange-100 hover:bg-orange-200 text-orange-700 font-semibold px-4 py-2 rounded-lg transition-colors text-sm"
-                    >
-                      Find Similar Recipes
-                    </a>
+                  <div className="mt-auto flex flex-col gap-2">
+                    <a href={"/?recipeId=" + recipe.id + "&recipeTitle=" + encodeURIComponent(recipe.title) + "&recipeImage=" + encodeURIComponent(recipe.image || "") + "&ingredients=" + data.ingredients} className="inline-block w-full text-center bg-orange-500 hover:bg-orange-600 text-white font-semibold px-4 py-2 rounded-lg transition-colors text-sm">View Full Recipe</a>
+                    <a href={"/?ingredients=" + data.ingredients} className="inline-block w-full text-center bg-orange-100 hover:bg-orange-200 text-orange-700 font-semibold px-4 py-2 rounded-lg transition-colors text-sm">Find Similar Recipes</a>
                   </div>
                 </div>
               </div>
