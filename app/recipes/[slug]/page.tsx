@@ -173,6 +173,7 @@ export default async function RecipePage({ params }: { params: Promise<{ slug: s
                       href={"/?ingredients=" + data.ingredients}
                       className="inline-block w-full text-center bg-orange-100 hover:bg-orange-200 text-orange-700 font-semibold px-4 py-2 rounded-lg transition-colors text-sm"
                     >
+                      Find Similar Recipes
                     </a>
                   </div>
                 </div>
