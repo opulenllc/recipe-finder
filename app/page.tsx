@@ -363,8 +363,11 @@ function RecipeApp() {
   const [history, setHistory] = useState<string[]>([]);
   const [selectedRecipe, setSelectedRecipe] = useState<any | null>(null);
   const [searchMode, setSearchMode] = useState<"ingredients" | "name">("ingredients");
+  const [referrerPage, setReferrerPage] = useState<string | null>(null);
 
   useEffect(() => {
+    const referrer = searchParams.get("from");
+    if (referrer) setReferrerPage(decodeURIComponent(referrer));
     const ing = searchParams.get("ingredients");
     const recipeId = searchParams.get("recipeId");
     const recipeTitle = searchParams.get("recipeTitle");
@@ -467,6 +470,11 @@ function RecipeApp() {
       </header>
 
       <main className="flex-1 max-w-4xl mx-auto w-full px-4 py-10 print:hidden">
+        {referrerPage && (
+          <a href={referrerPage} className="inline-flex items-center gap-2 text-sm text-orange-600 hover:text-orange-700 font-medium mb-4 bg-white px-4 py-2 rounded-xl shadow-sm border border-orange-100">
+            ← Back to {referrerPage.split("/recipes/")[1] ? referrerPage.split("/recipes/")[1].split("-").map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ") + " Recipes" : "Recipes"}
+          </a>
+        )}
 
         <div className="flex gap-2 mb-3 bg-white rounded-xl p-1 border-2 border-orange-100 w-fit">
           <button
