@@ -364,11 +364,8 @@ function RecipeApp() {
   const [selectedRecipe, setSelectedRecipe] = useState<any | null>(null);
   const [searchMode, setSearchMode] = useState<"ingredients" | "name">("ingredients");
   const [referrerPage, setReferrerPage] = useState<string | null>(null);
-  const [referrerPage, setReferrerPage] = useState<string | null>(null);
 
   useEffect(() => {
-    const referrer = searchParams.get("from");
-    if (referrer) setReferrerPage(decodeURIComponent(referrer));
     const referrer = searchParams.get("from");
     if (referrer) setReferrerPage(decodeURIComponent(referrer));
     const ing = searchParams.get("ingredients");
