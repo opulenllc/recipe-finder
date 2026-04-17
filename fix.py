@@ -1,23 +1,7 @@
 with open('app/page.tsx', encoding='utf-8') as f:
     content = f.read()
 
-navbar = '''
-function NavBar() {
-  const [cuisinesOpen, setCuisinesOpen] = useState(false);
-  const [recipesOpen, setRecipesOpen] = useState(false);
-
-  const cuisines = [
-    { label: "Italian", href: "/recipes/cuisine/italian" },
-    { label: "Mexican", href: "/recipes/cuisine/mexican" },
-    { label: "Chinese", href: "/recipes/cuisine/chinese" },
-    { label: "Indian", href: "/recipes/cuisine/indian" },
-    { label: "Japanese", href: "/recipes/cuisine/japanese" },
-    { label: "Thai", href: "/recipes/cuisine/thai" },
-    { label: "American", href: "/recipes/cuisine/american" },
-    { label: "Mediterranean", href: "/recipes/cuisine/mediterranean" },
-  ];
-
-  const recipes = [
+old = '''  const recipes = [
     { label: "Chicken and Rice", href: "/recipes/chicken-and-rice" },
     { label: "Chicken and Pasta", href: "/recipes/chicken-and-pasta" },
     { label: "Beef and Broccoli", href: "/recipes/beef-and-broccoli" },
@@ -28,65 +12,40 @@ function NavBar() {
     { label: "Chicken and Broccoli", href: "/recipes/chicken-and-broccoli" },
     { label: "Pasta and Cheese", href: "/recipes/pasta-and-cheese" },
     { label: "Tuna and Pasta", href: "/recipes/tuna-and-pasta" },
-  ];
+  ];'''
 
-  return (
-    <nav className="bg-white border-b border-gray-100 px-6 print:hidden">
-      <div className="max-w-4xl mx-auto flex items-center gap-1 h-10">
-        <a href="/" className="text-xs font-semibold text-gray-600 hover:text-orange-600 px-3 py-1 rounded-lg hover:bg-orange-50 transition-colors">
-          Home
-        </a>
-        <div className="relative">
-          <button
-            onClick={() => { setCuisinesOpen(!cuisinesOpen); setRecipesOpen(false); }}
-            className="text-xs font-semibold text-gray-600 hover:text-orange-600 px-3 py-1 rounded-lg hover:bg-orange-50 transition-colors flex items-center gap-1"
-          >
-            Cuisines <span className="text-gray-400">{cuisinesOpen ? "▲" : "▼"}</span>
-          </button>
-          {cuisinesOpen && (
-            <div className="absolute top-full left-0 bg-white border border-gray-100 rounded-xl shadow-lg z-50 py-2 min-w-40">
-              {cuisines.map(c => (
-                <a key={c.href} href={c.href} className="block px-4 py-1.5 text-xs text-gray-600 hover:text-orange-600 hover:bg-orange-50">
-                  {c.label}
-                </a>
-              ))}
-            </div>
-          )}
-        </div>
-        <div className="relative">
-          <button
-            onClick={() => { setRecipesOpen(!recipesOpen); setCuisinesOpen(false); }}
-            className="text-xs font-semibold text-gray-600 hover:text-orange-600 px-3 py-1 rounded-lg hover:bg-orange-50 transition-colors flex items-center gap-1"
-          >
-            Recipes <span className="text-gray-400">{recipesOpen ? "▲" : "▼"}</span>
-          </button>
-          {recipesOpen && (
-            <div className="absolute top-full left-0 bg-white border border-gray-100 rounded-xl shadow-lg z-50 py-2 min-w-48">
-              {recipes.map(r => (
-                <a key={r.href} href={r.href} className="block px-4 py-1.5 text-xs text-gray-600 hover:text-orange-600 hover:bg-orange-50">
-                  {r.label}
-                </a>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
-    </nav>
-  );
-}
+new = '''  const recipes = [
+    { label: "Chicken and Rice", href: "/recipes/chicken-and-rice" },
+    { label: "Chicken and Broccoli", href: "/recipes/chicken-and-broccoli" },
+    { label: "Chicken Breast and Rice", href: "/recipes/chicken-breast-and-rice" },
+    { label: "Chicken and Pasta", href: "/recipes/chicken-and-pasta" },
+    { label: "Chicken and Potatoes", href: "/recipes/chicken-and-potatoes" },
+    { label: "Chicken and Mushrooms", href: "/recipes/chicken-and-mushrooms" },
+    { label: "Chicken and Spinach", href: "/recipes/chicken-and-spinach" },
+    { label: "Chicken and Tomatoes", href: "/recipes/chicken-and-tomatoes" },
+    { label: "Chicken and Garlic", href: "/recipes/chicken-and-garlic" },
+    { label: "Chicken and Lemon", href: "/recipes/chicken-and-lemon" },
+    { label: "Beef and Broccoli", href: "/recipes/beef-and-broccoli" },
+    { label: "Beef and Potatoes", href: "/recipes/beef-and-potatoes" },
+    { label: "Ground Beef and Pasta", href: "/recipes/ground-beef-and-pasta" },
+    { label: "Ground Beef and Rice", href: "/recipes/ground-beef-and-rice" },
+    { label: "Ground Beef and Potatoes", href: "/recipes/ground-beef-and-potatoes" },
+    { label: "Shrimp and Rice", href: "/recipes/shrimp-and-rice" },
+    { label: "Shrimp and Pasta", href: "/recipes/shrimp-and-pasta" },
+    { label: "Salmon and Rice", href: "/recipes/salmon-and-rice" },
+    { label: "Tuna and Pasta", href: "/recipes/tuna-and-pasta" },
+    { label: "Pork and Rice", href: "/recipes/pork-and-rice" },
+    { label: "Pork and Potatoes", href: "/recipes/pork-and-potatoes" },
+    { label: "Eggs and Bread", href: "/recipes/eggs-and-bread" },
+    { label: "Eggs and Cheese", href: "/recipes/eggs-and-cheese" },
+    { label: "Eggs and Potatoes", href: "/recipes/eggs-and-potatoes" },
+    { label: "Pasta and Cheese", href: "/recipes/pasta-and-cheese" },
+    { label: "Potatoes and Cheese", href: "/recipes/potatoes-and-cheese" },
+  ];'''
 
-'''
-
-# Find where RecipeApp function starts and insert NavBar before it
-content = content.replace('function RecipeApp()', navbar + 'function RecipeApp()')
-
-# Find the header closing tag and add NavBar after it
-content = content.replace(
-    '</header>\n\n      <main',
-    '</header>\n      <NavBar />\n\n      <main'
-)
+content = content.replace(old, new)
 
 with open('app/page.tsx', 'w', encoding='utf-8') as f:
     f.write(content)
 
-print('NavBar added:', 'NavBar' in open('app/page.tsx', encoding='utf-8').read())
+print('Done!')
