@@ -74,6 +74,7 @@ export async function GET(request) {
         const cuisineList = cuisine.split(",").map(c => c.trim().toLowerCase());
 
         // Fetch cuisine recipes and ingredient recipes in parallel
+        console.log("Fetching cuisines:", cuisineList);
         const cuisineFetches = cuisineList.map(c =>
           fetch("https://api.spoonacular.com/recipes/complexSearch?cuisine=" + encodeURIComponent(c) + "&number=20&addRecipeInformation=false&apiKey=" + apiKey)
             .then(r => r.json())
@@ -91,43 +92,63 @@ export async function GET(request) {
           ingredientFetch,
         ]);
 
+        console.log("Results per cuisine:", cuisineResultsArrays.map(a => a.length));
         const cuisineRecipes = cuisineResultsArrays.flat();
         const cuisineIdSet = new Set(cuisineRecipes.map(r => r.id));
 
         // Find ingredient results that are also in cuisine results
         const overlap = ingredientResults.filter(r => cuisineIdSet.has(r.id));
 
-        let results;
-        if (overlap.length >= 3) {
-          results = overlap.slice(0, 9);
-        } else if (overlap.length > 0) {
-          const overlapIds = new Set(overlap.map(r => r.id));
-          const cuisineOnly = cuisineRecipes
-            .filter(r => !overlapIds.has(r.id))
-            .slice(0, 9 - overlap.length)
-            .map(r => ({
+        // Take 3 results per cuisine evenly, then fill with overlap
+        const totalResults = Math.min(9 * cuisineList.length, 27);
+        const perCuisine = Math.max(3, Math.floor(totalResults / cuisineList.length));
+        const seenIds = new Set();
+        let results = [];
+
+        // First add overlap results (ingredient + cuisine match)
+        for (const r of overlap) {
+          if (results.length >= totalResults) break;
+          if (!seenIds.has(r.id)) {
+            seenIds.add(r.id);
+            results.push(r);
+          }
+        }
+
+        // Then fill evenly from each cuisine
+        for (const arr of cuisineResultsArrays) {
+          let added = 0;
+          for (const r of arr) {
+            if (results.length >= totalResults) break;
+            if (added >= perCuisine) break;
+            if (!seenIds.has(r.id)) {
+              seenIds.add(r.id);
+              added++;
+              results.push({
+                id: r.id,
+                title: r.title,
+                image: r.image,
+                usedIngredients: ingredients.split(",").map(i => ({ name: i.trim() })),
+                missedIngredients: [],
+                isCuisineSearch: true,
+              });
+            }
+          }
+        }
+
+        // If still not enough, fill remaining slots from any cuisine
+        for (const r of cuisineRecipes) {
+          if (results.length >= totalResults) break;
+          if (!seenIds.has(r.id)) {
+            seenIds.add(r.id);
+            results.push({
               id: r.id,
               title: r.title,
               image: r.image,
               usedIngredients: ingredients.split(",").map(i => ({ name: i.trim() })),
               missedIngredients: [],
               isCuisineSearch: true,
-            }));
-          results = [...overlap, ...cuisineOnly].slice(0, 9);
-        } else {
-          // No overlap — show cuisine results only
-          const seenIds = new Set();
-          results = cuisineRecipes
-            .filter(r => { if (seenIds.has(r.id)) return false; seenIds.add(r.id); return true; })
-            .slice(0, 9)
-            .map(r => ({
-              id: r.id,
-              title: r.title,
-              image: r.image,
-              usedIngredients: ingredients.split(",").map(i => ({ name: i.trim() })),
-              missedIngredients: [],
-              isCuisineSearch: true,
-            }));
+            });
+          }
         }
 
         cache[cacheKey] = { data: results, timestamp: Date.now() };
