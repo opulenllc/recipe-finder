@@ -100,14 +100,12 @@ export async function GET(request) {
         const overlap = ingredientResults.filter(r => cuisineIdSet.has(r.id));
 
         // Take 3 results per cuisine evenly, then fill with overlap
-        const totalResults = Math.min(9 * cuisineList.length, 27);
-        const perCuisine = Math.max(3, Math.floor(totalResults / cuisineList.length));
+        const perCuisine = 20;
         const seenIds = new Set();
         let results = [];
 
         // First add overlap results (ingredient + cuisine match)
         for (const r of overlap) {
-          if (results.length >= totalResults) break;
           if (!seenIds.has(r.id)) {
             seenIds.add(r.id);
             results.push(r);
@@ -118,7 +116,6 @@ export async function GET(request) {
         for (const arr of cuisineResultsArrays) {
           let added = 0;
           for (const r of arr) {
-            if (results.length >= totalResults) break;
             if (added >= perCuisine) break;
             if (!seenIds.has(r.id)) {
               seenIds.add(r.id);
@@ -135,9 +132,8 @@ export async function GET(request) {
           }
         }
 
-        // If still not enough, fill remaining slots from any cuisine
+        // Fill any remaining from any cuisine
         for (const r of cuisineRecipes) {
-          if (results.length >= totalResults) break;
           if (!seenIds.has(r.id)) {
             seenIds.add(r.id);
             results.push({

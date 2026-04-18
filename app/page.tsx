@@ -455,6 +455,7 @@ function RecipeApp() {
   const [searchMode, setSearchMode] = useState<"ingredients" | "name">("ingredients");
   const [referrerPage, setReferrerPage] = useState<string | null>(null);
   const [activeCuisines, setActiveCuisines] = useState<string[]>([]);
+  const [visibleCount, setVisibleCount] = useState(9);
 
   useEffect(() => {
     const referrer = searchParams.get("from");
@@ -490,6 +491,7 @@ function RecipeApp() {
     setLoading(true);
     setSearched(true);
     setShowAll(false);
+    setVisibleCount(9);
     setIngredients(searchTerm);
     if (!history.includes(searchTerm)) {
       setHistory((prev) => [searchTerm, ...prev].slice(0, 5));
@@ -543,9 +545,10 @@ function RecipeApp() {
     );
   };
 
-  const filteredRecipes = showAll || searchMode === "name" || activeCuisines.length > 0
+  const allFilteredRecipes = showAll || searchMode === "name" || activeCuisines.length > 0
     ? recipes
     : recipes.filter((recipe) => isPerfectMatch(recipe));
+  const filteredRecipes = allFilteredRecipes.slice(0, visibleCount);
 
   return (
     <div className="min-h-screen bg-orange-50 flex flex-col">
@@ -643,7 +646,7 @@ function RecipeApp() {
         {searched && !loading && (
           <div className="flex items-center justify-between mb-4">
             <p className="text-sm text-gray-500">
-              {filteredRecipes.length === 0 ? "No matches found" : "Found " + filteredRecipes.length + " recipe" + (filteredRecipes.length === 1 ? "" : "s") + (activeCuisines.length > 0 ? " · " + activeCuisines.map(c => c.charAt(0).toUpperCase() + c.slice(1)).join(", ") : "")}
+              {allFilteredRecipes.length === 0 ? "No matches found" : "Found " + allFilteredRecipes.length + " recipe" + (allFilteredRecipes.length === 1 ? "" : "s") + (activeCuisines.length > 0 ? " · " + activeCuisines.map(c => c.charAt(0).toUpperCase() + c.slice(1)).join(", ") : "")}
             </p>
             {searchMode === "ingredients" && recipes.length > 0 && activeCuisines.length === 0 && (
               <button onClick={() => setShowAll(!showAll)} className="text-sm text-orange-600 underline">
@@ -704,6 +707,17 @@ function RecipeApp() {
                 </div>
               </div>
             ))}
+          </div>
+        )}
+        {allFilteredRecipes.length > visibleCount && !loading && (
+          <div className="flex flex-col items-center gap-2 mt-6">
+            <p className="text-xs text-gray-400">Showing {visibleCount} of {allFilteredRecipes.length} recipes</p>
+            <button
+              onClick={() => setVisibleCount(prev => prev + 9)}
+              className="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-8 py-3 rounded-xl"
+            >
+              Show More Recipes
+            </button>
           </div>
         )}
       </main>
