@@ -1,23 +1,83 @@
 with open('app/api/recipes/route.js', encoding='utf-8') as f:
     content = f.read()
 
-# Increase API fetch to max Spoonacular allows (100)
-content = content.replace(
-    '"&number=20&addRecipeInformation=false&apiKey=" + apiKey)',
-    '"&number=100&addRecipeInformation=false&apiKey=" + apiKey)'
-)
+old = '''        // First add overlap results (ingredient + cuisine match)
+        for (const r of overlap) {
+          if (!seenIds.has(r.id)) {
+            seenIds.add(r.id);
+            results.push(r);
+          }
+        }
 
-# Remove perCuisine limit
-content = content.replace(
-    '        const perCuisine = 20;',
-    '        const perCuisine = 999;'
-)
+        // Then fill evenly from each cuisine
+        for (const arr of cuisineResultsArrays) {
+          let added = 0;
+          for (const r of arr) {
+            if (added >= perCuisine) break;
+            if (!seenIds.has(r.id)) {
+              seenIds.add(r.id);
+              added++;
+              results.push({
+                id: r.id,
+                title: r.title,
+                image: r.image,
+                usedIngredients: ingredients.split(",").map(i => ({ name: i.trim() })),
+                missedIngredients: [],
+                isCuisineSearch: true,
+              });
+            }
+          }
+        }
 
-# Also increase ingredient fetch
-content = content.replace(
-    '"?ingredients=" + encodeURIComponent(ingredients) + "&number=20&apiKey=" + apiKey)',
-    '"?ingredients=" + encodeURIComponent(ingredients) + "&number=100&apiKey=" + apiKey)'
-)
+        // Fill any remaining from any cuisine
+        for (const r of cuisineRecipes) {
+          if (!seenIds.has(r.id)) {
+            seenIds.add(r.id);
+            results.push({
+              id: r.id,
+              title: r.title,
+              image: r.image,
+              usedIngredients: ingredients.split(",").map(i => ({ name: i.trim() })),
+              missedIngredients: [],
+              isCuisineSearch: true,
+            });
+          }
+        }'''
+
+new = '''        // First: add ingredient results that overlap with cuisine (best matches)
+        for (const r of overlap) {
+          if (!seenIds.has(r.id)) {
+            seenIds.add(r.id);
+            results.push(r);
+          }
+        }
+
+        // Second: add remaining ingredient results (no cuisine match but uses ingredients)
+        for (const r of ingredientResults) {
+          if (!seenIds.has(r.id)) {
+            seenIds.add(r.id);
+            results.push(r);
+          }
+        }
+
+        // Third: fill with cuisine-only results clearly marked
+        for (const arr of cuisineResultsArrays) {
+          for (const r of arr) {
+            if (!seenIds.has(r.id)) {
+              seenIds.add(r.id);
+              results.push({
+                id: r.id,
+                title: r.title,
+                image: r.image,
+                usedIngredients: [],
+                missedIngredients: [],
+                isCuisineSearch: true,
+              });
+            }
+          }
+        }'''
+
+content = content.replace(old, new)
 
 with open('app/api/recipes/route.js', 'w', encoding='utf-8') as f:
     f.write(content)

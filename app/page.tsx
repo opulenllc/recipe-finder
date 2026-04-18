@@ -682,16 +682,19 @@ function RecipeApp() {
               <div key={recipe.id} className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-shadow flex flex-col">
                 <div className="relative">
                   <img src={recipe.image} alt={recipe.title} className="w-full h-48 object-cover" onError={(e) => { e.currentTarget.src = "https://placehold.co/600x400?text=No+Image"; }} />
-                  {isPerfectMatch(recipe) && (
+                  {isPerfectMatch(recipe) && !recipe.isCuisineSearch && (
                     <div className="absolute top-2 left-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow">🎯 Perfect Match</div>
                   )}
                   {recipe.isNameSearch && (
                     <div className="absolute top-2 left-2 bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow">🍽️ Recipe</div>
                   )}
+                  {recipe.isCuisineSearch && (
+                    <div className="absolute top-2 left-2 bg-blue-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow capitalize">🌍 {activeCuisines.length === 1 ? activeCuisines[0] : "Cuisine Match"}</div>
+                  )}
                 </div>
                 <div className="p-4 flex flex-col flex-1">
                   <h2 className="text-lg font-bold text-gray-800 mb-2 leading-tight">{recipe.title}</h2>
-                  {!recipe.isNameSearch && (
+                  {!recipe.isNameSearch && !recipe.isCuisineSearch && (
                     <>
                       <p className="text-xs text-green-600 mb-1">Used: {recipe.usedIngredients.map((i: any) => i.name).join(", ")}</p>
                       {recipe.missedIngredients.length > 0 && (
