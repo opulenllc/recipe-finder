@@ -65,44 +65,78 @@ export async function GET(request) {
   }
 
   if (ingredients) {
-    const cacheKey = "ing_" + ingredients.toLowerCase().trim() + (cuisine ? "_" + cuisine : "");
+    const cacheKey = "ing_" + ingredients.toLowerCase().trim() + "_" + (cuisine || "none");
     if (cache[cacheKey] && Date.now() - cache[cacheKey].timestamp < CACHE_DURATION) {
       return Response.json(cache[cacheKey].data);
     }
     try {
-      let url;
       if (cuisine) {
         const cuisineList = cuisine.split(",").map(c => c.trim().toLowerCase());
-        const res = await fetch("https://api.spoonacular.com/recipes/findByIngredients?ingredients=" + ingredients + "&number=20&apiKey=" + apiKey);
-        const recipes = await res.json();
-        if (!Array.isArray(recipes)) {
-          cache[cacheKey] = { data: [], timestamp: Date.now() };
-          return Response.json([]);
+
+        // Fetch cuisine recipes and ingredient recipes in parallel
+        const cuisineFetches = cuisineList.map(c =>
+          fetch("https://api.spoonacular.com/recipes/complexSearch?cuisine=" + encodeURIComponent(c) + "&number=20&addRecipeInformation=false&apiKey=" + apiKey)
+            .then(r => r.json())
+            .then(j => (j.results || []).map(r => ({ ...r, matchedCuisine: c })))
+            .catch(() => [])
+        );
+
+        const ingredientFetch = fetch("https://api.spoonacular.com/recipes/findByIngredients?ingredients=" + encodeURIComponent(ingredients) + "&number=20&apiKey=" + apiKey)
+          .then(r => r.json())
+          .then(d => Array.isArray(d) ? d : [])
+          .catch(() => []);
+
+        const [cuisineResultsArrays, ingredientResults] = await Promise.all([
+          Promise.all(cuisineFetches),
+          ingredientFetch,
+        ]);
+
+        const cuisineRecipes = cuisineResultsArrays.flat();
+        const cuisineIdSet = new Set(cuisineRecipes.map(r => r.id));
+
+        // Find ingredient results that are also in cuisine results
+        const overlap = ingredientResults.filter(r => cuisineIdSet.has(r.id));
+
+        let results;
+        if (overlap.length >= 3) {
+          results = overlap.slice(0, 9);
+        } else if (overlap.length > 0) {
+          const overlapIds = new Set(overlap.map(r => r.id));
+          const cuisineOnly = cuisineRecipes
+            .filter(r => !overlapIds.has(r.id))
+            .slice(0, 9 - overlap.length)
+            .map(r => ({
+              id: r.id,
+              title: r.title,
+              image: r.image,
+              usedIngredients: ingredients.split(",").map(i => ({ name: i.trim() })),
+              missedIngredients: [],
+              isCuisineSearch: true,
+            }));
+          results = [...overlap, ...cuisineOnly].slice(0, 9);
+        } else {
+          // No overlap — show cuisine results only
+          const seenIds = new Set();
+          results = cuisineRecipes
+            .filter(r => { if (seenIds.has(r.id)) return false; seenIds.add(r.id); return true; })
+            .slice(0, 9)
+            .map(r => ({
+              id: r.id,
+              title: r.title,
+              image: r.image,
+              usedIngredients: ingredients.split(",").map(i => ({ name: i.trim() })),
+              missedIngredients: [],
+              isCuisineSearch: true,
+            }));
         }
-        const ids = recipes.map(r => r.id).join(",");
-        const infoRes = await fetch("https://api.spoonacular.com/recipes/informationBulk?ids=" + ids + "&apiKey=" + apiKey);
-        const infos = await infoRes.json();
-        console.log("INFO SAMPLE:", JSON.stringify(infos[0]?.cuisines));
-        const infoMap = {};
-        if (Array.isArray(infos)) {
-          infos.forEach(info => { infoMap[info.id] = info; });
-        }
-        const filtered = recipes.filter(r => {
-          const info = infoMap[r.id];
-          if (!info) return false;
-          const recipeCuisines = (info.cuisines || []).map(c => c.toLowerCase());
-          if (recipeCuisines.length === 0) return true;
-          return cuisineList.some(c => recipeCuisines.some(rc => rc.includes(c) || c.includes(rc)));
-        });
-        const results = (filtered.length > 0 ? filtered : recipes.slice(0, 9)).slice(0, 9);
+
         cache[cacheKey] = { data: results, timestamp: Date.now() };
         return Response.json(results);
       } else {
-        url = "https://api.spoonacular.com/recipes/findByIngredients?ingredients=" + ingredients + "&number=9&apiKey=" + apiKey;
-        const res = await fetch(url);
+        const res = await fetch("https://api.spoonacular.com/recipes/findByIngredients?ingredients=" + encodeURIComponent(ingredients) + "&number=9&apiKey=" + apiKey);
         const data = await res.json();
-        cache[cacheKey] = { data, timestamp: Date.now() };
-        return Response.json(data);
+        cache[cacheKey] = { data: Array.isArray(data) ? data : [], timestamp: Date.now() };
+        return Response.json(Array.isArray(data) ? data : []);
       }
     } catch (error) {
       return Response.json({ error: "Failed to fetch recipes" }, { status: 500 });
