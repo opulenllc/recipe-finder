@@ -76,7 +76,7 @@ export async function GET(request) {
         // Fetch cuisine recipes and ingredient recipes in parallel
         console.log("Fetching cuisines:", cuisineList);
         const cuisineFetches = cuisineList.map(c =>
-          fetch("https://api.spoonacular.com/recipes/complexSearch?cuisine=" + encodeURIComponent(c) + "&number=20&addRecipeInformation=false&apiKey=" + apiKey)
+          fetch("https://api.spoonacular.com/recipes/complexSearch?cuisine=" + encodeURIComponent(c) + "&number=100&addRecipeInformation=false&apiKey=" + apiKey)
             .then(r => r.json())
             .then(j => (j.results || []).map(r => ({ ...r, matchedCuisine: c })))
             .catch(() => [])
@@ -100,7 +100,7 @@ export async function GET(request) {
         const overlap = ingredientResults.filter(r => cuisineIdSet.has(r.id));
 
         // Take 3 results per cuisine evenly, then fill with overlap
-        const perCuisine = 20;
+        const perCuisine = 999;
         const seenIds = new Set();
         let results = [];
 
