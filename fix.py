@@ -1,125 +1,29 @@
-# Update client.tsx to pass cuisine in the URL
-with open('app/recipes/cuisine/[cuisine]/client.tsx', encoding='utf-8') as f:
+with open('app/page.tsx', encoding='utf-8') as f:
     content = f.read()
 
-old = '  const searchUrl = "/?ingredients=" + encodeURIComponent(selected.join(","));'
-new = '  const searchUrl = "/?ingredients=" + encodeURIComponent(selected.join(",")) + "&cuisine=" + cuisine;'
-
+# Update handleClear to also clear cuisine
+old = '  const handleClear = () => {\n    setIngredients("");\n    setRecipes([]);\n    setSearched(false);\n    setShowAll(false);\n  };'
+new = '  const handleClear = () => {\n    setIngredients("");\n    setRecipes([]);\n    setSearched(false);\n    setShowAll(false);\n    setActiveCuisine(null);\n  };'
 content = content.replace(old, new)
 
-with open('app/recipes/cuisine/[cuisine]/client.tsx', 'w', encoding='utf-8') as f:
+# Add cuisine badge after the mode toggle buttons and before the search box
+old = '        <div className="flex gap-2 mb-2">'
+new = '''        {activeCuisine && (
+          <div className="flex items-center gap-2 mb-3 bg-orange-100 border border-orange-200 rounded-xl px-4 py-2 w-fit">
+            <span className="text-sm text-orange-700 font-medium">🍽️ Filtering by: <span className="font-bold capitalize">{activeCuisine} cuisine</span></span>
+            <button
+              onClick={() => setActiveCuisine(null)}
+              className="text-orange-400 hover:text-orange-600 font-bold text-lg leading-none ml-1"
+              title="Remove cuisine filter"
+            >
+              ×
+            </button>
+          </div>
+        )}
+        <div className="flex gap-2 mb-2">'''
+content = content.replace(old, new)
+
+with open('app/page.tsx', 'w', encoding='utf-8') as f:
     f.write(content)
 
-print('client.tsx done!')
-
-# Update route.js to support cuisine filtering
-route = '''const cache = {};
-const CACHE_DURATION = 60 * 60 * 1000;
-
-export async function GET(request) {
-  const { searchParams } = new URL(request.url);
-  const ingredients = searchParams.get("ingredients");
-  const id = searchParams.get("id");
-  const type = searchParams.get("type");
-  const query = searchParams.get("query");
-  const cuisine = searchParams.get("cuisine");
-  const apiKey = "6b6dd0f982c448f7adef501f6ca84f88";
-
-  if (id && type === "info") {
-    const cacheKey = "info_" + id;
-    if (cache[cacheKey] && Date.now() - cache[cacheKey].timestamp < CACHE_DURATION) {
-      return Response.json(cache[cacheKey].data);
-    }
-    try {
-      const res = await fetch("https://api.spoonacular.com/recipes/" + id + "/information?includeNutrition=true&apiKey=" + apiKey);
-      const data = await res.json();
-      cache[cacheKey] = { data, timestamp: Date.now() };
-      return Response.json(data);
-    } catch (error) {
-      return Response.json({ error: "Failed" }, { status: 500 });
-    }
-  }
-
-  if (id && type === "instructions") {
-    const cacheKey = "instr_" + id;
-    if (cache[cacheKey] && Date.now() - cache[cacheKey].timestamp < CACHE_DURATION) {
-      return Response.json(cache[cacheKey].data);
-    }
-    try {
-      const res = await fetch("https://api.spoonacular.com/recipes/" + id + "/analyzedInstructions?apiKey=" + apiKey);
-      const data = await res.json();
-      cache[cacheKey] = { data, timestamp: Date.now() };
-      return Response.json(data);
-    } catch (error) {
-      return Response.json([], { status: 500 });
-    }
-  }
-
-  if (query) {
-    const cacheKey = "query_" + query.toLowerCase().trim();
-    if (cache[cacheKey] && Date.now() - cache[cacheKey].timestamp < CACHE_DURATION) {
-      return Response.json(cache[cacheKey].data);
-    }
-    try {
-      const res = await fetch("https://api.spoonacular.com/recipes/complexSearch?query=" + encodeURIComponent(query) + "&number=9&addRecipeInformation=false&apiKey=" + apiKey);
-      const json = await res.json();
-      const results = (json.results || []).map((r) => ({
-        id: r.id,
-        title: r.title,
-        image: r.image,
-        usedIngredients: [],
-        missedIngredients: [],
-        likes: 0,
-        isNameSearch: true,
-      }));
-      cache[cacheKey] = { data: results, timestamp: Date.now() };
-      return Response.json(results);
-    } catch (error) {
-      return Response.json({ error: "Failed to fetch recipes" }, { status: 500 });
-    }
-  }
-
-  if (ingredients) {
-    const cacheKey = "ing_" + ingredients.toLowerCase().trim() + (cuisine ? "_" + cuisine : "");
-    if (cache[cacheKey] && Date.now() - cache[cacheKey].timestamp < CACHE_DURATION) {
-      return Response.json(cache[cacheKey].data);
-    }
-    try {
-      let url;
-      if (cuisine) {
-        url = "https://api.spoonacular.com/recipes/complexSearch?includeIngredients=" + encodeURIComponent(ingredients) + "&cuisine=" + encodeURIComponent(cuisine) + "&number=9&addRecipeInformation=false&apiKey=" + apiKey;
-        const res = await fetch(url);
-        const json = await res.json();
-        const results = (json.results || []).map((r) => ({
-          id: r.id,
-          title: r.title,
-          image: r.image,
-          usedIngredients: ingredients.split(",").map(i => ({ name: i.trim() })),
-          missedIngredients: [],
-          likes: 0,
-          isCuisineSearch: true,
-          cuisine: cuisine,
-        }));
-        cache[cacheKey] = { data: results, timestamp: Date.now() };
-        return Response.json(results);
-      } else {
-        url = "https://api.spoonacular.com/recipes/findByIngredients?ingredients=" + ingredients + "&number=9&apiKey=" + apiKey;
-        const res = await fetch(url);
-        const data = await res.json();
-        cache[cacheKey] = { data, timestamp: Date.now() };
-        return Response.json(data);
-      }
-    } catch (error) {
-      return Response.json({ error: "Failed to fetch recipes" }, { status: 500 });
-    }
-  }
-
-  return Response.json({ error: "No parameters provided" }, { status: 400 });
-}
-'''
-
-with open('app/api/recipes/route.js', 'w', encoding='utf-8') as f:
-    f.write(route)
-
-print('route.js done!')
-print('All done!')
+print('Done!')

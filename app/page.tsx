@@ -523,6 +523,7 @@ function RecipeApp() {
     setRecipes([]);
     setSearched(false);
     setShowAll(false);
+    setActiveCuisine(null);
   };
 
   const handleModeSwitch = (mode: "ingredients" | "name") => {
@@ -590,6 +591,18 @@ function RecipeApp() {
           </button>
         </div>
 
+        {activeCuisine && (
+          <div className="flex items-center gap-2 mb-3 bg-orange-100 border border-orange-200 rounded-xl px-4 py-2 w-fit">
+            <span className="text-sm text-orange-700 font-medium">🍽️ Filtering by: <span className="font-bold capitalize">{activeCuisine} cuisine</span></span>
+            <button
+              onClick={() => setActiveCuisine(null)}
+              className="text-orange-400 hover:text-orange-600 font-bold text-lg leading-none ml-1"
+              title="Remove cuisine filter"
+            >
+              ×
+            </button>
+          </div>
+        )}
         <div className="flex gap-2 mb-2">
           <div className="relative flex-1">
             <input
