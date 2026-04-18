@@ -543,7 +543,7 @@ function RecipeApp() {
     );
   };
 
-  const filteredRecipes = showAll || searchMode === "name"
+  const filteredRecipes = showAll || searchMode === "name" || activeCuisines.length > 0
     ? recipes
     : recipes.filter((recipe) => isPerfectMatch(recipe));
 
@@ -645,7 +645,7 @@ function RecipeApp() {
             <p className="text-sm text-gray-500">
               {filteredRecipes.length === 0 ? "No matches found" : "Found " + filteredRecipes.length + " recipe" + (filteredRecipes.length === 1 ? "" : "s") + (activeCuisines.length > 0 ? " · " + activeCuisines.map(c => c.charAt(0).toUpperCase() + c.slice(1)).join(", ") : "")}
             </p>
-            {searchMode === "ingredients" && recipes.length > 0 && (
+            {searchMode === "ingredients" && recipes.length > 0 && activeCuisines.length === 0 && (
               <button onClick={() => setShowAll(!showAll)} className="text-sm text-orange-600 underline">
                 {showAll ? "Show exact matches only" : "Show all partial matches"}
               </button>
