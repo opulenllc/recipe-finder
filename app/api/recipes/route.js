@@ -82,6 +82,7 @@ export async function GET(request) {
         const ids = recipes.map(r => r.id).join(",");
         const infoRes = await fetch("https://api.spoonacular.com/recipes/informationBulk?ids=" + ids + "&apiKey=" + apiKey);
         const infos = await infoRes.json();
+        console.log("INFO SAMPLE:", JSON.stringify(infos[0]?.cuisines));
         const infoMap = {};
         if (Array.isArray(infos)) {
           infos.forEach(info => { infoMap[info.id] = info; });
