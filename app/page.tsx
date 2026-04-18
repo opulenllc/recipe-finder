@@ -462,6 +462,10 @@ function RecipeApp() {
     if (referrer) setReferrerPage(decodeURIComponent(referrer));
     const cuisineParam = searchParams.get("cuisine");
     if (cuisineParam) setActiveCuisines([cuisineParam]);
+    // Clean URL params after reading them
+    if (window.history.replaceState) {
+      window.history.replaceState({}, "", "/");
+    }
     const ing = searchParams.get("ingredients");
     const recipeId = searchParams.get("recipeId");
     const recipeTitle = searchParams.get("recipeTitle");
