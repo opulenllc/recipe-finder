@@ -454,13 +454,13 @@ function RecipeApp() {
   const [selectedRecipe, setSelectedRecipe] = useState<any | null>(null);
   const [searchMode, setSearchMode] = useState<"ingredients" | "name">("ingredients");
   const [referrerPage, setReferrerPage] = useState<string | null>(null);
-  const [activeCuisine, setActiveCuisine] = useState<string | null>(null);
+  const [activeCuisines, setActiveCuisines] = useState<string[]>([]);
 
   useEffect(() => {
     const referrer = searchParams.get("from");
     if (referrer) setReferrerPage(decodeURIComponent(referrer));
     const cuisineParam = searchParams.get("cuisine");
-    if (cuisineParam) setActiveCuisine(cuisineParam);
+    if (cuisineParam) setActiveCuisines([cuisineParam]);
     const ing = searchParams.get("ingredients");
     const recipeId = searchParams.get("recipeId");
     const recipeTitle = searchParams.get("recipeTitle");
@@ -497,7 +497,7 @@ function RecipeApp() {
 
     const url = currentMode === "name"
       ? "/api/recipes?query=" + encodeURIComponent(searchTerm)
-      : "/api/recipes?ingredients=" + searchTerm + (activeCuisine ? "&cuisine=" + activeCuisine : "");
+      : "/api/recipes?ingredients=" + searchTerm + (activeCuisines.length > 0 ? "&cuisine=" + activeCuisines.join(",") : "");
 
     const res = await fetch(url);
     const data = await res.json();
@@ -523,7 +523,7 @@ function RecipeApp() {
     setRecipes([]);
     setSearched(false);
     setShowAll(false);
-    setActiveCuisine(null);
+    setActiveCuisines([]);
   };
 
   const handleModeSwitch = (mode: "ingredients" | "name") => {
@@ -591,18 +591,23 @@ function RecipeApp() {
           </button>
         </div>
 
-        {activeCuisine && (
-          <div className="flex items-center gap-2 mb-3 bg-orange-100 border border-orange-200 rounded-xl px-4 py-2 w-fit">
-            <span className="text-sm text-orange-700 font-medium">🍽️ Filtering by: <span className="font-bold capitalize">{activeCuisine} cuisine</span></span>
-            <button
-              onClick={() => setActiveCuisine(null)}
-              className="text-orange-400 hover:text-orange-600 font-bold text-lg leading-none ml-1"
-              title="Remove cuisine filter"
-            >
-              ×
-            </button>
+        <div className="mb-3">
+          <div className="flex flex-wrap gap-2 items-center">
+            <span className="text-xs text-gray-400 font-medium">Filter by cuisine:</span>
+            {["italian","mexican","chinese","indian","japanese","thai","american","mediterranean"].map(c => (
+              <button
+                key={c}
+                onClick={() => setActiveCuisines(prev => prev.includes(c) ? prev.filter(x => x !== c) : [...prev, c])}
+                className={"text-xs font-semibold px-3 py-1 rounded-full border-2 transition-colors capitalize " + (activeCuisines.includes(c) ? "bg-orange-500 text-white border-orange-500" : "bg-white text-gray-500 border-gray-200 hover:border-orange-300 hover:text-orange-600")}
+              >
+                {activeCuisines.includes(c) ? "✓ " : ""}{c}
+              </button>
+            ))}
+            {activeCuisines.length > 0 && (
+              <button onClick={() => setActiveCuisines([])} className="text-xs text-gray-400 hover:text-gray-600 underline">Clear filters</button>
+            )}
           </div>
-        )}
+        </div>
         <div className="flex gap-2 mb-2">
           <div className="relative flex-1">
             <input
@@ -638,7 +643,7 @@ function RecipeApp() {
         {searched && !loading && (
           <div className="flex items-center justify-between mb-4">
             <p className="text-sm text-gray-500">
-              {filteredRecipes.length === 0 ? "No matches found" : "Found " + filteredRecipes.length + " recipe" + (filteredRecipes.length === 1 ? "" : "s") + (activeCuisine ? " · " + activeCuisine.charAt(0).toUpperCase() + activeCuisine.slice(1) + " cuisine" : "")}
+              {filteredRecipes.length === 0 ? "No matches found" : "Found " + filteredRecipes.length + " recipe" + (filteredRecipes.length === 1 ? "" : "s") + (activeCuisines.length > 0 ? " · " + activeCuisines.map(c => c.charAt(0).toUpperCase() + c.slice(1)).join(", ") : "")}
             </p>
             {searchMode === "ingredients" && recipes.length > 0 && (
               <button onClick={() => setShowAll(!showAll)} className="text-sm text-orange-600 underline">

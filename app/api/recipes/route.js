@@ -72,7 +72,7 @@ export async function GET(request) {
     try {
       let url;
       if (cuisine) {
-        url = "https://api.spoonacular.com/recipes/complexSearch?includeIngredients=" + encodeURIComponent(ingredients) + "&cuisine=" + encodeURIComponent(cuisine) + "&number=9&addRecipeInformation=false&apiKey=" + apiKey;
+        url = "https://api.spoonacular.com/recipes/complexSearch?includeIngredients=" + encodeURIComponent(ingredients) + "&cuisine=" + encodeURIComponent(cuisine) + "&number=9&addRecipeInformation=false&fillIngredients=true&apiKey=" + apiKey;
         const res = await fetch(url);
         const json = await res.json();
         const results = (json.results || []).map((r) => ({
