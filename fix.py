@@ -1,50 +1,7 @@
 with open('app/api/recipes/route.js', encoding='utf-8') as f:
     content = f.read()
 
-old = '''        // First add overlap results (ingredient + cuisine match)
-        for (const r of overlap) {
-          if (!seenIds.has(r.id)) {
-            seenIds.add(r.id);
-            results.push(r);
-          }
-        }
-
-        // Then fill evenly from each cuisine
-        for (const arr of cuisineResultsArrays) {
-          let added = 0;
-          for (const r of arr) {
-            if (added >= perCuisine) break;
-            if (!seenIds.has(r.id)) {
-              seenIds.add(r.id);
-              added++;
-              results.push({
-                id: r.id,
-                title: r.title,
-                image: r.image,
-                usedIngredients: ingredients.split(",").map(i => ({ name: i.trim() })),
-                missedIngredients: [],
-                isCuisineSearch: true,
-              });
-            }
-          }
-        }
-
-        // Fill any remaining from any cuisine
-        for (const r of cuisineRecipes) {
-          if (!seenIds.has(r.id)) {
-            seenIds.add(r.id);
-            results.push({
-              id: r.id,
-              title: r.title,
-              image: r.image,
-              usedIngredients: ingredients.split(",").map(i => ({ name: i.trim() })),
-              missedIngredients: [],
-              isCuisineSearch: true,
-            });
-          }
-        }'''
-
-new = '''        // First: add ingredient results that overlap with cuisine (best matches)
+old = '''        // First: add ingredient results that overlap with cuisine (best matches)
         for (const r of overlap) {
           if (!seenIds.has(r.id)) {
             seenIds.add(r.id);
@@ -61,6 +18,33 @@ new = '''        // First: add ingredient results that overlap with cuisine (bes
         }
 
         // Third: fill with cuisine-only results clearly marked
+        for (const arr of cuisineResultsArrays) {
+          for (const r of arr) {
+            if (!seenIds.has(r.id)) {
+              seenIds.add(r.id);
+              results.push({
+                id: r.id,
+                title: r.title,
+                image: r.image,
+                usedIngredients: [],
+                missedIngredients: [],
+                isCuisineSearch: true,
+              });
+            }
+          }
+        }'''
+
+new = '''        // HARD FILTER: only show recipes that match cuisine
+        // First: overlap (ingredient + cuisine match) - best results
+        for (const r of overlap) {
+          if (!seenIds.has(r.id)) {
+            seenIds.add(r.id);
+            results.push(r);
+          }
+        }
+
+        // Second: cuisine-only results that were not in ingredient results
+        // These are cuisine matches that may use the ingredient in a different way
         for (const arr of cuisineResultsArrays) {
           for (const r of arr) {
             if (!seenIds.has(r.id)) {

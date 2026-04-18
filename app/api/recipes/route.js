@@ -104,7 +104,8 @@ export async function GET(request) {
         const seenIds = new Set();
         let results = [];
 
-        // First: add ingredient results that overlap with cuisine (best matches)
+        // HARD FILTER: only show recipes that match cuisine
+        // First: overlap (ingredient + cuisine match) - best results
         for (const r of overlap) {
           if (!seenIds.has(r.id)) {
             seenIds.add(r.id);
@@ -112,15 +113,8 @@ export async function GET(request) {
           }
         }
 
-        // Second: add remaining ingredient results (no cuisine match but uses ingredients)
-        for (const r of ingredientResults) {
-          if (!seenIds.has(r.id)) {
-            seenIds.add(r.id);
-            results.push(r);
-          }
-        }
-
-        // Third: fill with cuisine-only results clearly marked
+        // Second: cuisine-only results that were not in ingredient results
+        // These are cuisine matches that may use the ingredient in a different way
         for (const arr of cuisineResultsArrays) {
           for (const r of arr) {
             if (!seenIds.has(r.id)) {
