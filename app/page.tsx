@@ -454,10 +454,13 @@ function RecipeApp() {
   const [selectedRecipe, setSelectedRecipe] = useState<any | null>(null);
   const [searchMode, setSearchMode] = useState<"ingredients" | "name">("ingredients");
   const [referrerPage, setReferrerPage] = useState<string | null>(null);
+  const [activeCuisine, setActiveCuisine] = useState<string | null>(null);
 
   useEffect(() => {
     const referrer = searchParams.get("from");
     if (referrer) setReferrerPage(decodeURIComponent(referrer));
+    const cuisineParam = searchParams.get("cuisine");
+    if (cuisineParam) setActiveCuisine(cuisineParam);
     const ing = searchParams.get("ingredients");
     const recipeId = searchParams.get("recipeId");
     const recipeTitle = searchParams.get("recipeTitle");
@@ -494,7 +497,7 @@ function RecipeApp() {
 
     const url = currentMode === "name"
       ? "/api/recipes?query=" + encodeURIComponent(searchTerm)
-      : "/api/recipes?ingredients=" + searchTerm;
+      : "/api/recipes?ingredients=" + searchTerm + (activeCuisine ? "&cuisine=" + activeCuisine : "");
 
     const res = await fetch(url);
     const data = await res.json();
@@ -622,7 +625,7 @@ function RecipeApp() {
         {searched && !loading && (
           <div className="flex items-center justify-between mb-4">
             <p className="text-sm text-gray-500">
-              {filteredRecipes.length === 0 ? "No matches found" : "Found " + filteredRecipes.length + " recipe" + (filteredRecipes.length === 1 ? "" : "s")}
+              {filteredRecipes.length === 0 ? "No matches found" : "Found " + filteredRecipes.length + " recipe" + (filteredRecipes.length === 1 ? "" : "s") + (activeCuisine ? " · " + activeCuisine.charAt(0).toUpperCase() + activeCuisine.slice(1) + " cuisine" : "")}
             </p>
             {searchMode === "ingredients" && recipes.length > 0 && (
               <button onClick={() => setShowAll(!showAll)} className="text-sm text-orange-600 underline">

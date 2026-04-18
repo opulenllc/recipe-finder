@@ -95,7 +95,7 @@ export default function CuisineClient({ cuisine, label, headline, description, c
     );
   };
 
-  const searchUrl = "/?ingredients=" + encodeURIComponent(selected.join(","));
+  const searchUrl = "/?ingredients=" + encodeURIComponent(selected.join(",")) + "&cuisine=" + cuisine;
 
   return (
     <div className="min-h-screen bg-orange-50 flex flex-col">
