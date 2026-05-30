@@ -509,10 +509,6 @@ function RecipeApp() {
     const data = await res.json();
     if (Array.isArray(data)) {
       setRecipes(data);
-      data.slice(0, 3).forEach((r: any) => {
-        fetch("/api/recipes?id=" + r.id + "&type=info").catch(() => {});
-        fetch("/api/recipes?id=" + r.id + "&type=instructions").catch(() => {});
-      });
       setLoading(false);
       return data;
     }
