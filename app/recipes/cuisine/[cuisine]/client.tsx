@@ -145,7 +145,7 @@ export default function CuisineClient({ cuisine, label, headline, description, c
         </div>
       </main>
       <footer className="bg-white border-t border-gray-100 py-4 px-6 text-center text-sm text-gray-400">
-        myrecipematch.com · Recipes by Spoonacular · <a href="/privacy" className="hover:text-orange-400">Privacy Policy</a> · <a href="/terms" className="hover:text-orange-400">Terms of Service</a>
+        myrecipematch.com · <a href="/privacy" className="hover:text-orange-400">Privacy Policy</a> · <a href="/terms" className="hover:text-orange-400">Terms of Service</a>
       </footer>
     </div>
   );

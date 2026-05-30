@@ -1,12 +1,24 @@
-with open('app/page.tsx', encoding='utf-8') as f:
-    content = f.read()
+for filepath in [
+    'app/recipes/[slug]/page.tsx',
+    'app/recipes/cuisine/[cuisine]/client.tsx',
+]:
+    with open(filepath, encoding='utf-8') as f:
+        content = f.read()
 
-# Update cuisine badge to show "Also in [cuisine]" vs just cuisine name
-old = '                  {recipe.isCuisineSearch && (\n                    <div className="absolute top-2 left-2 bg-blue-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow capitalize">🌍 {recipe.matchedCuisine || activeCuisines[0]}</div>\n                  )}'
-new = '                  {recipe.isCuisineSearch && (\n                    <div className="absolute top-2 left-2 bg-blue-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow capitalize">🌍 {activeCuisines.length === 1 ? activeCuisines[0] : "Cuisine Match"}</div>\n                  )}'
-content = content.replace(old, new)
+    content = content.replace(
+        'myrecipematch.com · Recipes by Spoonacular · <a href="/privacy" className="hover:text-orange-400">Privacy Policy</a> · <a href="/terms" className="hover:text-orange-400">Terms of Service</a>',
+        'myrecipematch.com · <a href="/privacy" className="hover:text-orange-400">Privacy Policy</a> · <a href="/terms" className="hover:text-orange-400">Terms of Service</a>'
+    )
+    content = content.replace(
+        'Recipe data by Spoonacular · myrecipematch.com',
+        'myrecipematch.com'
+    )
+    content = content.replace(
+        'Recipe data by Spoonacular',
+        ''
+    )
 
-with open('app/page.tsx', 'w', encoding='utf-8') as f:
-    f.write(content)
+    with open(filepath, 'w', encoding='utf-8') as f:
+        f.write(content)
 
-print('Done!')
+    print(filepath + ' done!')
