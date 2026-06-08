@@ -73,6 +73,7 @@ function NavBar() {
             </div>
           )}
         </div>
+        <a href="/about" className="text-xs font-semibold text-gray-600 hover:text-orange-600 px-3 py-1 rounded-lg hover:bg-orange-50 transition-colors">About</a>
       </div>
     </nav>
   );
