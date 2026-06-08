@@ -439,6 +439,7 @@ function NavBar() {
           )}
         </div>
       </div>
+      <a href="/about" className="text-xs font-semibold text-gray-600 hover:text-orange-600 px-3 py-1 rounded-lg hover:bg-orange-50 transition-colors">About</a>
     </nav>
   );
 }
@@ -834,7 +835,7 @@ function RecipeApp() {
       </main>
 
       <footer className="bg-white border-t border-gray-100 py-4 px-6 text-center text-sm text-gray-400 print:hidden">
-        myrecipematch.com · <a href="/privacy" className="hover:text-orange-400">Privacy Policy</a> · <a href="/terms" className="hover:text-orange-400">Terms of Service</a>
+        myrecipematch.com · <a href="/about" className="hover:text-orange-400">About</a> · <a href="/privacy" className="hover:text-orange-400">Privacy Policy</a> · <a href="/terms" className="hover:text-orange-400">Terms of Service</a>
       </footer>
     </div>
   );
