@@ -353,6 +353,96 @@ function RecipeModal({ recipe, onClose }: { recipe: any; onClose: () => void }) 
   );
 }
 
+
+function NavBar() {
+  const [cuisinesOpen, setCuisinesOpen] = useState(false);
+  const [recipesOpen, setRecipesOpen] = useState(false);
+
+  const cuisines = [
+    { label: "Italian", href: "/recipes/cuisine/italian" },
+    { label: "Mexican", href: "/recipes/cuisine/mexican" },
+    { label: "Chinese", href: "/recipes/cuisine/chinese" },
+    { label: "Indian", href: "/recipes/cuisine/indian" },
+    { label: "Japanese", href: "/recipes/cuisine/japanese" },
+    { label: "Thai", href: "/recipes/cuisine/thai" },
+    { label: "American", href: "/recipes/cuisine/american" },
+    { label: "Mediterranean", href: "/recipes/cuisine/mediterranean" },
+  ];
+
+  const recipes = [
+    { label: "Chicken and Rice", href: "/recipes/chicken-and-rice" },
+    { label: "Chicken and Broccoli", href: "/recipes/chicken-and-broccoli" },
+    { label: "Chicken Breast and Rice", href: "/recipes/chicken-breast-and-rice" },
+    { label: "Chicken and Pasta", href: "/recipes/chicken-and-pasta" },
+    { label: "Chicken and Potatoes", href: "/recipes/chicken-and-potatoes" },
+    { label: "Chicken and Mushrooms", href: "/recipes/chicken-and-mushrooms" },
+    { label: "Chicken and Spinach", href: "/recipes/chicken-and-spinach" },
+    { label: "Chicken and Tomatoes", href: "/recipes/chicken-and-tomatoes" },
+    { label: "Chicken and Garlic", href: "/recipes/chicken-and-garlic" },
+    { label: "Chicken and Lemon", href: "/recipes/chicken-and-lemon" },
+    { label: "Beef and Broccoli", href: "/recipes/beef-and-broccoli" },
+    { label: "Beef and Potatoes", href: "/recipes/beef-and-potatoes" },
+    { label: "Ground Beef and Pasta", href: "/recipes/ground-beef-and-pasta" },
+    { label: "Ground Beef and Rice", href: "/recipes/ground-beef-and-rice" },
+    { label: "Ground Beef and Potatoes", href: "/recipes/ground-beef-and-potatoes" },
+    { label: "Shrimp and Rice", href: "/recipes/shrimp-and-rice" },
+    { label: "Shrimp and Pasta", href: "/recipes/shrimp-and-pasta" },
+    { label: "Salmon and Rice", href: "/recipes/salmon-and-rice" },
+    { label: "Tuna and Pasta", href: "/recipes/tuna-and-pasta" },
+    { label: "Pork and Rice", href: "/recipes/pork-and-rice" },
+    { label: "Pork and Potatoes", href: "/recipes/pork-and-potatoes" },
+    { label: "Eggs and Bread", href: "/recipes/eggs-and-bread" },
+    { label: "Eggs and Cheese", href: "/recipes/eggs-and-cheese" },
+    { label: "Eggs and Potatoes", href: "/recipes/eggs-and-potatoes" },
+    { label: "Pasta and Cheese", href: "/recipes/pasta-and-cheese" },
+    { label: "Potatoes and Cheese", href: "/recipes/potatoes-and-cheese" },
+  ];
+
+  return (
+    <nav className="bg-white border-b border-gray-100 px-6 print:hidden">
+      <div className="max-w-4xl mx-auto flex items-center gap-1 h-10">
+        <a href="/" className="text-xs font-semibold text-gray-600 hover:text-orange-600 px-3 py-1 rounded-lg hover:bg-orange-50 transition-colors">
+          Home
+        </a>
+        <div className="relative">
+          <button
+            onClick={() => { setCuisinesOpen(!cuisinesOpen); setRecipesOpen(false); }}
+            className="text-xs font-semibold text-gray-600 hover:text-orange-600 px-3 py-1 rounded-lg hover:bg-orange-50 transition-colors flex items-center gap-1"
+          >
+            Cuisines <span className="text-gray-400">{cuisinesOpen ? "▲" : "▼"}</span>
+          </button>
+          {cuisinesOpen && (
+            <div className="absolute top-full left-0 bg-white border border-gray-100 rounded-xl shadow-lg z-50 py-2 min-w-40">
+              {cuisines.map(c => (
+                <a key={c.href} href={c.href} className="block px-4 py-1.5 text-xs text-gray-600 hover:text-orange-600 hover:bg-orange-50">
+                  {c.label}
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+        <div className="relative">
+          <button
+            onClick={() => { setRecipesOpen(!recipesOpen); setCuisinesOpen(false); }}
+            className="text-xs font-semibold text-gray-600 hover:text-orange-600 px-3 py-1 rounded-lg hover:bg-orange-50 transition-colors flex items-center gap-1"
+          >
+            Recipes <span className="text-gray-400">{recipesOpen ? "▲" : "▼"}</span>
+          </button>
+          {recipesOpen && (
+            <div className="absolute top-full left-0 bg-white border border-gray-100 rounded-xl shadow-lg z-50 py-2 min-w-48">
+              {recipes.map(r => (
+                <a key={r.href} href={r.href} className="block px-4 py-1.5 text-xs text-gray-600 hover:text-orange-600 hover:bg-orange-50">
+                  {r.label}
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </nav>
+  );
+}
+
 function RecipeApp() {
   const searchParams = useSearchParams();
   const [ingredients, setIngredients] = useState("");
@@ -363,22 +453,49 @@ function RecipeApp() {
   const [history, setHistory] = useState<string[]>([]);
   const [selectedRecipe, setSelectedRecipe] = useState<any | null>(null);
   const [searchMode, setSearchMode] = useState<"ingredients" | "name">("ingredients");
+  const [referrerPage, setReferrerPage] = useState<string | null>(null);
+  const [activeCuisines, setActiveCuisines] = useState<string[]>([]);
+  const [visibleCount, setVisibleCount] = useState(9);
 
   useEffect(() => {
+    const referrer = searchParams.get("from");
+    if (referrer) setReferrerPage(decodeURIComponent(referrer));
+    const cuisineParam = searchParams.get("cuisine");
+    if (cuisineParam) setActiveCuisines([cuisineParam]);
+    // Clean URL params after reading them
+    if (window.history.replaceState) {
+      window.history.replaceState({}, "", "/");
+    }
     const ing = searchParams.get("ingredients");
+    const recipeId = searchParams.get("recipeId");
+    const recipeTitle = searchParams.get("recipeTitle");
+    const recipeImage = searchParams.get("recipeImage");
+
     if (ing) {
       setIngredients(ing);
-      handleSearch(ing, "ingredients");
+      handleSearch(ing, "ingredients").then((results: any[]) => {
+        if (recipeId && results) {
+          const found = results.find((r: any) => String(r.id) === String(recipeId));
+          if (found) {
+            setSelectedRecipe(found);
+          } else if (recipeTitle) {
+            setSelectedRecipe({ id: recipeId, title: decodeURIComponent(recipeTitle), image: recipeImage ? decodeURIComponent(recipeImage) : null, usedIngredients: [], missedIngredients: [] });
+          }
+        }
+      });
+    } else if (recipeId && recipeTitle) {
+      setSelectedRecipe({ id: recipeId, title: decodeURIComponent(recipeTitle), image: recipeImage ? decodeURIComponent(recipeImage) : null, usedIngredients: [], missedIngredients: [] });
     }
   }, []);
 
-  const handleSearch = async (query?: string, mode?: "ingredients" | "name") => {
+  const handleSearch = async (query?: string, mode?: "ingredients" | "name"): Promise<any[]> => {
     const searchTerm = query || ingredients;
     const currentMode = mode || searchMode;
-    if (!searchTerm.trim()) return;
+    if (!searchTerm.trim()) return [];
     setLoading(true);
     setSearched(true);
     setShowAll(false);
+    setVisibleCount(9);
     setIngredients(searchTerm);
     if (!history.includes(searchTerm)) {
       setHistory((prev) => [searchTerm, ...prev].slice(0, 5));
@@ -386,18 +503,17 @@ function RecipeApp() {
 
     const url = currentMode === "name"
       ? "/api/recipes?query=" + encodeURIComponent(searchTerm)
-      : "/api/recipes?ingredients=" + searchTerm;
+      : "/api/recipes?ingredients=" + searchTerm + (activeCuisines.length > 0 ? "&cuisine=" + activeCuisines.join(",") : "");
 
     const res = await fetch(url);
     const data = await res.json();
     if (Array.isArray(data)) {
       setRecipes(data);
-      data.slice(0, 3).forEach((r: any) => {
-        fetch("/api/recipes?id=" + r.id + "&type=info").catch(() => {});
-        fetch("/api/recipes?id=" + r.id + "&type=instructions").catch(() => {});
-      });
+      setLoading(false);
+      return data;
     }
     setLoading(false);
+    return [];
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -409,6 +525,7 @@ function RecipeApp() {
     setRecipes([]);
     setSearched(false);
     setShowAll(false);
+    setActiveCuisines([]);
   };
 
   const handleModeSwitch = (mode: "ingredients" | "name") => {
@@ -428,9 +545,10 @@ function RecipeApp() {
     );
   };
 
-  const filteredRecipes = showAll || searchMode === "name"
+  const allFilteredRecipes = showAll || searchMode === "name" || activeCuisines.length > 0
     ? recipes
     : recipes.filter((recipe) => isPerfectMatch(recipe));
+  const filteredRecipes = allFilteredRecipes.slice(0, visibleCount);
 
   return (
     <div className="min-h-screen bg-orange-50 flex flex-col">
@@ -447,8 +565,19 @@ function RecipeApp() {
           </div>
         </div>
       </header>
+      <NavBar />
 
       <main className="flex-1 max-w-4xl mx-auto w-full px-4 py-10 print:hidden">
+        {referrerPage && (
+          <a href={referrerPage} className="inline-flex items-center gap-2 text-sm text-orange-600 hover:text-orange-700 font-medium mb-4 bg-white px-4 py-2 rounded-xl shadow-sm border border-orange-100">
+            ← Back to {referrerPage.split("/recipes/")[1] ? referrerPage.split("/recipes/")[1].split("-").map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ") + " Recipes" : "Recipes"}
+          </a>
+        )}
+        {referrerPage && (
+          <a href={referrerPage} className="inline-flex items-center gap-2 text-sm text-orange-600 hover:text-orange-700 font-medium mb-4 bg-white px-4 py-2 rounded-xl shadow-sm border border-orange-100">
+            ← Back to {referrerPage.split("/recipes/")[1] ? referrerPage.split("/recipes/")[1].split("-").map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ") + " Recipes" : "Recipes"}
+          </a>
+        )}
 
         <div className="flex gap-2 mb-3 bg-white rounded-xl p-1 border-2 border-orange-100 w-fit">
           <button
@@ -465,6 +594,23 @@ function RecipeApp() {
           </button>
         </div>
 
+        <div className="mb-3">
+          <div className="flex flex-wrap gap-2 items-center">
+            <span className="text-xs text-gray-400 font-medium">Filter by cuisine:</span>
+            {["italian","mexican","chinese","indian","japanese","thai","american","mediterranean"].map(c => (
+              <button
+                key={c}
+                onClick={() => setActiveCuisines(prev => prev.includes(c) ? prev.filter(x => x !== c) : [...prev, c])}
+                className={"text-xs font-semibold px-3 py-1 rounded-full border-2 transition-colors capitalize " + (activeCuisines.includes(c) ? "bg-orange-500 text-white border-orange-500" : "bg-white text-gray-500 border-gray-200 hover:border-orange-300 hover:text-orange-600")}
+              >
+                {activeCuisines.includes(c) ? "✓ " : ""}{c}
+              </button>
+            ))}
+            {activeCuisines.length > 0 && (
+              <button onClick={() => setActiveCuisines([])} className="text-xs text-gray-400 hover:text-gray-600 underline">Clear filters</button>
+            )}
+          </div>
+        </div>
         <div className="flex gap-2 mb-2">
           <div className="relative flex-1">
             <input
@@ -500,13 +646,121 @@ function RecipeApp() {
         {searched && !loading && (
           <div className="flex items-center justify-between mb-4">
             <p className="text-sm text-gray-500">
-              {filteredRecipes.length === 0 ? "No matches found" : "Found " + filteredRecipes.length + " recipe" + (filteredRecipes.length === 1 ? "" : "s")}
+              {allFilteredRecipes.length === 0 ? "No matches found" : "Found " + allFilteredRecipes.length + " recipe" + (allFilteredRecipes.length === 1 ? "" : "s") + (activeCuisines.length > 0 ? " · " + activeCuisines.map(c => c.charAt(0).toUpperCase() + c.slice(1)).join(", ") : "")}
             </p>
-            {searchMode === "ingredients" && recipes.length > 0 && (
+            {searchMode === "ingredients" && recipes.length > 0 && activeCuisines.length === 0 && (
               <button onClick={() => setShowAll(!showAll)} className="text-sm text-orange-600 underline">
                 {showAll ? "Show exact matches only" : "Show all partial matches"}
               </button>
             )}
+          </div>
+        )}
+
+        {!searched && !loading && (
+          <div>
+            <div className="text-center mb-10">
+              <h2 className="text-3xl font-bold text-gray-800 mb-3">Find Recipes Using Ingredients You Already Have</h2>
+              <p className="text-gray-500 max-w-xl mx-auto text-sm leading-relaxed">Stop staring at your fridge wondering what to cook. Type in whatever ingredients you have at home and instantly discover delicious recipes you can make right now — no extra shopping needed.</p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
+              {[
+                { icon: "🥕", title: "Enter Your Ingredients", desc: "Type in whatever you have at home — chicken, rice, eggs, anything." },
+                { icon: "🔍", title: "Instant Recipe Matches", desc: "We search thousands of recipes and find the best matches for your ingredients." },
+                { icon: "🍳", title: "Cook With Confidence", desc: "See full instructions, nutrition info, and what ingredients you are missing." },
+              ].map(item => (
+                <div key={item.title} className="bg-white rounded-2xl p-5 text-center shadow-sm">
+                  <div className="text-4xl mb-3">{item.icon}</div>
+                  <h3 className="font-bold text-gray-800 mb-1 text-sm">{item.title}</h3>
+                  <p className="text-xs text-gray-500 leading-relaxed">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="bg-white rounded-2xl shadow-sm p-6 mb-6">
+              <h3 className="text-lg font-bold text-gray-800 mb-4">Popular Ingredient Combinations</h3>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                {[
+                  { label: "Chicken + Rice", search: "chicken,rice" },
+                  { label: "Eggs + Cheese", search: "eggs,cheese" },
+                  { label: "Ground Beef + Pasta", search: "ground beef,pasta" },
+                  { label: "Shrimp + Rice", search: "shrimp,rice" },
+                  { label: "Chicken + Broccoli", search: "chicken,broccoli" },
+                  { label: "Salmon + Rice", search: "salmon,rice" },
+                  { label: "Pasta + Cheese", search: "pasta,cheese" },
+                  { label: "Beef + Potatoes", search: "beef,potatoes" },
+                  { label: "Chicken + Pasta", search: "chicken,pasta" },
+                ].map(item => (
+                  <button
+                    key={item.search}
+                    onClick={() => { setIngredients(item.search); handleSearch(item.search); }}
+                    className="bg-orange-50 hover:bg-orange-100 text-orange-700 text-xs font-medium px-3 py-2.5 rounded-xl text-left transition-colors border border-orange-100"
+                  >
+                    🍽️ {item.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="bg-white rounded-2xl shadow-sm p-6 mb-6">
+              <h3 className="text-lg font-bold text-gray-800 mb-4">Browse by Cuisine</h3>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                {[
+                  { label: "🍝 Italian", href: "/recipes/cuisine/italian" },
+                  { label: "🌮 Mexican", href: "/recipes/cuisine/mexican" },
+                  { label: "🥢 Chinese", href: "/recipes/cuisine/chinese" },
+                  { label: "🍛 Indian", href: "/recipes/cuisine/indian" },
+                  { label: "🍱 Japanese", href: "/recipes/cuisine/japanese" },
+                  { label: "🌶️ Thai", href: "/recipes/cuisine/thai" },
+                  { label: "🍔 American", href: "/recipes/cuisine/american" },
+                  { label: "🫒 Mediterranean", href: "/recipes/cuisine/mediterranean" },
+                ].map(item => (
+                  <a key={item.href} href={item.href} className="bg-gray-50 hover:bg-orange-50 text-gray-700 hover:text-orange-600 text-xs font-medium px-3 py-2.5 rounded-xl text-center transition-colors border border-gray-100">
+                    {item.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            <div className="bg-white rounded-2xl shadow-sm p-6 mb-6">
+              <h3 className="text-lg font-bold text-gray-800 mb-4">Featured Recipe Pages</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {[
+                  { title: "7 Easy Recipes with Chicken and Rice", href: "/recipes/chicken-and-rice", desc: "Quick weeknight dinners using pantry staples." },
+                  { title: "6 Easy Beef and Broccoli Recipes", href: "/recipes/beef-and-broccoli", desc: "Better than takeout and ready in 30 minutes." },
+                  { title: "6 Easy Recipes with Shrimp and Pasta", href: "/recipes/shrimp-and-pasta", desc: "Elegant dinners that come together fast." },
+                  { title: "6 Easy Recipes with Eggs and Cheese", href: "/recipes/eggs-and-cheese", desc: "Quick meals any time of day." },
+                ].map(item => (
+                  <a key={item.href} href={item.href} className="flex items-start gap-3 p-4 bg-orange-50 hover:bg-orange-100 rounded-xl transition-colors border border-orange-100">
+                    <span className="text-2xl flex-shrink-0">📖</span>
+                    <div>
+                      <p className="text-sm font-bold text-gray-800 leading-tight mb-1">{item.title}</p>
+                      <p className="text-xs text-gray-500">{item.desc}</p>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            <div className="bg-white rounded-2xl shadow-sm p-6">
+              <h3 className="text-lg font-bold text-gray-800 mb-3">Why My Recipe Match?</h3>
+              <div className="space-y-3">
+                {[
+                  { icon: "🎯", title: "Perfect Match Technology", desc: "Our tool identifies which recipes use ALL of your ingredients so you never have to buy anything extra." },
+                  { icon: "🥦", title: "Reduce Food Waste", desc: "Use up ingredients before they go bad. My Recipe Match helps you cook smarter and waste less." },
+                  { icon: "💰", title: "Save Money on Groceries", desc: "Cook with what you have instead of buying new ingredients every night. Thousands of recipes, zero extra shopping." },
+                  { icon: "⚡", title: "Results in Seconds", desc: "No browsing through endless recipe blogs. Enter your ingredients and get matched recipes instantly." },
+                ].map(item => (
+                  <div key={item.title} className="flex items-start gap-3">
+                    <span className="text-xl flex-shrink-0">{item.icon}</span>
+                    <div>
+                      <p className="text-sm font-bold text-gray-700">{item.title}</p>
+                      <p className="text-xs text-gray-500 leading-relaxed">{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         )}
 
@@ -536,16 +790,19 @@ function RecipeApp() {
               <div key={recipe.id} className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-shadow flex flex-col">
                 <div className="relative">
                   <img src={recipe.image} alt={recipe.title} className="w-full h-48 object-cover" onError={(e) => { e.currentTarget.src = "https://placehold.co/600x400?text=No+Image"; }} />
-                  {isPerfectMatch(recipe) && (
+                  {isPerfectMatch(recipe) && !recipe.isCuisineSearch && (
                     <div className="absolute top-2 left-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow">🎯 Perfect Match</div>
                   )}
                   {recipe.isNameSearch && (
                     <div className="absolute top-2 left-2 bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow">🍽️ Recipe</div>
                   )}
+                  {recipe.isCuisineSearch && (
+                    <div className="absolute top-2 left-2 bg-blue-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow capitalize">🌍 {activeCuisines.length === 1 ? activeCuisines[0] : "Cuisine Match"}</div>
+                  )}
                 </div>
                 <div className="p-4 flex flex-col flex-1">
                   <h2 className="text-lg font-bold text-gray-800 mb-2 leading-tight">{recipe.title}</h2>
-                  {!recipe.isNameSearch && (
+                  {!recipe.isNameSearch && !recipe.isCuisineSearch && (
                     <>
                       <p className="text-xs text-green-600 mb-1">Used: {recipe.usedIngredients.map((i: any) => i.name).join(", ")}</p>
                       {recipe.missedIngredients.length > 0 && (
@@ -563,10 +820,21 @@ function RecipeApp() {
             ))}
           </div>
         )}
+        {allFilteredRecipes.length > visibleCount && !loading && (
+          <div className="flex flex-col items-center gap-2 mt-6">
+            <p className="text-xs text-gray-400">Showing {visibleCount} of {allFilteredRecipes.length} recipes</p>
+            <button
+              onClick={() => setVisibleCount(prev => prev + 9)}
+              className="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-8 py-3 rounded-xl"
+            >
+              Show More Recipes
+            </button>
+          </div>
+        )}
       </main>
 
       <footer className="bg-white border-t border-gray-100 py-4 px-6 text-center text-sm text-gray-400 print:hidden">
-        myrecipematch.com · Recipes by Spoonacular · <a href="/privacy" className="hover:text-orange-400">Privacy Policy</a> · <a href="/terms" className="hover:text-orange-400">Terms of Service</a>
+        myrecipematch.com · <a href="/privacy" className="hover:text-orange-400">Privacy Policy</a> · <a href="/terms" className="hover:text-orange-400">Terms of Service</a>
       </footer>
     </div>
   );
