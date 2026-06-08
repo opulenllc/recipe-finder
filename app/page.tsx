@@ -2,7 +2,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
-import Link from "next/link";
 
 const funMessages = [
   "Consulting the chef... 👨‍🍳",
@@ -439,21 +438,13 @@ function RecipeApp() {
         <RecipeModal recipe={selectedRecipe} onClose={() => setSelectedRecipe(null)} />
       )}
 
-      {/* ── HEADER ── */}
       <header className="bg-white shadow-sm py-5 px-6 print:hidden">
-        <div className="max-w-4xl mx-auto flex items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <span className="text-4xl">🍳</span>
-            <div>
-              <h1 className="text-2xl font-bold text-orange-600">My Recipe Match</h1>
-              <p className="text-xs text-gray-400">Find recipes using ingredients you already have</p>
-            </div>
+        <div className="max-w-4xl mx-auto flex items-center gap-3">
+          <span className="text-4xl">🍳</span>
+          <div>
+            <h1 className="text-2xl font-bold text-orange-600">My Recipe Match</h1>
+            <p className="text-xs text-gray-400">Find recipes using ingredients you already have</p>
           </div>
-          <nav className="flex items-center gap-4">
-            <Link href="/about" className="text-sm text-gray-500 hover:text-orange-500 font-medium transition-colors">
-              About
-            </Link>
-          </nav>
         </div>
       </header>
 
@@ -574,12 +565,8 @@ function RecipeApp() {
         )}
       </main>
 
-      {/* ── FOOTER ── */}
       <footer className="bg-white border-t border-gray-100 py-4 px-6 text-center text-sm text-gray-400 print:hidden">
-        myrecipematch.com · Recipes by Spoonacular ·{" "}
-        <Link href="/about" className="hover:text-orange-400">About</Link> ·{" "}
-        <Link href="/privacy" className="hover:text-orange-400">Privacy Policy</Link> ·{" "}
-        <Link href="/terms" className="hover:text-orange-400">Terms of Service</Link>
+        myrecipematch.com · Recipes by Spoonacular · <a href="/privacy" className="hover:text-orange-400">Privacy Policy</a> · <a href="/terms" className="hover:text-orange-400">Terms of Service</a>
       </footer>
     </div>
   );
