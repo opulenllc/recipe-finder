@@ -1,12 +1,93 @@
-with open("app/blog/[slug]/page.tsx", "rb") as f:
-    content = f.read()
+import os
 
-content = content.replace(
-    b'from "../posts/index"',
-    b'from "@/app/blog/posts/index"'
-)
+content = '''import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { posts } from "@/app/blog/posts/index";
 
-with open("app/blog/[slug]/page.tsx", "wb") as f:
+export async function generateStaticParams() {
+  return posts.map((p) => ({ slug: p.slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const post = posts.find((p) => p.slug === slug);
+  if (!post) return {};
+  return {
+    title: post.title + " | My Recipe Match Blog",
+    description: post.excerpt,
+  };
+}
+
+export default async function BlogPostPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const post = posts.find((p) => p.slug === slug);
+  if (!post) notFound();
+
+  return (
+    <main className="min-h-screen bg-white">
+      <section className="bg-orange-50 py-12 px-6">
+        <div className="max-w-2xl mx-auto">
+          <Link
+            href="/blog"
+            className="text-sm text-orange-500 hover:text-orange-600 font-medium mb-6 inline-block"
+          >
+            ← Back to Blog
+          </Link>
+          <div className="flex items-center gap-3 mb-4">
+            <span className="text-xs text-gray-400">{post!.date}</span>
+            <span className="text-gray-300">·</span>
+            <span className="text-xs text-gray-400">{post!.readTime}</span>
+          </div>
+          <h1 className="text-3xl font-bold text-gray-900 leading-snug">
+            {post!.title}
+          </h1>
+        </div>
+      </section>
+
+      <img
+        src={post!.image}
+        alt={post!.title}
+        className="w-full h-64 object-cover"
+      />
+
+      <article className="max-w-2xl mx-auto px-6 py-12">
+        <div
+          className="prose prose-orange prose-lg max-w-none"
+          dangerouslySetInnerHTML={{ __html: post!.content }}
+        />
+      </article>
+
+      <section className="max-w-2xl mx-auto px-6 pb-16">
+        <div className="bg-orange-50 rounded-2xl p-8 text-center">
+          <h2 className="text-xl font-bold text-gray-900 mb-2">
+            Find recipes from your ingredients
+          </h2>
+          <p className="text-gray-500 text-sm mb-5">
+            Type in what you have and instantly discover meals you can make right now.
+          </p>
+          <Link
+            href="/"
+            className="inline-block bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-2.5 rounded-full text-sm transition-colors"
+          >
+            Search Recipes →
+          </Link>
+        </div>
+      </section>
+    </main>
+  );
+}
+'''
+
+path = "app/recipes/cuisine/[cuisine]/client.tsx".replace("cuisine/[cuisine]/client.tsx", "blog/[slug]/page.tsx")
+with open(path, "w", encoding="utf-8") as f:
     f.write(content)
-
-print("Done")
+print("Done! Written to:", path)
