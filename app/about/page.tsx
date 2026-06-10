@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "About | My Recipe Match",
   description:
-    "Learn about My Recipe Match — the free ingredient-based recipe finder that helps you cook great meals with whatever's already in your kitchen.",
+    "Learn about My Recipe Match, the free ingredient-based recipe finder that helps you cook great meals with whatever's already in your kitchen.",
 };
 
 export default function AboutPage() {
@@ -19,7 +19,7 @@ export default function AboutPage() {
           We help you cook with what you&apos;ve got
         </h1>
         <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-          My Recipe Match was built for real kitchens — not perfect ones. Type
+          My Recipe Match was built for real kitchens, not perfect ones. Type
           in whatever ingredients you have on hand, and we&apos;ll find recipes
           that actually work.
         </p>
@@ -36,7 +36,7 @@ export default function AboutPage() {
         <p className="text-gray-600 leading-relaxed mb-4">
           We got tired of searching for recipes only to realize we were missing
           six of the ten ingredients. Every search seemed to assume you had a
-          fully stocked pantry — and most of us simply don&apos;t.
+          fully stocked pantry, and most of us simply don&apos;t.
         </p>
         <p className="text-gray-600 leading-relaxed mb-4">
           So we flipped the problem: instead of starting with a recipe and
@@ -65,7 +65,7 @@ export default function AboutPage() {
               {
                 step: "1",
                 title: "Enter your ingredients",
-                desc: "Type in the ingredients you have — chicken, garlic, lemon, whatever. Separate them with commas.",
+                desc: "Type in the ingredients you have: chicken, garlic, lemon, whatever. Separate them with commas.",
               },
               {
                 step: "2",
@@ -126,7 +126,7 @@ export default function AboutPage() {
             {
               icon: "🖨️",
               title: "Print-friendly recipes",
-              desc: "Print any recipe — instructions, ingredients, and nutrition — all on one clean page.",
+              desc: "Print any recipe, complete with instructions, ingredients, and nutrition, all on one clean page.",
             },
             {
               icon: "🕑",
@@ -199,14 +199,14 @@ export default function AboutPage() {
           >
             Spoonacular Food API
           </a>{" "}
-          to power our recipe database — one of the largest and most reliable
+          to power our recipe database, one of the largest and most reliable
           recipe sources on the web. That means you get accurate ingredient
           lists, nutrition data, and step-by-step instructions for every recipe
           we show.
         </p>
         <p className="text-gray-600 leading-relaxed">
-          We&apos;re constantly adding new content — more ingredient combination
-          guides, more cuisine filters, and better matching logic — to make My
+          We&apos;re constantly adding new content: more ingredient combination
+          guides, more cuisine filters, and better matching logic, to make My
           Recipe Match even more useful over time.
         </p>
       </section>

@@ -662,12 +662,12 @@ function RecipeApp() {
           <div>
             <div className="text-center mb-10">
               <h2 className="text-3xl font-bold text-gray-800 mb-3">Find Recipes Using Ingredients You Already Have</h2>
-              <p className="text-gray-500 max-w-xl mx-auto text-sm leading-relaxed">Stop staring at your fridge wondering what to cook. Type in whatever ingredients you have at home and instantly discover delicious recipes you can make right now — no extra shopping needed.</p>
+              <p className="text-gray-500 max-w-xl mx-auto text-sm leading-relaxed">Stop staring at your fridge wondering what to cook. Type in whatever ingredients you have at home and instantly discover delicious recipes you can make right now, no extra shopping needed.</p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
               {[
-                { icon: "🥕", title: "Enter Your Ingredients", desc: "Type in whatever you have at home — chicken, rice, eggs, anything." },
+                { icon: "🥕", title: "Enter Your Ingredients", desc: "Type in whatever you have at home: chicken, rice, eggs, anything." },
                 { icon: "🔍", title: "Instant Recipe Matches", desc: "We search thousands of recipes and find the best matches for your ingredients." },
                 { icon: "🍳", title: "Cook With Confidence", desc: "See full instructions, nutrition info, and what ingredients you are missing." },
               ].map(item => (

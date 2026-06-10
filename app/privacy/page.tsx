@@ -38,9 +38,9 @@
             <h3 className="text-lg font-bold text-gray-800 mb-2">4. Third Party Services</h3>
             <p>We use the following third party services:</p>
             <ul className="list-disc ml-6 mt-2 space-y-1">
-              <li><strong>Spoonacular API</strong> — to retrieve recipe data based on your ingredient searches</li>
-              <li><strong>Google AdSense</strong> — to display advertisements</li>
-              <li><strong>Vercel</strong> — to host and serve our website</li>
+              <li><strong>Spoonacular API</strong>: retrieves recipe data based on your ingredient searches</li>
+              <li><strong>Google AdSense</strong>: displays advertisements</li>
+              <li><strong>Vercel</strong>: hosts and serves our website</li>
             </ul>
           </section>
 

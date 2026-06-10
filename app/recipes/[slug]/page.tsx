@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+﻿import { Metadata } from "next";
 
 type SlugEntry = {
   title: string;
@@ -15,14 +15,14 @@ const slugData: Record<string, SlugEntry> = {
   "chicken-and-rice": {
     title: "7 Easy Recipes with Chicken and Rice (No Grocery Trip Needed)",
     heading: "7 Easy Recipes with Chicken and Rice",
-    intro: "If you have chicken and rice in your kitchen, you are already halfway to a delicious, satisfying meal. These two pantry staples are the foundation of countless dishes across dozens of cuisines — from classic American casseroles to Asian-inspired fried rice and hearty soups. The best part? You do not need a long shopping list or hours in the kitchen. Whether you have fresh chicken breasts, leftover rotisserie, or frozen thighs, paired with any type of rice, these recipes will get dinner on the table fast. We have put together the best easy chicken and rice recipes you can make tonight using ingredients you likely already have at home.",
+    intro: "If you have chicken and rice in your kitchen, you are already halfway to a delicious, satisfying meal. These two pantry staples are the foundation of countless dishes across dozens of cuisines, from classic American casseroles to Asian-inspired fried rice and hearty soups. The best part? You do not need a long shopping list or hours in the kitchen. Whether you have fresh chicken breasts, leftover rotisserie, or frozen thighs, paired with any type of rice, these recipes will get dinner on the table fast. We have put together the best easy chicken and rice recipes you can make tonight using ingredients you likely already have at home.",
     ingredients: "chicken,rice",
     keywords: ["recipes with chicken and rice", "easy chicken and rice recipe", "simple chicken and rice recipes", "quick chicken and rice dinner", "chicken and rice meals"],
     tips: [
-      "Use long-grain white rice for the best texture in most recipes — it stays fluffy and does not clump.",
+      "Use long-grain white rice for the best texture in most recipes; it stays fluffy and does not clump.",
       "Leftover or rotisserie chicken works perfectly in rice dishes and saves significant cooking time.",
       "Toast your rice in a dry pan for 2 minutes before adding liquid for a nuttier, more complex flavor.",
-      "Always let your rice rest covered for 5 minutes after cooking — this makes it significantly fluffier.",
+      "Always let your rice rest covered for 5 minutes after cooking, making it significantly fluffier.",
       "Add a bay leaf or garlic clove to your cooking liquid for extra depth of flavor.",
     ],
     variations: [
@@ -42,12 +42,12 @@ const slugData: Record<string, SlugEntry> = {
   "chicken-and-broccoli": {
     title: "6 Easy Recipes with Chicken and Broccoli (Quick Weeknight Dinners)",
     heading: "6 Easy Recipes with Chicken and Broccoli",
-    intro: "Chicken and broccoli is one of the most popular ingredient combinations for a reason — it is healthy, quick, and incredibly versatile. Whether you are craving a Chinese-inspired stir fry, a creamy casserole, or a simple sheet pan dinner, this dynamic duo delivers every time. Both ingredients cook quickly, making them perfect for busy weeknights when you need dinner on the table fast. Plus, they are packed with protein and nutrients, so you can feel good about what you are eating. Here are the best easy chicken and broccoli recipes you can make tonight.",
+    intro: "Chicken and broccoli is one of the most popular ingredient combinations for a reason: it is healthy, quick, and incredibly versatile. Whether you are craving a Chinese-inspired stir fry, a creamy casserole, or a simple sheet pan dinner, this dynamic duo delivers every time. Both ingredients cook quickly, making them perfect for busy weeknights when you need dinner on the table fast. Plus, they are packed with protein and nutrients, so you can feel good about what you are eating. Here are the best easy chicken and broccoli recipes you can make tonight.",
     ingredients: "chicken,broccoli",
     keywords: ["recipes with chicken and broccoli", "chicken broccoli recipes", "easy chicken and broccoli dinner", "chicken broccoli stir fry", "healthy chicken broccoli meals"],
     tips: [
       "Cut chicken into even-sized pieces so it cooks at the same rate as the broccoli.",
-      "Do not overcook broccoli — it should be bright green and slightly crisp, not mushy.",
+      "Do not overcook broccoli; it should be bright green and slightly crisp, not mushy.",
       "Blanch broccoli for 2 minutes in boiling water before stir frying for the perfect texture.",
       "Marinate chicken for at least 15 minutes before cooking for significantly more flavor.",
       "Use high heat when stir frying to get a proper sear on the chicken rather than steaming it.",
@@ -60,7 +60,7 @@ const slugData: Record<string, SlugEntry> = {
       "Low carb version: Skip the rice or pasta and serve over cauliflower rice for a keto-friendly meal.",
     ],
     faqs: [
-      { q: "Should I use fresh or frozen broccoli?", a: "Fresh broccoli gives the best texture and flavor, especially for stir fries. Frozen broccoli works well in casseroles and soups where texture matters less. If using frozen, do not thaw first — add it directly to the pan." },
+      { q: "Should I use fresh or frozen broccoli?", a: "Fresh broccoli gives the best texture and flavor, especially for stir fries. Frozen broccoli works well in casseroles and soups where texture matters less. If using frozen, do not thaw first; add it directly to the pan." },
       { q: "How do I make chicken and broccoli stir fry sauce?", a: "A basic stir fry sauce combines soy sauce, garlic, ginger, a little sugar, and cornstarch mixed with water. Add sesame oil at the end for authentic flavor." },
       { q: "Can I meal prep chicken and broccoli?", a: "Absolutely. Cook a large batch and store in airtight containers in the fridge for up to 4 days. It reheats well in the microwave with a splash of water or broth." },
       { q: "What goes well with chicken and broccoli?", a: "Rice is the classic pairing, but noodles, quinoa, mashed potatoes, or cauliflower rice all work great. A simple side salad also complements the dish nicely." },
@@ -69,15 +69,15 @@ const slugData: Record<string, SlugEntry> = {
   "chicken-breast-and-rice": {
     title: "6 Easy Chicken Breast and Rice Recipes (Healthy Weeknight Dinners)",
     heading: "6 Easy Chicken Breast and Rice Recipes",
-    intro: "Chicken breast and rice is one of the healthiest and most satisfying meal combinations you can make. High in protein and low in fat, chicken breast paired with rice gives you a complete, balanced meal that keeps you full for hours. The challenge many cooks face is keeping chicken breast moist and flavorful — but with the right techniques, it is easy to achieve restaurant-quality results at home. These recipes cover everything from baked chicken and rice to quick stovetop meals and hearty soups, all designed for busy weeknights.",
+    intro: "Chicken breast and rice is one of the healthiest and most satisfying meal combinations you can make. High in protein and low in fat, chicken breast paired with rice gives you a complete, balanced meal that keeps you full for hours. The challenge many cooks face is keeping chicken breast moist and flavorful, but with the right techniques it is easy to achieve restaurant-quality results at home. These recipes cover everything from baked chicken and rice to quick stovetop meals and hearty soups, all designed for busy weeknights.",
     ingredients: "chicken breast,rice",
     keywords: ["chicken breast and rice recipes", "easy chicken breast and rice", "healthy chicken breast rice dinner", "baked chicken breast and rice", "simple chicken breast meals"],
     tips: [
       "Pound chicken breasts to an even thickness before cooking to ensure they cook evenly.",
       "Brine chicken breasts in salted water for 30 minutes before cooking to keep them juicy.",
-      "Use a meat thermometer — chicken breast is done at 165F internal temperature.",
+      "Use a meat thermometer; chicken breast is done at 165F internal temperature.",
       "Let chicken rest for 5 minutes after cooking before cutting to retain its juices.",
-      "Season generously — chicken breast benefits from bold seasonings like garlic, paprika, and herbs.",
+      "Season generously; chicken breast benefits from bold seasonings like garlic, paprika, and herbs.",
     ],
     variations: [
       "Baked version: Season with garlic, paprika, and olive oil, bake at 400F for 20-25 minutes over a bed of rice.",
@@ -89,18 +89,18 @@ const slugData: Record<string, SlugEntry> = {
     faqs: [
       { q: "How do I keep chicken breast from drying out?", a: "The key is not overcooking. Use a meat thermometer and remove from heat at 165F. Brining beforehand, cooking at the right temperature, and letting it rest before cutting all help retain moisture." },
       { q: "How long does it take to bake chicken breast with rice?", a: "At 375F, chicken breast typically takes 25-30 minutes. If baking over rice, the rice needs about 45 minutes total, so add the chicken partway through or par-cook the rice first." },
-      { q: "Is chicken breast and rice good for weight loss?", a: "Yes — it is high in lean protein and complex carbohydrates, keeping you full while staying relatively low in calories. Use brown rice for added fiber and nutrients." },
+      { q: "Is chicken breast and rice good for weight loss?", a: "Yes, it is high in lean protein and complex carbohydrates, keeping you full while staying relatively low in calories. Use brown rice for added fiber and nutrients." },
       { q: "Can I use chicken thighs instead of breasts?", a: "Absolutely. Chicken thighs are more forgiving and stay moist more easily than breasts. They take slightly longer to cook but deliver more flavor." },
     ],
   },
   "eggs-and-bread": {
     title: "7 Easy Recipes with Eggs and Bread (Quick Meals Any Time of Day)",
     heading: "7 Easy Recipes with Eggs and Bread",
-    intro: "Eggs and bread are the ultimate pantry duo — humble, affordable, and endlessly versatile. From a simple egg on toast to elegant French toast and hearty breakfast casseroles, these two ingredients can produce dozens of satisfying meals any time of day. Whether you are making breakfast, lunch, or a quick dinner, eggs and bread come together in minutes and never disappoint. These recipes celebrate the simplicity of cooking with what you have, proving that you do not need fancy ingredients to eat well.",
+    intro: "Eggs and bread are the ultimate pantry duo: humble, affordable, and endlessly versatile. From a simple egg on toast to elegant French toast and hearty breakfast casseroles, these two ingredients can produce dozens of satisfying meals any time of day. Whether you are making breakfast, lunch, or a quick dinner, eggs and bread come together in minutes and never disappoint. These recipes celebrate the simplicity of cooking with what you have, proving that you do not need fancy ingredients to eat well.",
     ingredients: "eggs,bread",
     keywords: ["recipes with eggs and bread", "easy egg and bread recipes", "what to make with eggs and bread", "egg toast recipes", "quick egg meals"],
     tips: [
-      "Use day-old or slightly stale bread for French toast — it absorbs the egg mixture better without falling apart.",
+      "Use day-old or slightly stale bread for French toast, as it absorbs the egg mixture better without falling apart.",
       "For perfectly fried eggs, start with a cold pan and heat gradually for whites that set without browning.",
       "Whisk eggs thoroughly with a fork before scrambling for a more uniform, fluffy result.",
       "Sourdough or thick-cut bread holds up best in egg-based recipes and adds more flavor.",
@@ -108,29 +108,29 @@ const slugData: Record<string, SlugEntry> = {
     ],
     variations: [
       "Sweet version: French toast with cinnamon, vanilla, and maple syrup for a classic breakfast treat.",
-      "Savory version: Egg in a hole — cut a circle from bread, fry the egg inside the hole for a fun presentation.",
+      "Savory version: Egg in a hole: cut a circle from bread, fry the egg inside the hole for a fun presentation.",
       "Casserole version: Layer bread and eggs with cheese and vegetables in a baking dish for an overnight breakfast casserole.",
       "Sandwich version: Scrambled or fried eggs with cheese and hot sauce between toasted bread slices.",
       "Crouton version: Cube stale bread and bake until crispy, top a soft boiled egg salad for texture contrast.",
     ],
     faqs: [
-      { q: "What is the best bread for egg recipes?", a: "Thick-cut white bread or brioche works best for French toast. Sourdough is great for savory egg dishes. Any sturdy bread works well — avoid very thin sandwich bread as it can fall apart." },
-      { q: "How do I make perfect scrambled eggs?", a: "Use medium-low heat, stir constantly, and remove from heat while still slightly wet — residual heat will finish cooking them. Add butter at the end for extra richness." },
-      { q: "Can I make egg and bread recipes ahead of time?", a: "Breakfast casseroles are perfect for making ahead — assemble the night before, refrigerate, and bake in the morning. French toast batter can also be made ahead and stored overnight." },
+      { q: "What is the best bread for egg recipes?", a: "Thick-cut white bread or brioche works best for French toast. Sourdough is great for savory egg dishes. Any sturdy bread works well; avoid very thin sandwich bread as it can fall apart." },
+      { q: "How do I make perfect scrambled eggs?", a: "Use medium-low heat, stir constantly, and remove from heat while still slightly wet, as residual heat will finish cooking them. Add butter at the end for extra richness." },
+      { q: "Can I make egg and bread recipes ahead of time?", a: "Breakfast casseroles are perfect for making ahead: assemble the night before, refrigerate, and bake in the morning. French toast batter can also be made ahead and stored overnight." },
       { q: "What can I add to egg and bread recipes for more nutrition?", a: "Spinach, tomatoes, mushrooms, onions, and bell peppers all pair beautifully with eggs. Add cheese for protein, or avocado for healthy fats." },
     ],
   },
   "ground-beef-and-pasta": {
     title: "6 Easy Recipes with Ground Beef and Pasta (Hearty Family Dinners)",
     heading: "6 Easy Recipes with Ground Beef and Pasta",
-    intro: "Ground beef and pasta is the ultimate comfort food combination — hearty, satisfying, and loved by the whole family. From classic bolognese to simple hamburger helper style dishes, this pair delivers big flavor without big effort. Ground beef cooks quickly and pairs perfectly with virtually any pasta shape, making it one of the most versatile weeknight dinner options available. These recipes range from quick 20-minute meals to slow-simmered sauces that fill your kitchen with incredible aromas.",
+    intro: "Ground beef and pasta is the ultimate comfort food combination: hearty, satisfying, and loved by the whole family. From classic bolognese to simple hamburger helper style dishes, this pair delivers big flavor without big effort. Ground beef cooks quickly and pairs perfectly with virtually any pasta shape, making it one of the most versatile weeknight dinner options available. These recipes range from quick 20-minute meals to slow-simmered sauces that fill your kitchen with incredible aromas.",
     ingredients: "ground beef,pasta",
     keywords: ["recipes with ground beef and pasta", "ground beef pasta recipes", "easy ground beef and pasta dinner", "hamburger pasta recipes", "quick beef pasta meals"],
     tips: [
       "Brown ground beef in batches without stirring too much to get a proper sear and more flavor.",
-      "Drain excess fat after browning but leave a little for flavor — about a tablespoon is ideal.",
+      "Drain excess fat after browning but leave a little for flavor, about a tablespoon is ideal.",
       "Season ground beef while browning, not after, for better flavor penetration.",
-      "Reserve a cup of pasta water before draining — the starchy water helps bind sauce to pasta.",
+      "Reserve a cup of pasta water before draining; the starchy water helps bind sauce to pasta.",
       "Cook pasta just to al dente since it will continue cooking when combined with hot sauce.",
     ],
     variations: [
@@ -143,7 +143,7 @@ const slugData: Record<string, SlugEntry> = {
     faqs: [
       { q: "What pasta shape works best with ground beef?", a: "Chunky shapes like rigatoni, penne, and shells hold meat sauce well. Spaghetti and fettuccine work great for bolognese. Elbow macaroni is classic for hamburger pasta dishes." },
       { q: "How do I make ground beef pasta sauce from scratch?", a: "Brown the beef, add diced onion and garlic, cook until soft, add crushed tomatoes and Italian seasoning, simmer for 20 minutes. Season with salt, pepper, and a pinch of sugar to balance acidity." },
-      { q: "Can I freeze ground beef pasta dishes?", a: "Yes — most ground beef pasta dishes freeze very well for up to 3 months. Store in airtight containers and thaw overnight in the fridge before reheating." },
+      { q: "Can I freeze ground beef pasta dishes?", a: "Yes, most ground beef pasta dishes freeze very well for up to 3 months. Store in airtight containers and thaw overnight in the fridge before reheating." },
       { q: "What percentage fat ground beef is best for pasta?", a: "80/20 ground beef gives the best flavor. Leaner beef like 90/10 can be used for a healthier option but may be slightly less flavorful. Drain excess fat after browning regardless." },
     ],
   },
@@ -154,10 +154,10 @@ const slugData: Record<string, SlugEntry> = {
     ingredients: "potatoes,cheese",
     keywords: ["recipes with potatoes and cheese", "cheesy potato recipes", "easy potato and cheese dinner", "potato cheese casserole", "loaded potato recipes"],
     tips: [
-      "Slice potatoes evenly for casseroles and gratins — a mandoline slicer makes this much faster.",
+      "Slice potatoes evenly for casseroles and gratins; a mandoline slicer makes this much faster.",
       "Parboil potatoes for 5 minutes before baking to significantly reduce overall cooking time.",
       "Sharp cheddar, gruyere, and fontina melt the best and provide the most flavor in potato dishes.",
-      "Add a pinch of nutmeg to cheesy potato dishes — it enhances the flavor in a subtle but noticeable way.",
+      "Add a pinch of nutmeg to cheesy potato dishes; it enhances the flavor in a subtle but noticeable way.",
       "Let cheesy potato dishes rest for 10 minutes before serving so they set and are easier to serve.",
     ],
     variations: [
@@ -171,7 +171,7 @@ const slugData: Record<string, SlugEntry> = {
       { q: "What potatoes work best with cheese?", a: "Russet potatoes are best for baking and mashing. Yukon Gold potatoes have a naturally buttery flavor that pairs beautifully with cheese. Red potatoes hold their shape well in casseroles and soups." },
       { q: "What cheese melts best on potatoes?", a: "Cheddar is the classic choice. Gruyere, fontina, and gouda melt smoothly and add sophistication. Mozzarella gives a stretchy, mild melt. Avoid pre-shredded cheese when possible as it contains anti-caking agents that prevent smooth melting." },
       { q: "How do I make cheesy potatoes not watery?", a: "Dry potatoes thoroughly after washing. If making a casserole, avoid covering tightly which traps steam. Use a roux-based sauce rather than adding liquid cheese directly to prevent separation." },
-      { q: "Can I make cheesy potatoes ahead of time?", a: "Yes — assemble the dish, cover, and refrigerate up to 24 hours before baking. Add 10-15 extra minutes to the baking time if cooking straight from the fridge." },
+      { q: "Can I make cheesy potatoes ahead of time?", a: "Yes, assemble the dish, cover, and refrigerate up to 24 hours before baking. Add 10-15 extra minutes to the baking time if cooking straight from the fridge." },
     ],
   },
   "chicken-and-pasta": {
@@ -182,7 +182,7 @@ const slugData: Record<string, SlugEntry> = {
     keywords: ["recipes with chicken and pasta", "easy chicken pasta recipes", "quick chicken and pasta dinner", "chicken pasta meals", "simple chicken noodle dishes"],
     tips: [
       "Pound chicken to even thickness before cooking for consistent results and faster cooking time.",
-      "Always salt your pasta water generously — it should taste like the sea for properly seasoned pasta.",
+      "Always salt your pasta water generously; it should taste like the sea for properly seasoned pasta.",
       "Reserve pasta water before draining to use in your sauce for better consistency.",
       "Let chicken rest before slicing to keep it juicy and prevent the juices from running out.",
       "Finish pasta in the sauce pan with a splash of pasta water for the best coating.",
@@ -197,7 +197,7 @@ const slugData: Record<string, SlugEntry> = {
     faqs: [
       { q: "What pasta shape works best with chicken?", a: "Penne and rigatoni work great with chunky chicken pieces and thick sauces. Fettuccine and linguine pair well with creamy sauces. Spaghetti works for lighter tomato-based dishes." },
       { q: "How do I make chicken pasta not dry?", a: "Do not overcook the chicken and always add enough sauce. Finishing the pasta in the sauce pan with pasta water helps coat every piece. A drizzle of good olive oil at the end adds richness." },
-      { q: "Can I use rotisserie chicken in pasta recipes?", a: "Absolutely — rotisserie chicken is perfect for pasta dishes. It saves significant time and adds great flavor. Just shred or chop and add at the end of cooking to heat through." },
+      { q: "Can I use rotisserie chicken in pasta recipes?", a: "Absolutely; rotisserie chicken is perfect for pasta dishes. It saves significant time and adds great flavor. Just shred or chop and add at the end of cooking to heat through." },
       { q: "How do I make a simple chicken pasta sauce from scratch?", a: "Saute garlic in olive oil, add diced tomatoes or cream, season with salt, pepper, and Italian herbs. Add cooked chicken, toss with pasta and pasta water, finish with parmesan." },
     ],
   },
@@ -210,7 +210,7 @@ const slugData: Record<string, SlugEntry> = {
     tips: [
       "Bring eggs to room temperature before cooking for more even, consistent results.",
       "Use freshly grated cheese rather than pre-shredded for better melting and superior flavor.",
-      "For omelettes, use medium-low heat and do not rush — patience produces a silkier result.",
+      "For omelettes, use medium-low heat and do not rush, as patience produces a silkier result.",
       "Add cheese at the very end of cooking scrambled eggs and fold it in off the heat.",
       "Gruyere, cheddar, and feta are the best cheeses for egg dishes due to their strong flavors.",
     ],
@@ -224,7 +224,7 @@ const slugData: Record<string, SlugEntry> = {
     faqs: [
       { q: "What cheese goes best with eggs?", a: "Cheddar is the most popular for everyday egg dishes. Gruyere adds sophistication and melts beautifully. Feta adds a salty, tangy punch. Brie and goat cheese make for an elegant, creamy filling in omelettes." },
       { q: "How do I make a perfect cheesy omelette?", a: "Use 2-3 eggs per omelette, beat well, cook in butter over medium heat, add cheese when the eggs are just set but still slightly wet on top, fold and serve immediately." },
-      { q: "Can I meal prep egg and cheese dishes?", a: "Frittatas and egg casseroles meal prep very well — make on Sunday and portion for the week. Individual egg cups baked in a muffin tin are also perfect for grab-and-go breakfasts." },
+      { q: "Can I meal prep egg and cheese dishes?", a: "Frittatas and egg casseroles meal prep very well; make on Sunday and portion for the week. Individual egg cups baked in a muffin tin are also perfect for grab-and-go breakfasts." },
       { q: "How many eggs per person for egg recipes?", a: "For a main dish, plan on 2-3 eggs per person. For a frittata or casserole serving 4, use 6-8 eggs total. Adjust based on what other ingredients you are including." },
     ],
   },
@@ -238,7 +238,7 @@ const slugData: Record<string, SlugEntry> = {
       "Brown ground beef in a hot, dry pan without crowding for the best caramelization and flavor.",
       "Add aromatics like onion and garlic after browning the beef for maximum flavor development.",
       "Use beef broth instead of water to cook your rice for a richer, more savory base.",
-      "Season in layers — add salt and pepper to the beef while browning, then adjust at the end.",
+      "Season in layers: add salt and pepper to the beef while browning, then adjust at the end.",
       "A splash of soy sauce or Worcestershire sauce adds incredible depth to beef and rice dishes.",
     ],
     variations: [
@@ -258,7 +258,7 @@ const slugData: Record<string, SlugEntry> = {
   "chicken-and-potatoes": {
     title: "6 Easy Recipes with Chicken and Potatoes (One-Pan Comfort Food)",
     heading: "6 Easy Recipes with Chicken and Potatoes",
-    intro: "Chicken and potatoes is the ultimate one-pan comfort food combination. These two humble ingredients have been feeding families for generations, and for good reason — they are affordable, filling, and absolutely delicious together. Whether you roast them in the oven, cook them in a skillet, or simmer them in a hearty stew, chicken and potatoes deliver a satisfying meal that requires minimal cleanup and effort. These recipes make the most of this classic combination.",
+    intro: "Chicken and potatoes is the ultimate one-pan comfort food combination. These two humble ingredients have been feeding families for generations, and for good reason; they are affordable, filling, and absolutely delicious together. Whether you roast them in the oven, cook them in a skillet, or simmer them in a hearty stew, chicken and potatoes deliver a satisfying meal that requires minimal cleanup and effort. These recipes make the most of this classic combination.",
     ingredients: "chicken,potatoes",
     keywords: ["recipes with chicken and potatoes", "chicken and potato recipes", "easy chicken potatoes dinner", "roasted chicken and potatoes", "one pan chicken potato meals"],
     tips: [
@@ -273,24 +273,24 @@ const slugData: Record<string, SlugEntry> = {
       "Stew version: Simmer chicken thighs and cubed potatoes in broth with vegetables for a hearty dinner.",
       "Skillet version: Brown chicken and potatoes together in a cast iron pan for a quick stovetop meal.",
       "Greek version: Season with lemon, oregano, and olive oil for a bright Mediterranean flavor profile.",
-      "Slow cooker version: Set and forget — cook on low for 6-8 hours for fall-apart tender results.",
+      "Slow cooker version: Set and forget: cook on low for 6 to 8 hours for fall-apart tender results.",
     ],
     faqs: [
-      { q: "What potatoes are best with chicken?", a: "Baby potatoes and Yukon Gold potatoes are ideal — they roast beautifully, have a creamy texture, and do not need peeling. Russet potatoes work well in stews as they absorb flavors well." },
+      { q: "What potatoes are best with chicken?", a: "Baby potatoes and Yukon Gold potatoes are ideal; they roast beautifully, have a creamy texture, and do not need peeling. Russet potatoes work well in stews as they absorb flavors well." },
       { q: "How do I get crispy potatoes when roasting with chicken?", a: "Make sure potatoes are completely dry before seasoning. Use high heat (425F), do not overcrowd the pan, and parboil for 5 minutes before roasting for maximum crispiness." },
-      { q: "Should I use bone-in or boneless chicken with potatoes?", a: "Bone-in chicken thighs are ideal for roasting with potatoes — they take similar amounts of time and stay moist and flavorful. Boneless chicken breasts cook faster, so add them later in the cooking process." },
+      { q: "Should I use bone-in or boneless chicken with potatoes?", a: "Bone-in chicken thighs are ideal for roasting with potatoes; they take similar amounts of time and stay moist and flavorful. Boneless chicken breasts cook faster, so add them later in the cooking process." },
       { q: "What herbs go best with chicken and potatoes?", a: "Rosemary, thyme, and garlic are the classic combination. Paprika adds color and mild smokiness. Oregano gives a Mediterranean flavor. Fresh parsley added at the end brightens the whole dish." },
     ],
   },
   "tuna-and-pasta": {
     title: "6 Easy Recipes with Tuna and Pasta (Quick Budget Meals)",
     heading: "6 Easy Recipes with Tuna and Pasta",
-    intro: "Tuna and pasta is one of the quickest, most affordable meals you can make. With just a can of tuna and some pasta, you can have a satisfying dinner on the table in under 20 minutes. This combination is popular across Mediterranean Europe and for good reason — it is simple, protein-rich, and incredibly flavorful when seasoned well. These recipes range from light and lemony to creamy and indulgent, all built around pantry staples you likely already have.",
+    intro: "Tuna and pasta is one of the quickest, most affordable meals you can make. With just a can of tuna and some pasta, you can have a satisfying dinner on the table in under 20 minutes. This combination is popular across Mediterranean Europe and for good reason; it is simple, protein-rich, and incredibly flavorful when seasoned well. These recipes range from light and lemony to creamy and indulgent, all built around pantry staples you likely already have.",
     ingredients: "tuna,pasta",
     keywords: ["recipes with tuna and pasta", "tuna pasta recipes", "easy tuna and pasta dinner", "canned tuna pasta", "quick tuna noodle dishes"],
     tips: [
       "Drain tuna thoroughly and pat dry to prevent excess liquid from diluting your sauce.",
-      "Oil-packed tuna has significantly more flavor than water-packed — worth the slight price difference.",
+      "Oil-packed tuna has significantly more flavor than water-packed, worth the slight price difference.",
       "Add tuna at the very end of cooking to prevent it from becoming dry and crumbly.",
       "Capers, olives, and lemon juice complement tuna pasta beautifully and add brightness.",
       "Fresh or dried chili flakes add a welcome kick that elevates simple tuna pasta dishes.",
@@ -304,7 +304,7 @@ const slugData: Record<string, SlugEntry> = {
     ],
     faqs: [
       { q: "What pasta shape works best with tuna?", a: "Spaghetti and linguine work beautifully with light oil-based tuna sauces. Penne and rigatoni are better for chunkier sauces. Egg noodles are traditional in American tuna noodle casserole." },
-      { q: "Is canned tuna healthy?", a: "Yes — canned tuna is an excellent source of lean protein and omega-3 fatty acids. Light tuna in water is the lowest calorie option. Limit to 2-3 servings per week due to mercury content." },
+      { q: "Is canned tuna healthy?", a: "Yes, canned tuna is an excellent source of lean protein and omega-3 fatty acids. Light tuna in water is the lowest calorie option. Limit to 2-3 servings per week due to mercury content." },
       { q: "How do I make tuna pasta more flavorful?", a: "Use oil-packed tuna, do not skip the garlic, add lemon juice and zest, use capers or olives, and finish with fresh parsley. A pinch of chili flakes wakes up the whole dish." },
       { q: "Can I make tuna pasta ahead of time?", a: "Light tuna pasta dishes are best served fresh. Creamy tuna noodle casserole can be assembled ahead and baked when needed. Cold tuna pasta salad actually improves after a few hours in the fridge." },
     ],
@@ -317,10 +317,10 @@ const slugData: Record<string, SlugEntry> = {
     keywords: ["beef and broccoli recipes", "easy beef broccoli stir fry", "homemade beef and broccoli", "better than takeout beef broccoli", "quick beef broccoli dinner"],
     tips: [
       "Slice beef against the grain and as thin as possible for the most tender results.",
-      "Freeze beef for 20 minutes before slicing — it firms up and makes thin slicing much easier.",
+      "Freeze beef for 20 minutes before slicing; it firms up and makes thin slicing much easier.",
       "Velveting beef with baking soda for 15 minutes before cooking produces restaurant-quality tenderness.",
       "Use high heat and cook in small batches so the beef sears rather than steams.",
-      "Make the sauce before you start cooking — the stir fry moves fast and you will not have time.",
+      "Make the sauce before you start cooking, as the stir fry moves fast and you will not have time.",
     ],
     variations: [
       "Classic stir fry version: Thin beef strips with oyster sauce, soy sauce, and garlic over steamed rice.",
@@ -330,10 +330,10 @@ const slugData: Record<string, SlugEntry> = {
       "Healthy version: Use lean sirloin, reduce sauce sugar, add extra broccoli and serve over cauliflower rice.",
     ],
     faqs: [
-      { q: "What cut of beef is best for beef and broccoli?", a: "Flank steak is the traditional choice — it is affordable and becomes very tender when sliced thin against the grain. Sirloin, skirt steak, and flat iron steak also work well. Avoid thick, tough cuts like chuck." },
+      { q: "What cut of beef is best for beef and broccoli?", a: "Flank steak is the traditional choice; it is affordable and becomes very tender when sliced thin against the grain. Sirloin, skirt steak, and flat iron steak also work well. Avoid thick, tough cuts like chuck." },
       { q: "How do I make beef and broccoli sauce?", a: "Combine soy sauce, oyster sauce, brown sugar, sesame oil, garlic, ginger, and cornstarch mixed with water. This creates a glossy, savory sauce that coats everything perfectly." },
       { q: "How do I make beef tender for stir fry?", a: "Slice thin against the grain, marinate briefly in soy sauce and cornstarch, and optionally velvet with baking soda. Cook in a very hot pan in small batches for maximum tenderness." },
-      { q: "Can I use frozen broccoli for beef and broccoli?", a: "Yes — thaw and pat very dry before using to prevent steaming instead of stir frying. Fresh broccoli will give you better texture, but frozen works in a pinch." },
+      { q: "Can I use frozen broccoli for beef and broccoli?", a: "Yes, thaw and pat very dry before using to prevent steaming instead of stir frying. Fresh broccoli will give you better texture, but frozen works in a pinch." },
     ],
   },
   "shrimp-and-rice": {
@@ -343,10 +343,10 @@ const slugData: Record<string, SlugEntry> = {
     ingredients: "shrimp,rice",
     keywords: ["recipes with shrimp and rice", "shrimp rice recipes", "easy shrimp and rice dinner", "shrimp fried rice recipe", "quick shrimp rice bowls"],
     tips: [
-      "Pat shrimp completely dry before cooking — moisture prevents proper searing.",
-      "Do not overcook shrimp — they are done the moment they curl into a C shape and turn pink.",
+      "Pat shrimp completely dry before cooking, as moisture prevents proper searing.",
+      "Do not overcook shrimp; they are done the moment they curl into a C shape and turn pink.",
       "Season shrimp just before cooking, not ahead of time, to prevent the salt from drawing out moisture.",
-      "Use day-old rice for fried rice — freshly cooked rice is too moist and will not fry properly.",
+      "Use day-old rice for fried rice; freshly cooked rice is too moist and will not fry properly.",
       "Cook shrimp last when combining with rice to prevent overcooking while other elements heat up.",
     ],
     variations: [
@@ -357,22 +357,22 @@ const slugData: Record<string, SlugEntry> = {
       "Bowl version: Layer rice with seasoned shrimp, avocado, cucumber, and a drizzle of sriracha mayo.",
     ],
     faqs: [
-      { q: "Fresh or frozen shrimp — which is better?", a: "For most home cooks, frozen shrimp is actually fresher than what is sold as fresh at the counter, which is often previously frozen and thawed. Buy frozen and thaw yourself for the best quality and value." },
+      { q: "Fresh or frozen shrimp: which is better?", a: "For most home cooks, frozen shrimp is actually fresher than what is sold as fresh at the counter, which is often previously frozen and thawed. Buy frozen and thaw yourself for the best quality and value." },
       { q: "How do I thaw shrimp quickly?", a: "Place frozen shrimp in a colander under cold running water for 5 minutes. Never thaw in warm water or the microwave as this begins cooking the shrimp unevenly." },
-      { q: "What size shrimp is best for rice dishes?", a: "Medium to large shrimp (21/25 count per pound) work best in rice dishes — they cook quickly but are substantial enough to be satisfying. Extra large shrimp work well for showier presentations." },
-      { q: "How do I know when shrimp are cooked?", a: "Shrimp are done when they turn pink and opaque and curl into a loose C shape. If they curl into a tight O shape, they are overcooked. This happens very quickly — usually just 1-2 minutes per side." },
+      { q: "What size shrimp is best for rice dishes?", a: "Medium to large shrimp (21/25 count per pound) work best in rice dishes; they cook quickly but are substantial enough to be satisfying. Extra large shrimp work well for showier presentations." },
+      { q: "How do I know when shrimp are cooked?", a: "Shrimp are done when they turn pink and opaque and curl into a loose C shape. If they curl into a tight O shape, they are overcooked. This happens very quickly, usually just 1 to 2 minutes per side." },
     ],
   },
   "pork-and-potatoes": {
     title: "6 Easy Recipes with Pork and Potatoes (Hearty Comfort Dinners)",
     heading: "6 Easy Recipes with Pork and Potatoes",
-    intro: "Pork and potatoes is a classic combination that has sustained families for centuries. Affordable, filling, and deeply satisfying, this pairing works across dozens of cooking styles — from simple roasted pork chops with potatoes to hearty stews and crispy hash. Pork has incredible versatility and pairs naturally with the starchy richness of potatoes, creating meals that feel substantial and comforting without requiring advanced cooking skills.",
+    intro: "Pork and potatoes is a classic combination that has sustained families for centuries. Affordable, filling, and deeply satisfying, this pairing works across dozens of cooking styles, from simple roasted pork chops with potatoes to hearty stews and crispy hash. Pork has incredible versatility and pairs naturally with the starchy richness of potatoes, creating meals that feel substantial and comforting without requiring advanced cooking skills.",
     ingredients: "pork,potatoes",
     keywords: ["recipes with pork and potatoes", "pork and potato recipes", "easy pork potatoes dinner", "pork chops and potatoes", "roasted pork potato meals"],
     tips: [
       "Bring pork chops to room temperature for 20 minutes before cooking for more even results.",
       "Sear pork in a very hot pan before finishing in the oven for the best crust and juiciness.",
-      "Use a meat thermometer — pork is safe and perfectly juicy at 145F internal temperature.",
+      "Use a meat thermometer; pork is safe and perfectly juicy at 145F internal temperature.",
       "Parboil potatoes before adding to the pan with pork so everything finishes at the same time.",
       "Let pork rest for 5 minutes after cooking to redistribute juices before cutting.",
     ],
@@ -385,9 +385,9 @@ const slugData: Record<string, SlugEntry> = {
     ],
     faqs: [
       { q: "What cut of pork works best with potatoes?", a: "Pork chops are the quickest option. Pork shoulder and pork butt become incredibly tender in slow braises with potatoes. Pork tenderloin is the leanest option and roasts beautifully with potatoes." },
-      { q: "How do I keep pork chops from drying out?", a: "Do not overcook — use a meat thermometer and pull at 145F. Brine the chops in salted water for 30 minutes before cooking. Bone-in chops stay juicier than boneless. Let them rest before cutting." },
+      { q: "How do I keep pork chops from drying out?", a: "Do not overcook; use a meat thermometer and pull at 145F. Brine the chops in salted water for 30 minutes before cooking. Bone-in chops stay juicier than boneless. Let them rest before cutting." },
       { q: "What seasonings go best with pork and potatoes?", a: "Garlic, rosemary, thyme, and sage are classic pairings. Smoked paprika adds depth. Mustard-based marinades pair beautifully with both pork and potatoes. Apple and fennel also complement pork wonderfully." },
-      { q: "Can I cook pork and potatoes together from raw?", a: "Yes — in a slow cooker or oven roast they cook together beautifully. For stovetop cooking, parboil potatoes first since pork chops cook much faster than raw potatoes." },
+      { q: "Can I cook pork and potatoes together from raw?", a: "Yes, in a slow cooker or oven roast they cook together beautifully. For stovetop cooking, parboil potatoes first since pork chops cook much faster than raw potatoes." },
     ],
   },
   "salmon-and-rice": {
@@ -400,7 +400,7 @@ const slugData: Record<string, SlugEntry> = {
       "Bring salmon to room temperature for 15 minutes before cooking for more even results.",
       "Pat salmon skin completely dry before cooking for the crispiest skin possible.",
       "Cook salmon skin-side down first on high heat, then flip for just 1-2 minutes to finish.",
-      "Do not move salmon while cooking — let it release naturally from the pan for the best crust.",
+      "Do not move salmon while cooking; let it release naturally from the pan for the best crust.",
       "A simple glaze of soy sauce, honey, and garlic transforms basic salmon into something spectacular.",
     ],
     variations: [
@@ -411,10 +411,10 @@ const slugData: Record<string, SlugEntry> = {
       "Curry version: Simmer salmon in a light coconut curry sauce, serve over fragrant jasmine rice.",
     ],
     faqs: [
-      { q: "What rice pairs best with salmon?", a: "Jasmine rice is the most popular pairing — its subtle fragrance complements salmon beautifully. Sushi rice works for bowls. Brown rice adds nutrition. Wild rice adds a nutty, earthy flavor that pairs well with richer salmon preparations." },
+      { q: "What rice pairs best with salmon?", a: "Jasmine rice is the most popular pairing; its subtle fragrance complements salmon beautifully. Sushi rice works for bowls. Brown rice adds nutrition. Wild rice adds a nutty, earthy flavor that pairs well with richer salmon preparations." },
       { q: "How do I know when salmon is cooked?", a: "Salmon is done when it flakes easily with a fork and the flesh has changed from translucent to opaque. For the juiciest result, cook to an internal temperature of 125-130F for medium, or 145F for well done." },
       { q: "Should I eat the salmon skin?", a: "Salmon skin is edible and actually contains concentrated omega-3 fatty acids. When cooked crispy, it is delicious. If you prefer not to eat it, it removes easily after cooking." },
-      { q: "Can I use canned salmon instead of fresh?", a: "Yes — canned salmon works well in salmon fried rice, salmon bowls, and salmon patties served over rice. It is significantly cheaper and still provides excellent nutrition." },
+      { q: "Can I use canned salmon instead of fresh?", a: "Yes, canned salmon works well in salmon fried rice, salmon bowls, and salmon patties served over rice. It is significantly cheaper and still provides excellent nutrition." },
     ],
   },
   "chicken-and-mushrooms": {
@@ -424,10 +424,10 @@ const slugData: Record<string, SlugEntry> = {
     ingredients: "chicken,mushrooms",
     keywords: ["recipes with chicken and mushrooms", "chicken mushroom recipes", "easy chicken and mushroom dinner", "creamy chicken mushroom", "chicken mushroom skillet"],
     tips: [
-      "Do not crowd mushrooms in the pan — cook in batches so they brown rather than steam.",
+      "Do not crowd mushrooms in the pan; cook in batches so they brown rather than steam.",
       "Let mushrooms sit undisturbed in the hot pan for 2-3 minutes before stirring for best browning.",
       "Add a splash of white wine or sherry after browning mushrooms to deglaze and add depth.",
-      "Season mushrooms with salt only after they have browned — early salting draws out moisture.",
+      "Season mushrooms with salt only after they have browned; early salting draws out moisture.",
       "Dried mushrooms rehydrated in warm water add intense flavor to sauces and stews.",
     ],
     variations: [
@@ -439,7 +439,7 @@ const slugData: Record<string, SlugEntry> = {
     ],
     faqs: [
       { q: "What mushrooms work best with chicken?", a: "Cremini and button mushrooms are the most accessible and work well in any preparation. Shiitake add deep umami flavor. Oyster mushrooms have a delicate texture. Portobello mushrooms are meaty and substantial." },
-      { q: "How do I get mushrooms to brown properly?", a: "Use a hot, dry pan. Do not add oil until the pan is very hot. Cook in small batches without crowding. Do not stir too early — let them sit and develop color before moving." },
+      { q: "How do I get mushrooms to brown properly?", a: "Use a hot, dry pan. Do not add oil until the pan is very hot. Cook in small batches without crowding. Do not stir too early; let them sit and develop color before moving." },
       { q: "Can I use canned mushrooms instead of fresh?", a: "Fresh mushrooms will always give better texture and flavor. Canned mushrooms work in soups and sauces where texture matters less. Drain and pat dry thoroughly before using canned mushrooms." },
       { q: "What herbs go best with chicken and mushrooms?", a: "Thyme is the classic pairing. Rosemary adds piney depth. Tarragon gives a French bistro character. Fresh parsley added at the end brightens the whole dish. Sage works particularly well in fall preparations." },
     ],
@@ -447,13 +447,13 @@ const slugData: Record<string, SlugEntry> = {
   "eggs-and-potatoes": {
     title: "6 Easy Recipes with Eggs and Potatoes (Hearty Any-Time Meals)",
     heading: "6 Easy Recipes with Eggs and Potatoes",
-    intro: "Eggs and potatoes are a combination beloved across cultures for a simple reason — they are delicious together. Whether you are making a classic American breakfast hash, a Spanish tortilla, or a hearty frittata, eggs and potatoes create filling, satisfying meals that work any time of day. Both are economical, widely available, and packed with nutrients, making this one of the best budget-friendly meal combinations available.",
+    intro: "Eggs and potatoes are a combination beloved across cultures for a simple reason: they are delicious together. Whether you are making a classic American breakfast hash, a Spanish tortilla, or a hearty frittata, eggs and potatoes create filling, satisfying meals that work any time of day. Both are economical, widely available, and packed with nutrients, making this one of the best budget-friendly meal combinations available.",
     ingredients: "eggs,potatoes",
     keywords: ["recipes with eggs and potatoes", "egg and potato recipes", "easy eggs and potatoes dinner", "potato egg hash recipes", "Spanish tortilla recipe"],
     tips: [
       "Par-cook potatoes before combining with eggs so both elements finish at the same time.",
       "Use a well-seasoned cast iron or non-stick pan for the best results with potato and egg dishes.",
-      "Dice potatoes uniformly so they cook evenly — larger pieces for roasting, smaller for hash.",
+      "Dice potatoes uniformly so they cook evenly; use larger pieces for roasting and smaller for hash.",
       "Season potatoes generously with salt and pepper before cooking for the most flavorful result.",
       "For frittatas, finish under the broiler rather than flipping for a perfectly set top without risk.",
     ],
@@ -467,7 +467,7 @@ const slugData: Record<string, SlugEntry> = {
     faqs: [
       { q: "How do I make crispy potato hash?", a: "Start with dry, diced potatoes. Cook in a hot pan with oil without stirring for 4-5 minutes to develop a crust, then stir and repeat. Season well and finish with butter for extra flavor." },
       { q: "What is a Spanish tortilla?", a: "A Spanish tortilla is a thick egg and potato omelette cooked slowly in olive oil. Unlike a French omelette, it is flipped and served at room temperature. It is one of the most popular dishes in Spain." },
-      { q: "Can eggs and potatoes be meal prepped?", a: "Frittatas and egg casseroles with potatoes meal prep beautifully — make on Sunday and reheat portions throughout the week. Hash is best made fresh as potatoes lose their crispiness when reheated." },
+      { q: "Can eggs and potatoes be meal prepped?", a: "Frittatas and egg casseroles with potatoes meal prep beautifully; make on Sunday and reheat portions throughout the week. Hash is best made fresh as potatoes lose their crispiness when reheated." },
       { q: "What goes well with egg and potato dishes?", a: "Hot sauce, salsa, and ketchup are classic accompaniments. Sour cream pairs wonderfully with potato-forward dishes. A simple green salad balances the richness nicely." },
     ],
   },
@@ -478,11 +478,11 @@ const slugData: Record<string, SlugEntry> = {
     ingredients: "chicken,spinach",
     keywords: ["recipes with chicken and spinach", "chicken spinach recipes", "easy chicken and spinach dinner", "healthy chicken spinach meals", "stuffed chicken spinach"],
     tips: [
-      "Fresh spinach wilts down dramatically — what looks like a lot will reduce to a small amount.",
+      "Fresh spinach wilts down dramatically; what looks like a lot will reduce to a small amount.",
       "Add spinach at the very end of cooking to preserve its bright color and nutritional value.",
       "Squeeze excess moisture from thawed frozen spinach before using in stuffed chicken or casseroles.",
-      "Baby spinach is more tender and has a milder flavor than mature spinach — better for most recipes.",
-      "Garlic and spinach are natural partners — saute garlic first before adding spinach for maximum flavor.",
+      "Baby spinach is more tender and has a milder flavor than mature spinach; it works better for most recipes.",
+      "Garlic and spinach are natural partners; saute garlic first before adding spinach for maximum flavor.",
     ],
     variations: [
       "Stuffed version: Fill chicken breasts with spinach, feta, and garlic, bake at 375F for 25 minutes.",
@@ -492,10 +492,10 @@ const slugData: Record<string, SlugEntry> = {
       "Stir fry version: Quick cook with garlic, soy sauce, and sesame oil for a light, healthy dinner.",
     ],
     faqs: [
-      { q: "Fresh or frozen spinach — which should I use?", a: "Fresh baby spinach is best for salads, stir fries, and dishes where texture matters. Frozen spinach works well in stuffed chicken, casseroles, and soups where it will be cooked down. Always squeeze frozen spinach dry before using." },
-      { q: "How do I prevent spinach from getting slimy?", a: "Add spinach at the very end of cooking over high heat. Do not overcook — spinach should just wilt, not stew. Pat dry before adding to hot pans and avoid covering the pan which traps steam." },
-      { q: "Is chicken and spinach good for weight loss?", a: "It is an excellent weight loss meal — very high in protein and low in calories. Spinach is extremely nutrient-dense while being almost calorie-free. Together they create a filling, satisfying meal." },
-      { q: "What cheese pairs well with chicken and spinach?", a: "Feta is the classic choice — its saltiness and tanginess complement both chicken and spinach perfectly. Parmesan adds savory depth. Ricotta creates a creamy, mild filling in stuffed chicken preparations." },
+      { q: "Fresh or frozen spinach: which should I use?", a: "Fresh baby spinach is best for salads, stir fries, and dishes where texture matters. Frozen spinach works well in stuffed chicken, casseroles, and soups where it will be cooked down. Always squeeze frozen spinach dry before using." },
+      { q: "How do I prevent spinach from getting slimy?", a: "Add spinach at the very end of cooking over high heat. Do not overcook; spinach should just wilt, not stew. Pat dry before adding to hot pans and avoid covering the pan which traps steam." },
+      { q: "Is chicken and spinach good for weight loss?", a: "It is an excellent weight loss meal, very high in protein and low in calories. Spinach is extremely nutrient-dense while being almost calorie-free. Together they create a filling, satisfying meal." },
+      { q: "What cheese pairs well with chicken and spinach?", a: "Feta is the classic choice; its saltiness and tanginess complement both chicken and spinach perfectly. Parmesan adds savory depth. Ricotta creates a creamy, mild filling in stuffed chicken preparations." },
     ],
   },
   "ground-beef-and-potatoes": {
@@ -533,7 +533,7 @@ const slugData: Record<string, SlugEntry> = {
     keywords: ["recipes with chicken and tomatoes", "chicken tomato recipes", "easy chicken and tomato dinner", "Mediterranean chicken recipes", "Italian chicken tomato sauce"],
     tips: [
       "Use a mix of fresh and canned tomatoes for the best balance of brightness and depth.",
-      "Brown chicken well before adding tomatoes — proper searing builds the flavor base for the sauce.",
+      "Brown chicken well before adding tomatoes; proper searing builds the flavor base for the sauce.",
       "Add a pinch of sugar to tomato-based chicken dishes to balance acidity if needed.",
       "Fresh basil added at the very end of cooking preserves its bright flavor and aroma.",
       "Deglaze the pan with white wine before adding tomatoes to capture all the browned bits.",
@@ -549,21 +549,21 @@ const slugData: Record<string, SlugEntry> = {
       { q: "Fresh or canned tomatoes for chicken dishes?", a: "Canned whole or crushed tomatoes are often better for sauces and braises as they are picked and processed at peak ripeness. Fresh tomatoes shine in quick sautes and dishes where they are lightly cooked." },
       { q: "How do I make chicken in tomato sauce?", a: "Brown chicken pieces in olive oil, remove and saute garlic and onion, add crushed tomatoes and herbs, return chicken and simmer covered for 25-30 minutes until tender and sauce has thickened." },
       { q: "What herbs go best with chicken and tomatoes?", a: "Basil is the classic pairing. Oregano and thyme add Mediterranean character. Rosemary works well in roasted preparations. Bay leaves add depth to slow-cooked dishes. Parsley brightens any preparation at the end." },
-      { q: "Can I freeze chicken and tomato dishes?", a: "Yes — tomato-based chicken dishes freeze exceptionally well for up to 3 months. The tomato sauce actually improves after freezing as flavors meld together. Thaw overnight in the fridge and reheat gently." },
+      { q: "Can I freeze chicken and tomato dishes?", a: "Yes, tomato-based chicken dishes freeze exceptionally well for up to 3 months. The tomato sauce actually improves after freezing as flavors meld together. Thaw overnight in the fridge and reheat gently." },
     ],
   },
   "pasta-and-cheese": {
     title: "6 Easy Recipes with Pasta and Cheese (Ultimate Comfort Food)",
     heading: "6 Easy Recipes with Pasta and Cheese",
-    intro: "Pasta and cheese is arguably the greatest comfort food combination ever created. From the creamy indulgence of homemade mac and cheese to elegant cacio e pepe and satisfying baked ziti, these two ingredients together create meals that are universally loved and endlessly satisfying. The beauty of pasta and cheese is its simplicity — with good quality ingredients and the right technique, you can create genuinely spectacular dishes from just a few basic components.",
+    intro: "Pasta and cheese is arguably the greatest comfort food combination ever created. From the creamy indulgence of homemade mac and cheese to elegant cacio e pepe and satisfying baked ziti, these two ingredients together create meals that are universally loved and endlessly satisfying. The beauty of pasta and cheese is its simplicity; with good quality ingredients and the right technique, you can create genuinely spectacular dishes from just a few basic components.",
     ingredients: "pasta,cheese",
     keywords: ["recipes with pasta and cheese", "pasta cheese recipes", "easy pasta and cheese dinner", "mac and cheese recipe", "baked pasta cheese dishes"],
     tips: [
-      "Always grate cheese freshly — pre-shredded cheese contains anti-caking agents that prevent smooth melting.",
+      "Always grate cheese freshly; pre-shredded cheese contains anti-caking agents that prevent smooth melting.",
       "Add cheese off the heat or over very low heat to prevent it from becoming grainy and clumping.",
-      "Use starchy pasta water to create silky, emulsified sauces — reserve at least a cup before draining.",
+      "Use starchy pasta water to create silky, emulsified sauces; reserve at least a cup before draining.",
       "A combination of cheeses almost always beats a single cheese for complexity and better melting.",
-      "Season pasta water generously with salt — this is your only opportunity to season the pasta itself.",
+      "Season pasta water generously with salt; this is your only opportunity to season the pasta itself.",
     ],
     variations: [
       "Mac and cheese version: Make a bechamel, melt cheddar, toss with cooked macaroni, bake with breadcrumbs.",
@@ -573,7 +573,7 @@ const slugData: Record<string, SlugEntry> = {
       "Four cheese version: Combine parmesan, gruyere, fontina, and gorgonzola for a decadent pasta dish.",
     ],
     faqs: [
-      { q: "What cheese melts best in pasta?", a: "Gruyere, fontina, and young cheddar melt the most smoothly. Parmesan and pecorino add flavor but do not melt as smoothly — combine with a melting cheese for best results. Avoid pre-shredded cheese which contains anti-caking agents." },
+      { q: "What cheese melts best in pasta?", a: "Gruyere, fontina, and young cheddar melt the most smoothly. Parmesan and pecorino add flavor but do not melt as smoothly; combine with a melting cheese for best results. Avoid pre-shredded cheese which contains anti-caking agents." },
       { q: "How do I make mac and cheese from scratch?", a: "Make a bechamel (butter, flour, milk), melt sharp cheddar into it, season with mustard and cayenne, toss with cooked macaroni. Bake with breadcrumbs and more cheese for a crispy top." },
       { q: "Why does my cheese sauce become grainy?", a: "Cheese was added to sauce that was too hot. Always add cheese off the heat or over very low heat, stirring constantly. Adding a teaspoon of cornstarch to shredded cheese before adding helps prevent graining." },
       { q: "What pasta shapes work best with cheese sauces?", a: "Short tubular shapes like penne, rigatoni, and ziti trap cheese sauce inside. Elbow macaroni is classic for mac and cheese. Spaghetti and rigatoni work for cacio e pepe. Wide noodles suit bechamel-based sauces." },
@@ -586,21 +586,21 @@ const slugData: Record<string, SlugEntry> = {
     ingredients: "chicken,garlic",
     keywords: ["recipes with chicken and garlic", "garlic chicken recipes", "easy chicken and garlic dinner", "roasted garlic chicken", "garlic butter chicken"],
     tips: [
-      "Whole roasted garlic cloves become sweet and mellow — very different from raw or quickly cooked garlic.",
+      "Whole roasted garlic cloves become sweet and mellow; very different from raw or quickly cooked garlic.",
       "Mince garlic finely for sauces, slice for stir fries, and use whole cloves for roasting.",
-      "Add garlic after browning meat so it does not burn — garlic burns quickly and becomes bitter.",
+      "Add garlic after browning meat so it does not burn; garlic burns quickly and becomes bitter.",
       "Garlic infused olive oil is a simple way to add garlic flavor without pieces that might burn.",
       "Fresh garlic is always significantly better than pre-minced jarred garlic for these recipes.",
     ],
     variations: [
-      "40-clove version: Braise chicken with 40 whole garlic cloves until sweet and tender — a classic French dish.",
+      "40-clove version: Braise chicken with 40 whole garlic cloves until sweet and tender, a classic French dish.",
       "Garlic butter version: Pan sear chicken, make a quick garlic butter sauce, serve immediately.",
       "Roasted version: Rub chicken with garlic paste and herbs, roast until golden and fragrant.",
       "Lemon garlic version: Brighten with lemon juice and zest for a fresh, vibrant preparation.",
       "Asian version: Marinate with garlic, soy sauce, and ginger for an Asian-inspired preparation.",
     ],
     faqs: [
-      { q: "How much garlic should I use with chicken?", a: "For most recipes, 3-6 cloves is a good starting point. For garlic-forward dishes like 40-clove chicken, you can use an entire head. Adjust based on your personal preference — garlic lovers can always add more." },
+      { q: "How much garlic should I use with chicken?", a: "For most recipes, 3-6 cloves is a good starting point. For garlic-forward dishes like 40-clove chicken, you can use an entire head. Adjust based on your personal preference; garlic lovers can always add more." },
       { q: "How do I prevent garlic from burning?", a: "Add garlic to a pan that is warm but not smoking hot. Keep the heat at medium and stir frequently. Adding garlic after your protein is browned reduces the risk. Whole cloves and slices are less likely to burn than minced." },
       { q: "What is the easiest garlic chicken recipe?", a: "Pat chicken dry, season with salt and pepper, sear in butter until golden, add minced garlic and more butter, baste the chicken with the garlic butter for 2 minutes, serve immediately. Done in under 20 minutes." },
       { q: "Can I use garlic powder instead of fresh garlic?", a: "Garlic powder works as a substitute but delivers a different, less complex flavor. Use about a quarter teaspoon of garlic powder per garlic clove. For the best results in these recipes, fresh garlic is strongly recommended." },
@@ -609,7 +609,7 @@ const slugData: Record<string, SlugEntry> = {
   "beef-and-potatoes": {
     title: "6 Easy Recipes with Beef and Potatoes (Hearty Classic Dinners)",
     heading: "6 Easy Recipes with Beef and Potatoes",
-    intro: "Beef and potatoes is one of the most classic and universally beloved combinations in home cooking. This hearty pairing appears in virtually every culinary tradition around the world — from American pot roast to Irish beef stew and French beef bourguignon. Both ingredients are filling, nutritious, and become remarkably tender and flavorful when cooked together over time. These recipes celebrate the simple power of beef and potatoes to create deeply satisfying meals.",
+    intro: "Beef and potatoes is one of the most classic and universally beloved combinations in home cooking. This hearty pairing appears in virtually every culinary tradition around the world, from American pot roast to Irish beef stew and French beef bourguignon. Both ingredients are filling, nutritious, and become remarkably tender and flavorful when cooked together over time. These recipes celebrate the simple power of beef and potatoes to create deeply satisfying meals.",
     ingredients: "beef,potatoes",
     keywords: ["recipes with beef and potatoes", "beef and potato recipes", "easy beef and potatoes dinner", "beef stew with potatoes", "pot roast with potatoes"],
     tips: [
@@ -617,17 +617,17 @@ const slugData: Record<string, SlugEntry> = {
       "Cut potatoes into larger chunks for stews so they hold together during long cooking times.",
       "Deglaze the pan with red wine or beef broth after browning beef to capture all the flavor.",
       "Add potatoes in the last 45 minutes of stew cooking so they do not become mushy.",
-      "Use tougher, cheaper cuts of beef for stews — they become tender and flavorful with slow cooking.",
+      "Use tougher, cheaper cuts of beef for stews; they become tender and flavorful with slow cooking.",
     ],
     variations: [
       "Stew version: Braise beef chunks with potatoes, carrots, and onions in beef broth for 2 hours.",
       "Pot roast version: Slow cook a beef chuck roast with whole potatoes and vegetables until fork tender.",
       "Skillet version: Sear thin beef slices with cubed potatoes in a hot pan for a quick dinner.",
-      "Slow cooker version: Set and forget — cook on low for 8 hours for incredibly tender results.",
+      "Slow cooker version: Set and forget: cook on low for 8 hours for incredibly tender results.",
       "Sheet pan version: Roast beef strips and cubed potatoes with garlic and herbs at 425F.",
     ],
     faqs: [
-      { q: "What cut of beef is best for beef and potato dishes?", a: "Chuck roast and beef stew meat are ideal for slow-cooked dishes — they become incredibly tender. Sirloin works for quick skillet meals. Short ribs add incredible richness to braised potato dishes." },
+      { q: "What cut of beef is best for beef and potato dishes?", a: "Chuck roast and beef stew meat are ideal for slow-cooked dishes; they become incredibly tender. Sirloin works for quick skillet meals. Short ribs add incredible richness to braised potato dishes." },
       { q: "How do I make beef and potato stew?", a: "Brown beef chunks in batches, saute onions and garlic, add broth, tomato paste, and herbs, return beef, simmer 1 hour, add potatoes and carrots, continue simmering 45 minutes until everything is tender." },
       { q: "How long does beef and potato stew take?", a: "On the stovetop, plan on 2-2.5 hours total for the most tender results. In a slow cooker, 8 hours on low. In a pressure cooker or instant pot, about 45 minutes with natural pressure release." },
       { q: "Can I freeze beef and potato stew?", a: "Yes, but potatoes can become mealy after freezing. For best results, make the stew without potatoes to freeze, then add freshly cooked potatoes when reheating. Alternatively, use waxy potatoes which freeze better than russets." },
@@ -640,11 +640,11 @@ const slugData: Record<string, SlugEntry> = {
     ingredients: "chicken,lemon",
     keywords: ["recipes with chicken and lemon", "lemon chicken recipes", "easy chicken and lemon dinner", "lemon herb chicken", "quick lemon chicken meals"],
     tips: [
-      "Use both lemon juice AND zest — the zest contains the most intensely flavored lemon oils.",
-      "Add lemon juice at the end of cooking to preserve its bright, fresh flavor — heat dulls it.",
+      "Use both lemon juice AND zest; the zest contains the most intensely flavored lemon oils.",
+      "Add lemon juice at the end of cooking to preserve its bright, fresh flavor; heat dulls it.",
       "Rub lemon zest under chicken skin before roasting for the most intensely flavored result.",
-      "Slice lemons and roast alongside chicken — they caramelize and create an incredible pan sauce.",
-      "Balance lemon with butter or olive oil — a little fat softens the acidity for a more rounded flavor.",
+      "Slice lemons and roast alongside chicken; they caramelize and create an incredible pan sauce.",
+      "Balance lemon with butter or olive oil; a little fat softens the acidity for a more rounded flavor.",
     ],
     variations: [
       "Pan sauce version: Sear chicken, deglaze with lemon juice and white wine, finish with butter.",
@@ -667,7 +667,7 @@ const slugData: Record<string, SlugEntry> = {
     ingredients: "pork,rice",
     keywords: ["recipes with pork and rice", "pork rice recipes", "easy pork and rice dinner", "pork fried rice recipe", "pork rice bowls"],
     tips: [
-      "Use day-old rice for fried rice — freshly cooked rice contains too much moisture.",
+      "Use day-old rice for fried rice; freshly cooked rice contains too much moisture.",
       "Pork shoulder becomes incredibly tender and flavorful after 2+ hours of braising over rice.",
       "Pork belly fat renders beautifully and creates natural sauces that coat rice perfectly.",
       "Season pork with soy sauce, garlic, and ginger for the most versatile Asian-inspired preparations.",
@@ -694,7 +694,7 @@ const slugData: Record<string, SlugEntry> = {
     ingredients: "chicken,zucchini",
     keywords: ["chicken and zucchini recipes", "easy chicken zucchini dinner", "healthy chicken zucchini meals", "chicken zucchini stir fry", "quick chicken and zucchini"],
     tips: [
-      "Do not overcook zucchini — it only needs 3 to 4 minutes in a hot pan to become tender.",
+      "Do not overcook zucchini; it only needs 3 to 4 minutes in a hot pan to become tender.",
       "Salt zucchini and let it sit for 10 minutes before cooking to draw out excess moisture.",
       "Cut chicken and zucchini into similar-sized pieces for even cooking.",
       "Use high heat for stir frying to get a light char on the zucchini rather than steaming it.",
@@ -724,7 +724,7 @@ const slugData: Record<string, SlugEntry> = {
       "Cut sweet potatoes into evenly sized cubes so they roast or cook at the same rate.",
       "Parboil sweet potato cubes for 5 minutes before roasting to cut oven time significantly.",
       "Sweet potatoes pair beautifully with warming spices like cumin, smoked paprika, and cinnamon.",
-      "Use bone-in chicken thighs for sheet pan dinners — they stay juicier alongside sweet potatoes.",
+      "Use bone-in chicken thighs for sheet pan dinners; they stay juicier alongside sweet potatoes.",
       "Roast at high heat (425F) to caramelize the sweet potatoes and get crispy chicken skin.",
     ],
     variations: [
@@ -735,7 +735,7 @@ const slugData: Record<string, SlugEntry> = {
       "Bowl version: Serve roasted chicken and sweet potato over quinoa with a tahini dressing.",
     ],
     faqs: [
-      { q: "Do sweet potatoes and chicken cook at the same rate?", a: "Not always — sweet potatoes take longer. Cut them smaller than the chicken pieces or give them a 10 to 15 minute head start in the oven before adding the chicken." },
+      { q: "Do sweet potatoes and chicken cook at the same rate?", a: "Not always; sweet potatoes take longer. Cut them smaller than the chicken pieces or give them a 10 to 15 minute head start in the oven before adding the chicken." },
       { q: "What spices go best with chicken and sweet potato?", a: "Smoked paprika, cumin, garlic powder, cinnamon, and chili powder all complement both ingredients. For an Asian twist, try five spice or ginger." },
       { q: "Can I meal prep chicken and sweet potato?", a: "Yes, it is an excellent meal prep combination. Cook a large batch and store in the fridge for up to 4 days. It reheats well in the microwave or oven." },
       { q: "Is chicken and sweet potato good for weight loss?", a: "Yes, it is a high-protein, high-fiber meal that keeps you full. Sweet potatoes have a lower glycemic index than white potatoes and are packed with vitamins A and C." },
@@ -744,12 +744,12 @@ const slugData: Record<string, SlugEntry> = {
   "ground-beef-and-onions": {
     title: "6 Easy Recipes with Ground Beef and Onions (Budget-Friendly Dinners)",
     heading: "6 Easy Recipes with Ground Beef and Onions",
-    intro: "Ground beef and onions are two of the most essential ingredients in any kitchen. Together they form the flavor base for hundreds of classic dishes — burgers, Bolognese, shepherd's pie, tacos, and so much more. Onions caramelize beautifully with ground beef, adding sweetness and depth that elevates even the simplest recipe. Best of all, this combination is incredibly budget-friendly and quick to cook. If you have ground beef and onions on hand, a great dinner is never far away.",
+    intro: "Ground beef and onions are two of the most essential ingredients in any kitchen. Together they form the flavor base for hundreds of classic dishes: burgers, Bolognese, shepherd's pie, tacos, and so much more. Onions caramelize beautifully with ground beef, adding sweetness and depth that elevates even the simplest recipe. Best of all, this combination is incredibly budget-friendly and quick to cook. If you have ground beef and onions on hand, a great dinner is never far away.",
     ingredients: "ground beef,onions",
     keywords: ["ground beef and onion recipes", "easy ground beef onion dinner", "ground beef onion skillet", "simple ground beef meals", "budget ground beef recipes"],
     tips: [
       "Cook onions first over medium heat until softened before adding ground beef for the best flavor.",
-      "Use 80/20 ground beef for the most flavor — the fat keeps the meat moist and tasty.",
+      "Use 80/20 ground beef for the most flavor; the fat keeps the meat moist and tasty.",
       "Break ground beef into small pieces as it cooks for even browning and better texture.",
       "Drain excess fat after browning for a less greasy final dish.",
       "Caramelize onions slowly over low heat for 20 minutes to develop deep, sweet flavor.",
@@ -771,14 +771,14 @@ const slugData: Record<string, SlugEntry> = {
   "shrimp-and-garlic": {
     title: "6 Easy Recipes with Shrimp and Garlic (Quick & Flavorful Dinners)",
     heading: "6 Easy Recipes with Shrimp and Garlic",
-    intro: "Shrimp and garlic is one of the most classic and beloved flavor combinations in cooking. Garlic butter shrimp, shrimp scampi, garlic shrimp pasta — these dishes are restaurant favorites that you can easily make at home in under 20 minutes. Shrimp cooks incredibly fast, which makes it the perfect protein for busy weeknights. Paired with the bold, aromatic flavor of garlic, you get a meal that tastes impressive with very little effort. Here are the best easy shrimp and garlic recipes to try tonight.",
+    intro: "Shrimp and garlic is one of the most classic and beloved flavor combinations in cooking. Garlic butter shrimp, shrimp scampi, garlic shrimp pasta; these are restaurant favorites that you can easily make at home in under 20 minutes. Shrimp cooks incredibly fast, which makes it the perfect protein for busy weeknights. Paired with the bold, aromatic flavor of garlic, you get a meal that tastes impressive with very little effort. Here are the best easy shrimp and garlic recipes to try tonight.",
     ingredients: "shrimp,garlic",
     keywords: ["shrimp and garlic recipes", "garlic butter shrimp recipe", "easy shrimp garlic dinner", "shrimp scampi recipe", "quick shrimp and garlic meals"],
     tips: [
-      "Do not overcook shrimp — it only takes 2 to 3 minutes per side and turns rubbery when overdone.",
+      "Do not overcook shrimp; it only takes 2 to 3 minutes per side and turns rubbery when overdone.",
       "Pat shrimp completely dry before cooking to get a better sear in the pan.",
       "Use fresh garlic rather than garlic powder for the best flavor in shrimp dishes.",
-      "Cook garlic in butter over medium heat until fragrant before adding shrimp — about 30 seconds.",
+      "Cook garlic in butter over medium heat until fragrant before adding shrimp, about 30 seconds.",
       "Add a splash of white wine or lemon juice to deglaze the pan and build a simple sauce.",
     ],
     variations: [
@@ -825,15 +825,15 @@ const slugData: Record<string, SlugEntry> = {
   "pasta-and-tomatoes": {
     title: "6 Easy Recipes with Pasta and Tomatoes (Simple Italian-Inspired Dinners)",
     heading: "6 Easy Recipes with Pasta and Tomatoes",
-    intro: "Pasta and tomatoes are at the heart of Italian cooking — and for good reason. Tomatoes provide natural acidity and sweetness that complement pasta in ways no other ingredient can. From a simple pomodoro sauce to a rich Bolognese or a fresh summer pasta salad, this combination is endlessly versatile. Best of all, you probably already have everything you need in your pantry. These easy pasta and tomato recipes will become your go-to weeknight dinners.",
+    intro: "Pasta and tomatoes are at the heart of Italian cooking, and for good reason. Tomatoes provide natural acidity and sweetness that complement pasta in ways no other ingredient can. From a simple pomodoro sauce to a rich Bolognese or a fresh summer pasta salad, this combination is endlessly versatile. Best of all, you probably already have everything you need in your pantry. These easy pasta and tomato recipes will become your go-to weeknight dinners.",
     ingredients: "pasta,tomatoes",
     keywords: ["pasta and tomato recipes", "easy tomato pasta dinner", "simple tomato pasta sauce", "quick pasta with tomatoes", "Italian pasta tomato recipes"],
     tips: [
-      "Reserve a cup of pasta water before draining — the starchy water helps bind the sauce to the noodles.",
+      "Reserve a cup of pasta water before draining; the starchy water helps bind the sauce to the noodles.",
       "Use canned San Marzano tomatoes for the best flavor in cooked sauces.",
       "Fresh cherry tomatoes burst beautifully in a hot pan and make a quick fresh sauce in minutes.",
       "Cook pasta 1 minute less than the package says and finish it in the sauce to absorb more flavor.",
-      "Always salt your pasta water generously — it should taste like mild seawater.",
+      "Always salt your pasta water generously; it should taste like mild seawater.",
     ],
     variations: [
       "Pomodoro version: Simmer crushed tomatoes with garlic and olive oil for 15 minutes for a classic sauce.",
@@ -856,11 +856,11 @@ const slugData: Record<string, SlugEntry> = {
     ingredients: "eggs,spinach",
     keywords: ["eggs and spinach recipes", "spinach egg breakfast", "easy eggs and spinach dinner", "spinach scrambled eggs", "healthy egg and spinach meals"],
     tips: [
-      "Wilt spinach in the pan for just 1 to 2 minutes before adding eggs — it cooks down quickly.",
+      "Wilt spinach in the pan for just 1 to 2 minutes before adding eggs; it cooks down quickly.",
       "Use fresh baby spinach for the best texture and flavor in egg dishes.",
       "Season eggs with salt only after cooking to prevent them from becoming watery.",
       "Add a splash of water rather than milk to scrambled eggs for a fluffier texture.",
-      "Frozen spinach works in frittatas and baked egg dishes — just squeeze out all excess water first.",
+      "Frozen spinach works in frittatas and baked egg dishes; just squeeze out all excess water first.",
     ],
     variations: [
       "Scramble version: Wilt spinach in butter, pour in beaten eggs, scramble gently over low heat.",
@@ -884,7 +884,7 @@ const slugData: Record<string, SlugEntry> = {
     keywords: ["chicken and carrot recipes", "easy chicken carrot dinner", "chicken carrot soup", "roast chicken with carrots", "healthy chicken and carrot meals"],
     tips: [
       "Cut carrots into similar-sized pieces for even cooking throughout the dish.",
-      "Roasting carrots brings out their natural sweetness — use high heat and a little olive oil.",
+      "Roasting carrots brings out their natural sweetness; use high heat and a little olive oil.",
       "Add carrots early in soups and stews as they take longer to soften than most vegetables.",
       "Glaze roasted carrots with a little honey or maple syrup for a beautiful caramelized finish.",
       "Baby carrots are a convenient shortcut and work perfectly in any chicken and carrot recipe.",
@@ -911,7 +911,7 @@ const slugData: Record<string, SlugEntry> = {
     keywords: ["beef and mushroom recipes", "easy beef mushroom dinner", "beef mushroom stroganoff", "beef mushroom stew", "savory beef and mushroom meals"],
     tips: [
       "Cook mushrooms in a dry hot pan first without oil to drive off moisture and develop deep flavor.",
-      "Do not crowd mushrooms in the pan — cook in batches to get browning rather than steaming.",
+      "Do not crowd mushrooms in the pan; cook in batches to get browning rather than steaming.",
       "Add a splash of Worcestershire sauce to beef and mushroom dishes for extra depth.",
       "Use a mix of mushroom varieties like cremini, shiitake, and portobello for more complex flavor.",
       "Deglaze the pan with red wine or beef broth after browning beef to capture all the flavorful bits.",
@@ -940,7 +940,7 @@ const slugData: Record<string, SlugEntry> = {
       "Drain canned tuna thoroughly before using to prevent dishes from becoming watery.",
       "Season tuna rice bowls with soy sauce, sesame oil, and sriracha for a quick Japanese-inspired meal.",
       "Mix tuna with mayo, lemon juice, and dill for a classic filling to serve over rice.",
-      "Use leftover rice for tuna fried rice — day-old rice fries much better than freshly cooked.",
+      "Use leftover rice for tuna fried rice; day-old rice fries much better than freshly cooked.",
       "Rinse canned tuna under cold water to remove any excess sodium or oil.",
     ],
     variations: [
@@ -987,13 +987,13 @@ const slugData: Record<string, SlugEntry> = {
   "shrimp-and-broccoli": {
     title: "6 Easy Recipes with Shrimp and Broccoli (Healthy Quick Dinners)",
     heading: "6 Easy Recipes with Shrimp and Broccoli",
-    intro: "Shrimp and broccoli is one of the most popular takeout combinations — and it is even better and healthier when made at home. Both ingredients cook in just minutes, making this an ideal weeknight dinner when you are short on time. Shrimp provides lean protein while broccoli adds fiber, vitamins, and a satisfying crunch. Together they make a complete, balanced meal with minimal effort.",
+    intro: "Shrimp and broccoli is one of the most popular takeout combinations, and it is even better and healthier when made at home. Both ingredients cook in just minutes, making this an ideal weeknight dinner when you are short on time. Shrimp provides lean protein while broccoli adds fiber, vitamins, and a satisfying crunch. Together they make a complete, balanced meal with minimal effort.",
     ingredients: "shrimp,broccoli",
     keywords: ["shrimp and broccoli recipes", "easy shrimp broccoli stir fry", "healthy shrimp broccoli dinner", "quick shrimp and broccoli", "shrimp broccoli garlic"],
     tips: [
       "Blanch broccoli for 90 seconds before stir frying to get the perfect crisp-tender texture.",
       "Cook shrimp and broccoli separately and combine at the end to prevent overcooking either one.",
-      "Use high heat for stir frying — this is essential for proper searing rather than steaming.",
+      "Use high heat for stir frying; this is essential for proper searing rather than steaming.",
       "Pat shrimp completely dry before cooking for the best sear and texture.",
       "A simple sauce of soy sauce, garlic, ginger, and a little honey brings everything together.",
     ],
@@ -1005,7 +1005,7 @@ const slugData: Record<string, SlugEntry> = {
       "Soup version: Simmer in a light broth with ginger, garlic, and noodles for an Asian-style soup.",
     ],
     faqs: [
-      { q: "How do I prevent shrimp from overcooking in a stir fry?", a: "Add shrimp last in the cooking process and cook for only 2 minutes per side until pink and curled into a C shape. Remove immediately from heat — they will continue cooking from residual heat." },
+      { q: "How do I prevent shrimp from overcooking in a stir fry?", a: "Add shrimp last in the cooking process and cook for only 2 minutes per side until pink and curled into a C shape. Remove immediately from heat; they will continue cooking from residual heat." },
       { q: "Should I use fresh or frozen broccoli with shrimp?", a: "Fresh broccoli gives the best texture for stir fries. Frozen broccoli can become too soft when stir fried but works well in soups and baked dishes." },
       { q: "What sauce goes best with shrimp and broccoli?", a: "A classic stir fry sauce of soy sauce, garlic, ginger, and a little cornstarch works perfectly. Oyster sauce adds depth. Garlic butter with lemon is excellent for a non-Asian version." },
       { q: "Is shrimp and broccoli healthy?", a: "Yes, it is an excellent low-calorie, high-protein meal. Shrimp is very low in fat and calories while being high in protein. Broccoli is rich in vitamins C and K, fiber, and antioxidants." },
@@ -1046,7 +1046,7 @@ const slugData: Record<string, SlugEntry> = {
     keywords: ["pasta and mushroom recipes", "easy mushroom pasta dinner", "creamy mushroom pasta", "garlic mushroom pasta", "vegetarian mushroom pasta"],
     tips: [
       "Cook mushrooms in a hot dry pan first to drive off moisture before adding butter or oil.",
-      "Use a mix of mushroom varieties for more complex flavor — cremini, shiitake, and oyster work great together.",
+      "Use a mix of mushroom varieties for more complex flavor; cremini, shiitake, and oyster work great together.",
       "Reserve pasta water to loosen the sauce and help it cling to the noodles.",
       "Add fresh thyme or rosemary to mushrooms as they cook for an aromatic depth.",
       "Finish the dish with a drizzle of truffle oil for an elevated, restaurant-quality flavor.",
@@ -1068,15 +1068,15 @@ const slugData: Record<string, SlugEntry> = {
   "chicken-and-beans": {
     title: "6 Easy Recipes with Chicken and Beans (Hearty & Budget-Friendly)",
     heading: "6 Easy Recipes with Chicken and Beans",
-    intro: "Chicken and beans is one of the most nutritious, budget-friendly, and satisfying meal combinations you can make. Beans are packed with fiber, plant protein, and complex carbohydrates that make any meal more filling and nutritious. Together with chicken, they create hearty dishes like soups, stews, chilis, and casseroles that stretch your grocery budget without sacrificing flavor. Any type of bean works beautifully — black beans, white beans, chickpeas, or kidney beans.",
+    intro: "Chicken and beans is one of the most nutritious, budget-friendly, and satisfying meal combinations you can make. Beans are packed with fiber, plant protein, and complex carbohydrates that make any meal more filling and nutritious. Together with chicken, they create hearty dishes like soups, stews, chilis, and casseroles that stretch your grocery budget without sacrificing flavor. Any type of bean works beautifully: black beans, white beans, chickpeas, or kidney beans.",
     ingredients: "chicken,beans",
     keywords: ["chicken and bean recipes", "easy chicken bean dinner", "chicken white bean soup", "chicken black bean recipes", "healthy chicken and bean meals"],
     tips: [
-      "Canned beans save significant time — drain and rinse well before adding to any recipe.",
+      "Canned beans save significant time; drain and rinse well before adding to any recipe.",
       "White beans break down slightly when cooked, naturally thickening soups and stews.",
       "Add beans in the last 15 minutes of cooking stews to keep their shape and texture.",
       "Mash a portion of the beans against the pot wall to thicken soups without adding cream.",
-      "Season beans well — they absorb flavors beautifully but need generous seasoning.",
+      "Season beans well; they absorb flavors beautifully but need generous seasoning.",
     ],
     variations: [
       "Soup version: Simmer chicken thighs with white beans, kale, garlic, and chicken broth for a Tuscan-style soup.",
@@ -1099,7 +1099,7 @@ const slugData: Record<string, SlugEntry> = {
     ingredients: "eggs,mushrooms",
     keywords: ["eggs and mushroom recipes", "mushroom egg breakfast", "easy eggs and mushroom dinner", "mushroom scrambled eggs", "mushroom frittata recipe"],
     tips: [
-      "Saute mushrooms first until golden before adding eggs — this prevents a watery final dish.",
+      "Saute mushrooms first until golden before adding eggs; this prevents a watery final dish.",
       "Use butter rather than oil for sauteing mushrooms to get the richest flavor with eggs.",
       "Add fresh thyme or chives to mushrooms and eggs for an elevated, aromatic flavor.",
       "Cook eggs low and slow for the creamiest scramble when paired with mushrooms.",
@@ -1127,7 +1127,7 @@ const slugData: Record<string, SlugEntry> = {
     keywords: ["salmon and lemon recipes", "lemon salmon recipe", "easy lemon baked salmon", "healthy salmon lemon dinner", "quick salmon and lemon meals"],
     tips: [
       "Use both lemon juice and lemon zest for maximum lemon flavor in salmon dishes.",
-      "Marinate salmon in lemon juice for no more than 30 minutes — longer will begin to cook the fish.",
+      "Marinate salmon in lemon juice for no more than 30 minutes; longer will begin to cook the fish.",
       "Place lemon slices under the salmon while baking to infuse flavor from below.",
       "Squeeze fresh lemon over cooked salmon just before serving for the brightest flavor.",
       "Brown butter with lemon is one of the simplest and most delicious sauces for pan-seared salmon.",
@@ -1149,13 +1149,13 @@ const slugData: Record<string, SlugEntry> = {
   "beef-and-carrots": {
     title: "6 Easy Recipes with Beef and Carrots (Hearty Comfort Food Dinners)",
     heading: "6 Easy Recipes with Beef and Carrots",
-    intro: "Beef and carrots is the ultimate comfort food pairing — warm, hearty, and deeply satisfying. Carrots add natural sweetness that balances the savory richness of beef, and their firm texture holds up beautifully in slow-cooked stews, braises, and roasts. This classic combination is at the heart of pot roast, beef stew, and Bolognese, making it one of the most beloved pairings in home cooking. If you have beef and carrots, a truly comforting dinner is just ahead.",
+    intro: "Beef and carrots is the ultimate comfort food pairing: warm, hearty, and deeply satisfying. Carrots add natural sweetness that balances the savory richness of beef, and their firm texture holds up beautifully in slow-cooked stews, braises, and roasts. This classic combination is at the heart of pot roast, beef stew, and Bolognese, making it one of the most beloved pairings in home cooking. If you have beef and carrots, a truly comforting dinner is just ahead.",
     ingredients: "beef,carrots",
     keywords: ["beef and carrot recipes", "easy beef carrot dinner", "beef carrot stew", "pot roast with carrots", "hearty beef and carrot meals"],
     tips: [
       "Cut carrots into large chunks for stews so they hold their shape during long cooking.",
       "Add carrots in the last 45 minutes of braising to prevent them from becoming mushy.",
-      "Brown beef well before adding carrots and liquid — this develops the deepest flavor.",
+      "Brown beef well before adding carrots and liquid; this develops the deepest flavor.",
       "A splash of red wine adds wonderful depth to beef and carrot braises and stews.",
       "Baby carrots are a convenient option and require no chopping for quick weeknight dinners.",
     ],
@@ -1176,7 +1176,7 @@ const slugData: Record<string, SlugEntry> = {
   "chicken-and-avocado": {
     title: "6 Easy Recipes with Chicken and Avocado (Fresh & Healthy Meals)",
     heading: "6 Easy Recipes with Chicken and Avocado",
-    intro: "Chicken and avocado is a fresh, healthy, and incredibly satisfying combination. Avocado adds creamy richness, healthy fats, and a buttery texture that complements grilled, baked, or shredded chicken beautifully. From salads and wraps to bowls and tacos, this pairing is popular for good reason — it is delicious, nutritious, and comes together quickly. These easy chicken and avocado recipes are perfect for light lunches and healthy weeknight dinners.",
+    intro: "Chicken and avocado is a fresh, healthy, and incredibly satisfying combination. Avocado adds creamy richness, healthy fats, and a buttery texture that complements grilled, baked, or shredded chicken beautifully. From salads and wraps to bowls and tacos, this pairing is popular for good reason; it is delicious, nutritious, and comes together quickly. These easy chicken and avocado recipes are perfect for light lunches and healthy weeknight dinners.",
     ingredients: "chicken,avocado",
     keywords: ["chicken and avocado recipes", "easy chicken avocado dinner", "chicken avocado salad", "healthy chicken avocado meals", "chicken avocado bowl"],
     tips: [
@@ -1203,15 +1203,15 @@ const slugData: Record<string, SlugEntry> = {
   "shrimp-and-pasta": {
     title: "6 Easy Recipes with Shrimp and Pasta (Quick Elegant Dinners)",
     heading: "6 Easy Recipes with Shrimp and Pasta",
-    intro: "Shrimp and pasta might be the most impressive quick dinner you can make. Shrimp cook in just 2-3 minutes, meaning the entire dish can be on the table in under 20 minutes. Despite the speed, shrimp and pasta dishes look and taste elegant — perfect for impressing guests or treating yourself on a weeknight. From classic shrimp scampi to spicy arrabbiata and light lemon pasta, these recipes cover the full range of what this outstanding combination can achieve.",
+    intro: "Shrimp and pasta might be the most impressive quick dinner you can make. Shrimp cook in just 2-3 minutes, meaning the entire dish can be on the table in under 20 minutes. Despite the speed, shrimp and pasta dishes look and taste elegant, perfect for impressing guests or treating yourself on a weeknight. From classic shrimp scampi to spicy arrabbiata and light lemon pasta, these recipes cover the full range of what this outstanding combination can achieve.",
     ingredients: "shrimp,pasta",
     keywords: ["recipes with shrimp and pasta", "shrimp pasta recipes", "easy shrimp and pasta dinner", "shrimp scampi recipe", "quick shrimp noodle dishes"],
     tips: [
-      "Do not overcook shrimp — they are done when pink and curled into a C shape, usually 1-2 minutes per side.",
+      "Do not overcook shrimp; they are done when pink and curled into a C shape, usually 1 to 2 minutes per side.",
       "Cook shrimp separately and add to pasta at the very end to prevent overcooking while sauce reduces.",
-      "Use the shrimp shells to make a quick stock for pasta cooking water — adds incredible flavor.",
+      "Use the shrimp shells to make a quick stock for pasta cooking water; it adds incredible flavor.",
       "Pat shrimp dry before cooking for better searing and more flavor development.",
-      "Reserve pasta water — the starchy liquid is essential for creating silky, coating sauces.",
+      "Reserve pasta water; the starchy liquid is essential for creating silky, coating sauces.",
     ],
     variations: [
       "Scampi version: Saute shrimp in garlic butter with white wine and lemon, toss with linguine.",
@@ -1371,7 +1371,7 @@ export default async function RecipePage({ params }: { params: Promise<{ slug: s
 
         <div className="bg-orange-500 rounded-2xl p-6 mb-8 text-center">
           <h3 className="text-xl font-bold text-white mb-2">Find Recipes With Your Ingredients</h3>
-          <p className="text-orange-100 text-sm mb-4">Enter whatever you have at home and instantly find matching recipes — no shopping needed.</p>
+          <p className="text-orange-100 text-sm mb-4">Enter whatever you have at home and instantly find matching recipes, no shopping needed.</p>
           <a href="/" className="inline-block bg-white text-orange-600 font-bold px-8 py-3 rounded-xl hover:bg-orange-50 transition-colors">
             Try My Recipe Match Free
           </a>

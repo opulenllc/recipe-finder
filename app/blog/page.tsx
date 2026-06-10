@@ -21,7 +21,7 @@ export default function BlogPage() {
           Cook smarter with what you have
         </h1>
         <p className="text-lg text-gray-600 max-w-xl mx-auto leading-relaxed">
-          Practical cooking tips, pantry guides, and meal ideas — all focused
+          Practical cooking tips, pantry guides, and meal ideas, all focused
           on making the most of the ingredients you already own.
         </p>
       </section>
