@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { posts } from "../posts/index";
+import { posts } from "@/app/blog/posts/index";
 
 type Props = { params: { slug: string } };
 
