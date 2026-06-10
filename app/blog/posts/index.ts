@@ -1,5 +1,6 @@
 export type BlogPost = {
   slug: string;
+  image: string;
   title: string;
   date: string;
   readTime: string;
@@ -10,6 +11,7 @@ export type BlogPost = {
 export const posts: BlogPost[] = [
   {
     slug: "ingredient-combos-that-make-amazing-meals",
+    image: "https://images.unsplash.com/photo-1543353071-10c8ba85a904?w=800&q=80",
     title: "10 Ingredient Combos That Make Amazing Meals (No Recipe Needed)",
     date: "June 1, 2026",
     readTime: "6 min read",
@@ -58,6 +60,7 @@ export const posts: BlogPost[] = [
   },
   {
     slug: "clean-out-your-fridge-before-grocery-day",
+    image: "https://images.unsplash.com/photo-1547592180-85f173990554?w=800&q=80",
     title: "How to Clean Out Your Fridge Before Grocery Day",
     date: "May 25, 2026",
     readTime: "5 min read",
@@ -99,6 +102,7 @@ export const posts: BlogPost[] = [
   },
   {
     slug: "cooking-with-what-you-have-saves-more-than-you-think",
+    image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=800&q=80",
     title: "Why Cooking With What You Have Saves More Than You Think",
     date: "May 18, 2026",
     readTime: "5 min read",
@@ -134,6 +138,7 @@ export const posts: BlogPost[] = [
   },
   {
     slug: "pantry-staples-that-go-with-almost-everything",
+    image: "https://images.unsplash.com/photo-1506368249639-73a05d6f6488?w=800&q=80",
     title: "The 5 Pantry Staples That Go With Almost Everything",
     date: "May 10, 2026",
     readTime: "4 min read",
@@ -171,6 +176,7 @@ export const posts: BlogPost[] = [
   },
   {
     slug: "what-to-cook-with-20-minutes-and-random-ingredients",
+    image: "https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=800&q=80",
     title: "What to Cook When You Only Have 20 Minutes and Random Ingredients",
     date: "May 3, 2026",
     readTime: "5 min read",

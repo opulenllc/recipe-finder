@@ -76,7 +76,9 @@ export default function BlogPage() {
               href={"/blog/" + post.slug}
               className="block group"
             >
-              <article className="border border-gray-200 rounded-2xl p-6 hover:border-orange-300 hover:shadow-md transition-all">
+              <article className="border border-gray-200 rounded-2xl overflow-hidden hover:border-orange-300 hover:shadow-md transition-all">
+                <img src={post.image} alt={post.title} className="w-full h-48 object-cover" />
+                <div className="p-6">
                 <div className="flex items-center gap-3 mb-3">
                   <span className="text-xs text-gray-400">{post.date}</span>
                   <span className="text-gray-300">·</span>
@@ -91,6 +93,7 @@ export default function BlogPage() {
                 <span className="inline-block mt-4 text-sm font-semibold text-orange-500 group-hover:text-orange-600">
                   Read more →
                 </span>
+                </div>
               </article>
             </Link>
           ))}

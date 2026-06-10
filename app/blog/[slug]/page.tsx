@@ -43,6 +43,7 @@ export default function BlogPostPage({ params }: Props) {
           </h1>
         </div>
       </section>
+      <img src={post.image} alt={post.title} className="w-full h-64 object-cover" />
 
       {/* Content */}
       <article className="max-w-2xl mx-auto px-6 py-12">
