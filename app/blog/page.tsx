@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { posts } from "./posts/index";
 
 export const metadata: Metadata = {
   title: "Blog | My Recipe Match",
@@ -7,48 +8,6 @@ export const metadata: Metadata = {
     "Cooking tips, pantry guides, and meal ideas from My Recipe Match. Learn how to cook great meals with whatever ingredients you already have at home.",
 };
 
-const posts = [
-  {
-    slug: "ingredient-combos-that-make-amazing-meals",
-    title: "10 Ingredient Combos That Make Amazing Meals (No Recipe Needed)",
-    date: "June 1, 2026",
-    excerpt:
-      "Some ingredient pairings are so natural they barely need a recipe. Here are 10 combinations that reliably produce delicious meals with minimal effort.",
-    readTime: "6 min read",
-  },
-  {
-    slug: "clean-out-your-fridge-before-grocery-day",
-    title: "How to Clean Out Your Fridge Before Grocery Day",
-    date: "May 25, 2026",
-    excerpt:
-      "Grocery day is coming and your fridge is a mystery. Here is a practical, stress-free approach to using up what you have before buying more.",
-    readTime: "5 min read",
-  },
-  {
-    slug: "cooking-with-what-you-have-saves-more-than-you-think",
-    title: "Why Cooking With What You Have Saves More Than You Think",
-    date: "May 18, 2026",
-    excerpt:
-      "The average household throws away hundreds of dollars of food each year. Ingredient-first cooking is one of the simplest ways to stop the waste.",
-    readTime: "5 min read",
-  },
-  {
-    slug: "pantry-staples-that-go-with-almost-everything",
-    title: "The 5 Pantry Staples That Go With Almost Everything",
-    date: "May 10, 2026",
-    excerpt:
-      "Stock these five ingredients and you will always have the foundation for a great meal, no matter what else is in your fridge.",
-    readTime: "4 min read",
-  },
-  {
-    slug: "what-to-cook-with-20-minutes-and-random-ingredients",
-    title: "What to Cook When You Only Have 20 Minutes and Random Ingredients",
-    date: "May 3, 2026",
-    excerpt:
-      "It is 6pm, you are tired, and dinner needs to happen. Here is how to turn whatever is in your kitchen into something genuinely good in under 20 minutes.",
-    readTime: "5 min read",
-  },
-];
 
 export default function BlogPage() {
   return (
