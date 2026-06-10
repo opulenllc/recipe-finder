@@ -85,7 +85,7 @@ export const posts: BlogPost[] = [
     date: "May 25, 2026",
     readTime: "5 min read",
     excerpt:
-      "Grocery day is coming and your fridge is a mystery. Here is a practical, stress-free approach to using up what you have before buying more.",
+      "Grocery day is coming and your fridge is a mystery. Here is a practical, stress free approach to using up what you have before buying more.",
     content: `
       <p>Every serious cook I have known has a version of this ritual. In Italy they call it <em>cucina povera</em> — poor kitchen — and it gave the world ribollita, panzanella, and pasta e fagioli. In Japan the concept of <em>mottainai</em>, a deep aversion to waste, means home cooks have turned the art of using every last thing into something approaching a philosophy. The French made it elegant with their Sunday evening <em>potage</em>, a soup built entirely from the week's scraps, drizzled with cream and called dinner.</p>
 
@@ -99,7 +99,7 @@ export const posts: BlogPost[] = [
       <p>Group by category: proteins together, vegetables together, dairy together, condiments in their own section. Leftovers get a spot apart from everything else. Now you can actually see what you are working with.</p>
 
       <h2>Step 2: Figure Out What Goes First</h2>
-      <p>Not everything has the same urgency. Fresh proteins — chicken, fish, ground meat — need to be used today or tomorrow, and that is essentially non-negotiable. Vegetables are more forgiving, but wilting greens and soft peppers should go before crisp ones that still have days in them. Dairy depends entirely on the type; hard cheese keeps for weeks after opening, a container of heavy cream does not.</p>
+      <p>Not everything has the same urgency. Fresh proteins — chicken, fish, ground meat — need to be used today or tomorrow, and that is essentially non negotiable. Vegetables are more forgiving, but wilting greens and soft peppers should go before crisp ones that still have days in them. Dairy depends entirely on the type; hard cheese keeps for weeks after opening, a container of heavy cream does not.</p>
       <p>Leftovers from earlier in the week should jump the queue ahead of anything fresh, because they are already a day or two into their window and fresh things can wait another day. Make a rough priority order in your head before you touch anything and let it guide what you reach for first.</p>
 
       <h2>Step 3: Build Everything Around Your Protein</h2>
@@ -135,7 +135,7 @@ export const posts: BlogPost[] = [
     date: "May 18, 2026",
     readTime: "5 min read",
     excerpt:
-      "The average household throws away hundreds of dollars of food each year. Ingredient-first cooking is one of the simplest ways to stop the waste.",
+      "The average household throws away hundreds of dollars of food each year. Ingredient first cooking is one of the simplest ways to stop the waste.",
     content: `
       <p>Most people know they waste food. Fewer realize how much it actually costs them. The average American household throws away somewhere between $1,500 and $1,800 worth of food every year. That is not a rounding error. That is a car payment, several months of groceries, or a plane ticket to somewhere worth going.</p>
 
@@ -181,7 +181,7 @@ export const posts: BlogPost[] = [
 
       <p>A well stocked pantry is not about volume. It is about choosing the right things — ingredients versatile enough to work with almost anything, stable enough to survive weeks on a shelf, and powerful enough to transform simple proteins and vegetables into complete, satisfying meals.</p>
 
-      <p>Here are the five I consider non-negotiable.</p>
+      <p>Here are the five I consider non negotiable.</p>
 
       <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80" alt="Olive oil being poured over fresh vegetables" />
 
