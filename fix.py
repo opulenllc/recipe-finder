@@ -1,14 +1,12 @@
-path = "app/page.tsx"
-
-with open(path, "r", encoding="utf-8") as f:
+with open("app/recipes/cuisine/[cuisine]/client.tsx", "rb") as f:
     content = f.read()
 
-old = '        </div>\n      </div>\n      <a href="/about" className="text-xs font-semibold text-gray-600 hover:text-orange-600 px-3 py-1 rounded-lg hover:bg-orange-50 transition-colors">About</a>\n    </nav>'
-new = '        </div>\n        <a href="/about" className="text-xs font-semibold text-gray-600 hover:text-orange-600 px-3 py-1 rounded-lg hover:bg-orange-50 transition-colors">About</a>\n      </div>\n    </nav>'
+old = b'">About</a>\r\n      </div>\r\n    </nav>'
+new = b'">About</a>\r\n        <a href="/blog" className="text-xs font-semibold text-gray-600 hover:text-orange-600 px-3 py-1 rounded-lg hover:bg-orange-50 transition-colors">Blog</a>\r\n      </div>\r\n    </nav>'
 
 if old in content:
     content = content.replace(old, new, 1)
-    with open(path, "w", encoding="utf-8") as f:
+    with open("app/recipes/cuisine/[cuisine]/client.tsx", "wb") as f:
         f.write(content)
     print("Fixed!")
 else:
