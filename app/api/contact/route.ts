@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
     });
 
     await transporter.sendMail({
-      from: `"My Recipe Match Contact" <${process.env.YAHOO_USER}>`,
+      from: process.env.YAHOO_USER,
       to: process.env.CONTACT_RECEIVER,
       replyTo: email,
       subject: `New contact from ${name} — My Recipe Match`,
