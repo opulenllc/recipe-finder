@@ -18,8 +18,9 @@ export async function POST(req: NextRequest) {
 
     const transporter = nodemailer.createTransport({
       host: "smtp.mail.yahoo.com",
-      port: 465,
-      secure: true,
+      port: 587,
+      secure: false,
+      requireTLS: true,
       auth: {
         user: process.env.YAHOO_USER,
         pass: process.env.YAHOO_APP_PASSWORD,
