@@ -1,4 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
+path = "app/api/contact/route.ts"
+
+content = '''import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
 export async function POST(req: NextRequest) {
@@ -31,7 +33,7 @@ export async function POST(req: NextRequest) {
       to: process.env.CONTACT_RECEIVER,
       replyTo: email,
       subject: `New contact from ${name} - My Recipe Match`,
-      text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
+      text: `Name: ${name}\\nEmail: ${email}\\n\\nMessage:\\n${message}`,
       html: `
         <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #ea580c;">New Contact Form Submission</h2>
@@ -39,7 +41,7 @@ export async function POST(req: NextRequest) {
           <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
           <p><strong>Message:</strong></p>
           <div style="background: #f9fafb; padding: 16px; border-radius: 8px; margin-top: 8px;">
-            ${message.replace(/\n/g, "<br>")}
+            ${message.replace(/\\n/g, "<br>")}
           </div>
           <p style="color: #9ca3af; font-size: 12px; margin-top: 24px;">Sent from myrecipematch.com contact form</p>
         </div>
@@ -52,3 +54,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Failed to send message. Please try again." }, { status: 500 });
   }
 }
+'''
+
+with open(path, "w", encoding="utf-8") as f:
+    f.write(content)
+print("Debug version written!")
