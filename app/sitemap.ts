@@ -1,4 +1,4 @@
-﻿import { MetadataRoute } from "next";
+import { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://www.myrecipematch.com";
@@ -57,34 +57,31 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "chicken-and-avocado",
   ];
 
+  const blogSlugs = [
+    "ingredient-combos-that-make-amazing-meals",
+    "clean-out-your-fridge-before-grocery-day",
+    "cooking-with-what-you-have-saves-more-than-you-think",
+    "pantry-staples-that-go-with-almost-everything",
+    "what-to-cook-with-20-minutes-and-random-ingredients",
+    "beginners-guide-to-cooking-chicken-without-drying-it-out",
+    "how-to-turn-leftovers-into-a-completely-different-meal",
+    "10-things-you-can-make-with-a-can-of-chickpeas",
+    "why-meal-prepping-one-ingredient-beats-prepping-full-meals",
+    "best-spice-combinations-every-home-cook-should-know",
+  ];
+
   return [
     { url: baseUrl, lastModified: new Date(), changeFrequency: "daily", priority: 1 },
-    { url: baseUrl + "/privacy", lastModified: new Date(), changeFrequency: "monthly", priority: 0.3 },
-    { url: baseUrl + "/terms", lastModified: new Date(), changeFrequency: "monthly", priority: 0.3 },
-    { url: baseUrl + '/about', lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.6 },
-    { url: baseUrl + '/blog', lastModified: new Date(), changeFrequency: 'weekly' as const, priority: 0.7 },
-    { url: baseUrl + '/blog/ingredient-combos-that-make-amazing-meals', lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.6 },
-    { url: baseUrl + '/blog/clean-out-your-fridge-before-grocery-day', lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.6 },
-    { url: baseUrl + '/blog/cooking-with-what-you-have-saves-more-than-you-think', lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.6 },
-    { url: baseUrl + '/blog/pantry-staples-that-go-with-almost-everything', lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.6 },
-    { url: baseUrl + '/blog/what-to-cook-with-20-minutes-and-random-ingredients', lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.6 },
-    { url: baseUrl + '/blog/beginners-guide-to-cooking-chicken-without-drying-it-out', lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.6 },
-    { url: baseUrl + '/blog/how-to-turn-leftovers-into-a-completely-different-meal', lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.6 },
-    { url: baseUrl + '/blog/10-things-you-can-make-with-a-can-of-chickpeas', lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.6 },
-    { url: baseUrl + '/blog/why-meal-prepping-one-ingredient-beats-prepping-full-meals', lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.6 },
-    { url: baseUrl + '/blog/best-spice-combinations-every-home-cook-should-know', lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.6 },
-    { url: baseUrl + '/blog', lastModified: new Date(), changeFrequency: 'weekly' as const, priority: 0.7 },
-    { url: baseUrl + '/blog/ingredient-combos-that-make-amazing-meals', lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.6 },
-    { url: baseUrl + '/blog/clean-out-your-fridge-before-grocery-day', lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.6 },
-    { url: baseUrl + '/blog/cooking-with-what-you-have-saves-more-than-you-think', lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.6 },
-    { url: baseUrl + '/blog/pantry-staples-that-go-with-almost-everything', lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.6 },
-    { url: baseUrl + '/blog/what-to-cook-with-20-minutes-and-random-ingredients', lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.6 },
-    { url: baseUrl + '/blog', lastModified: new Date(), changeFrequency: 'weekly' as const, priority: 0.7 },
-    { url: baseUrl + '/blog/ingredient-combos-that-make-amazing-meals', lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.6 },
-    { url: baseUrl + '/blog/clean-out-your-fridge-before-grocery-day', lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.6 },
-    { url: baseUrl + '/blog/cooking-with-what-you-have-saves-more-than-you-think', lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.6 },
-    { url: baseUrl + '/blog/pantry-staples-that-go-with-almost-everything', lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.6 },
-    { url: baseUrl + '/blog/what-to-cook-with-20-minutes-and-random-ingredients', lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.6 },
+    { url: baseUrl + "/about", lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.6 },
+    { url: baseUrl + "/blog", lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.7 },
+    { url: baseUrl + "/privacy", lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.3 },
+    { url: baseUrl + "/terms", lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.3 },
+    ...blogSlugs.map((slug) => ({
+      url: baseUrl + "/blog/" + slug,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    })),
     ...cuisines.map((cuisine) => ({
       url: baseUrl + "/recipes/cuisine/" + cuisine,
       lastModified: new Date(),

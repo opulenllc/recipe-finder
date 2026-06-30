@@ -1,93 +1,105 @@
-import os
+path = "app/sitemap.ts"
 
-content = '''import type { Metadata } from "next";
-import Link from "next/link";
-import { notFound } from "next/navigation";
-import { posts } from "@/app/blog/posts/index";
+content = '''import { MetadataRoute } from "next";
 
-export async function generateStaticParams() {
-  return posts.map((p) => ({ slug: p.slug }));
-}
+export default function sitemap(): MetadataRoute.Sitemap {
+  const baseUrl = "https://www.myrecipematch.com";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
-  const { slug } = await params;
-  const post = posts.find((p) => p.slug === slug);
-  if (!post) return {};
-  return {
-    title: post.title + " | My Recipe Match Blog",
-    description: post.excerpt,
-  };
-}
+  const cuisines = ["italian", "mexican", "chinese", "indian", "japanese", "thai", "american", "mediterranean"];
 
-export default async function BlogPostPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
-  const post = posts.find((p) => p.slug === slug);
-  if (!post) notFound();
+  const slugs = [
+    "chicken-and-rice",
+    "chicken-and-broccoli",
+    "chicken-breast-and-rice",
+    "eggs-and-bread",
+    "ground-beef-and-pasta",
+    "potatoes-and-cheese",
+    "chicken-and-rice-soup",
+    "chicken-stir-fry-with-rice",
+    "baked-chicken-and-rice",
+    "healthy-chicken-and-rice",
+    "chicken-and-pasta",
+    "eggs-and-cheese",
+    "ground-beef-and-rice",
+    "chicken-and-potatoes",
+    "tuna-and-pasta",
+    "beef-and-broccoli",
+    "shrimp-and-rice",
+    "pork-and-potatoes",
+    "salmon-and-rice",
+    "chicken-and-mushrooms",
+    "eggs-and-potatoes",
+    "chicken-and-spinach",
+    "ground-beef-and-potatoes",
+    "chicken-and-tomatoes",
+    "pasta-and-cheese",
+    "chicken-and-garlic",
+    "beef-and-potatoes",
+    "chicken-and-lemon",
+    "pork-and-rice",
+    "shrimp-and-pasta",
+    "chicken-and-zucchini",
+    "chicken-and-sweet-potato",
+    "ground-beef-and-onions",
+    "shrimp-and-garlic",
+    "salmon-and-potatoes",
+    "pasta-and-tomatoes",
+    "eggs-and-spinach",
+    "chicken-and-carrots",
+    "beef-and-mushrooms",
+    "tuna-and-rice",
+    "chicken-and-corn",
+    "shrimp-and-broccoli",
+    "ground-beef-and-tomatoes",
+    "pasta-and-mushrooms",
+    "chicken-and-beans",
+    "eggs-and-mushrooms",
+    "salmon-and-lemon",
+    "beef-and-carrots",
+    "chicken-and-avocado",
+  ];
 
-  return (
-    <main className="min-h-screen bg-white">
-      <section className="bg-orange-50 py-12 px-6">
-        <div className="max-w-2xl mx-auto">
-          <Link
-            href="/blog"
-            className="text-sm text-orange-500 hover:text-orange-600 font-medium mb-6 inline-block"
-          >
-            ← Back to Blog
-          </Link>
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-xs text-gray-400">{post!.date}</span>
-            <span className="text-gray-300">·</span>
-            <span className="text-xs text-gray-400">{post!.readTime}</span>
-          </div>
-          <h1 className="text-3xl font-bold text-gray-900 leading-snug">
-            {post!.title}
-          </h1>
-        </div>
-      </section>
+  const blogSlugs = [
+    "ingredient-combos-that-make-amazing-meals",
+    "clean-out-your-fridge-before-grocery-day",
+    "cooking-with-what-you-have-saves-more-than-you-think",
+    "pantry-staples-that-go-with-almost-everything",
+    "what-to-cook-with-20-minutes-and-random-ingredients",
+    "beginners-guide-to-cooking-chicken-without-drying-it-out",
+    "how-to-turn-leftovers-into-a-completely-different-meal",
+    "10-things-you-can-make-with-a-can-of-chickpeas",
+    "why-meal-prepping-one-ingredient-beats-prepping-full-meals",
+    "best-spice-combinations-every-home-cook-should-know",
+  ];
 
-      <img
-        src={post!.image}
-        alt={post!.title}
-        className="w-full h-64 object-cover"
-      />
-
-      <article className="max-w-2xl mx-auto px-6 py-12">
-        <div
-          className="prose prose-orange prose-lg max-w-none"
-          dangerouslySetInnerHTML={{ __html: post!.content }}
-        />
-      </article>
-
-      <section className="max-w-2xl mx-auto px-6 pb-16">
-        <div className="bg-orange-50 rounded-2xl p-8 text-center">
-          <h2 className="text-xl font-bold text-gray-900 mb-2">
-            Find recipes from your ingredients
-          </h2>
-          <p className="text-gray-500 text-sm mb-5">
-            Type in what you have and instantly discover meals you can make right now.
-          </p>
-          <Link
-            href="/"
-            className="inline-block bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-2.5 rounded-full text-sm transition-colors"
-          >
-            Search Recipes →
-          </Link>
-        </div>
-      </section>
-    </main>
-  );
+  return [
+    { url: baseUrl, lastModified: new Date(), changeFrequency: "daily", priority: 1 },
+    { url: baseUrl + "/about", lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.6 },
+    { url: baseUrl + "/blog", lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.7 },
+    { url: baseUrl + "/privacy", lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.3 },
+    { url: baseUrl + "/terms", lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.3 },
+    ...blogSlugs.map((slug) => ({
+      url: baseUrl + "/blog/" + slug,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    })),
+    ...cuisines.map((cuisine) => ({
+      url: baseUrl + "/recipes/cuisine/" + cuisine,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.7,
+    })),
+    ...slugs.map((slug) => ({
+      url: baseUrl + "/recipes/" + slug,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.8,
+    })),
+  ];
 }
 '''
 
-path = "app/recipes/cuisine/[cuisine]/client.tsx".replace("cuisine/[cuisine]/client.tsx", "blog/[slug]/page.tsx")
 with open(path, "w", encoding="utf-8") as f:
     f.write(content)
-print("Done! Written to:", path)
+print("Sitemap written!")
