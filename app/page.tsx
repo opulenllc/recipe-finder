@@ -439,6 +439,7 @@ function NavBar() {
           )}
         </div>
         <a href="/about" className="text-xs font-semibold text-gray-600 hover:text-orange-600 px-3 py-1 rounded-lg hover:bg-orange-50 transition-colors">About</a>
+        <a href="/contact" className="text-xs font-semibold text-gray-600 hover:text-orange-600 px-3 py-1 rounded-lg hover:bg-orange-50 transition-colors">Contact</a>
         <a href="/blog" className="text-xs font-semibold text-gray-600 hover:text-orange-600 px-3 py-1 rounded-lg hover:bg-orange-50 transition-colors">Blog</a>
       </div>
     </nav>
